@@ -1,0 +1,1 @@
+# plugins-faq-for-woocommerce
