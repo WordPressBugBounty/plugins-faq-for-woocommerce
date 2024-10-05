@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.ffw-admin-wrapper {
+    font-family: 'Inter', sans-serif;
+    
+    .ffw-primary-btn{
+        padding: 12px 16px;
+        background-color: var(--success-lite);
+        border-radius: 4px;
+        color: var(--success-dark);
+        transition: .2s ease-in-out;
+        &:hover{
+            background-color: var(--success-lite-hover);
+            color: var(--neutral-white);
+        }
+    }
+
+    .ffw-secondary-btn{
+        padding: 12px 16px;
+        color: var(--neutral-white);
+        border-radius: 4px;
+        transition: .2s ease-in-out;
+    }
+
+    h2{
+        font-size: 34px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 40px;
+        color: var(--neutral-white);
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    h3{
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+        margin: 0;
+        margin-bottom: 10px;
+        color: var(--heading-color);
+    }
+    h4{
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    
+    p{
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--primary-text-color);
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    a{
+        text-decoration: none;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        transition: .2s ease-in-out;
+    }
+}

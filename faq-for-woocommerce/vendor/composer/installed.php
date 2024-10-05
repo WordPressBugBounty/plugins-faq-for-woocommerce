@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'optemiz/xplainer',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => '0be4c76ec27ff7460c787d81906e7e4e6ccfcb3b',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'appsero/client' => array(
+            'pretty_version' => 'v2.0.2',
+            'version' => '2.0.2.0',
+            'reference' => 'b61c3ab21df4d44f805ee9476f9d880f8370a36b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../appsero/client',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'optemiz/plugin-tracker' => array(
+            'pretty_version' => '1.0.3',
+            'version' => '1.0.3.0',
+            'reference' => '03a25037562913bd1014754b766df864400f6b3b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../optemiz/plugin-tracker',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'optemiz/xplainer' => array(
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '0be4c76ec27ff7460c787d81906e7e4e6ccfcb3b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);
