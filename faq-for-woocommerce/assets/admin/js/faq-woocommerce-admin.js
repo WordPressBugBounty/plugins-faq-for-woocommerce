@@ -61,6 +61,11 @@ jQuery(document).ready(function ($) {
                 placeholder: "Select categories",
                 // allowClear: true
             });
+            
+            $('.ffw-tag-select2').select2({
+                placeholder: "Select tags",
+                // allowClear: true
+            });
 
             if( "product" === ffw_admin.current_post_type && "edit" === ffw_admin.current_page_action ) {
 

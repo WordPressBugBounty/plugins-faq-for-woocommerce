@@ -13,6 +13,7 @@
   margin: auto;
   visibility: hidden;
   box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.2);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
@@ -121,6 +122,7 @@
   visibility: visible;
 }
 #ffw-popup-form-wrapper .ffw-modal-frame.state-appear .modal-inset {
+  -webkit-animation: modalComeIn 0.25s ease;
   animation: modalComeIn 0.25s ease;
   visibility: visible;
   /* to keep @ final state */
@@ -133,6 +135,7 @@
   visibility: visible;
 }
 #ffw-popup-form-wrapper .ffw-modal-frame.state-leave .modal-inset {
+  -webkit-animation: modalHeadOut 0.35s ease 0.1s;
   animation: modalHeadOut 0.35s ease 0.1s;
   visibility: visible;
 }
@@ -166,6 +169,21 @@
   transition-delay: 0s;
   transition-duration: 0.2s, 0s;
 }
+@-webkit-keyframes modalComeIn {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.8, 0.8);
+  }
+  65.5% {
+    transform: scale(1.03, 1.03);
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
 @keyframes modalComeIn {
   0% {
     visibility: hidden;
@@ -179,6 +197,18 @@
     visibility: visible;
     opacity: 1;
     transform: scale(1, 1);
+  }
+}
+@-webkit-keyframes modalHeadOut {
+  0% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(35px) scale(0.97, 0.97);
   }
 }
 @keyframes modalHeadOut {

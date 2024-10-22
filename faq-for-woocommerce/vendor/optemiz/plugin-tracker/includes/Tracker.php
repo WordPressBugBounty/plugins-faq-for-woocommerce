@@ -34,15 +34,6 @@ if ( ! class_exists( 'Tracker', false ) ) :
         }
 
         function execute() {
-            if ( function_exists( 'wc_get_logger' ) ) {
-                wc_get_logger()->info(
-                    'Inside Tracker->execute()',
-                    array(
-                        'source'        => $this->slug,
-                    )
-                );
-            }
-
             add_action( 'upgrader_process_complete', array($this, 'plugin_updated'), 10, 2 );
 
             add_action($this->slug . '_tracker_optin', array($this, 'tracker_optin'));
@@ -52,15 +43,6 @@ if ( ! class_exists( 'Tracker', false ) ) :
         function tracker_optin($data) {
             $new_data = [];
             $new_data['plugin_name'] = $this->slug;
-
-            if ( function_exists( 'wc_get_logger' ) ) {
-                wc_get_logger()->info(
-                    'Inside Tracker->tracker_optin()',
-                    array(
-                        'source'      => $this->slug,
-                    )
-                );
-            }
 
             if(!empty($data) && is_array($data)) {
                 $new_data['user_nicename'] = $data['first_name'] . ' ' . $data['last_name'];
@@ -102,16 +84,6 @@ if ( ! class_exists( 'Tracker', false ) ) :
 
             if (is_wp_error($response)) {
                 $error_message = $response->get_error_message();
-
-                if ( function_exists( 'wc_get_logger' ) ) {
-                    wc_get_logger()->info(
-                        'Inside Tracker->tracker_optin() is_wp_error($response)',
-                        array(
-                            'source'      => $this->slug,
-                            'error_message' => $error_message,
-                        )
-                    );
-                }
             } else {
                 // Get the body of the response
                 $response_body  = wp_remote_retrieve_body($response);
@@ -120,32 +92,10 @@ if ( ! class_exists( 'Tracker', false ) ) :
                 $token_option_name = $this->get_token_option_name();
                 $token_exist = get_option($token_option_name);
 
-                if ( function_exists( 'wc_get_logger' ) ) {
-                    wc_get_logger()->info(
-                        'Inside Tracker->tracker_optin() else of is_wp_error($response)',
-                        array(
-                            'source'      => $this->slug,
-                            'token_option_name' => $token_option_name,
-                            'token_exist' => $token_exist,
-                            'response_body' => $data,
-                        )
-                    );
-                }
-
                 if(false === $token_exist && isset($data['token'])) {
                     update_option($token_option_name, $data['token']);
 
                     $new_data['token'] = $data['token'];
-
-                    if ( function_exists( 'wc_get_logger' ) ) {
-                        wc_get_logger()->info(
-                            'Inside Tracker->tracker_optin() false === $token_exist && isset($data[token])',
-                            array(
-                                'source'      => $this->slug,
-                                'new_data' => $new_data,
-                            )
-                        );
-                    }
 
                     $this->send_request($new_data, $this->api_url . '/wp-json/optemiz/v1/email_tracker/optin');
                 }
@@ -161,16 +111,6 @@ if ( ! class_exists( 'Tracker', false ) ) :
             
             if(!isset($data['admin_email'])) {
                 return;
-            }
-
-            if ( function_exists( 'wc_get_logger' ) ) {
-                wc_get_logger()->info(
-                    'Inside Tracker->uninstall_reason_submitted()',
-                    array(
-                        'source'        => $this->slug,
-                        'data'        => $data,
-                    )
-                );
             }
 
             $new_data['user_email']     = $data['admin_email'];
@@ -204,16 +144,6 @@ if ( ! class_exists( 'Tracker', false ) ) :
 					'cookies'     => [],
 				]
 			);
-
-            if ( function_exists( 'wc_get_logger' ) ) {
-                wc_get_logger()->info(
-                    'Inside Tracker->send_request()',
-                    array(
-                        'source'      => $this->slug,
-                        'response' => $response,
-                    )
-                );
-            }
 	
 			return $response;
 		}
@@ -225,15 +155,6 @@ if ( ! class_exists( 'Tracker', false ) ) :
          * @param $options Array
          */
         function plugin_updated( $upgrader_object, $options ) {
-
-            if ( function_exists( 'wc_get_logger' ) ) {
-                wc_get_logger()->info(
-                    'Inside Tracker->plugin_updated()',
-                    array(
-                        'source'        => $this->slug,
-                    )
-                );
-            }
             
             // when plugin is updated.
             if( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
@@ -245,46 +166,13 @@ if ( ! class_exists( 'Tracker', false ) ) :
                         //check whether trakcing allowed or not.
                         $allow_tracking = get_option("{$this->slug}_allow_tracking");
 
-                        if ( function_exists( 'wc_get_logger' ) ) {
-                            wc_get_logger()->info(
-                                'Inside Tracker->plugin_updated() -> $plugin == $this->plugin_base_path',
-                                array(
-                                    'source'        => $this->slug,
-                                    'plugin base path' => $this->plugin_base_path,
-                                    'tracking_data' => $tracking_data,
-                                    'allow_tracking' => $allow_tracking,
-                                )
-                            );
-                        }
-
                         if("yes" === $allow_tracking) {
 
                             $token_option_name  = $this->get_token_option_name();
                             $already_tracked    = get_option($token_option_name);
 
-                            if ( function_exists( 'wc_get_logger' ) ) {
-                                wc_get_logger()->info(
-                                    'Inside Tracker->plugin_updated() -> "yes" === $allow_tracking',
-                                    array(
-                                        'source'        => $this->slug,
-                                        'token_option_name' => $token_option_name,
-                                        'already_tracked' => $already_tracked,
-                                    )
-                                );
-                            }
-
                             //when no token exists, send data.
                             if (false === $already_tracked) {
-
-                                if ( function_exists( 'wc_get_logger' ) ) {
-                                    wc_get_logger()->info(
-                                        'Inside Tracker->plugin_updated() -> false === $already_tracked',
-                                        array(
-                                            'source'        => $this->slug
-                                        )
-                                    );
-                                }
-
                                 $this->tracker_optin($tracking_data);
                             }else {
                                 // $tracking_data['site_url']          = $tracking_data['url'];

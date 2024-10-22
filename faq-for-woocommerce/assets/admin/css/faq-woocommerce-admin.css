@@ -401,6 +401,24 @@ body {
   color: #ee5253;
 }
 
+@-webkit-keyframes slideInOut {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-200px);
+  }
+  50% {
+    opacity: 0.5;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
 @keyframes slideInOut {
   0% {
     opacity: 0;
@@ -1072,6 +1090,7 @@ body {
   opacity: 0;
   visibility: hidden;
   display: none;
+  -webkit-animation: slideInOut 1s ease-in-out;
   animation: slideInOut 1s ease-in-out;
 }
 .ffw-admin-wrapper .ffw-ai-wrapper .ffw-contianer .ffw-ai-content .ffw-ai-result-content .ffw-ai-result-content-header {

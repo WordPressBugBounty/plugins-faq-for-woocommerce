@@ -165,7 +165,19 @@
                                 <p><?php esc_html_e("Assign product categories to FAQs. It will minimize your time to connect FAQs with products.", "faq-for-woocommerce"); ?></p>
                             </td>
                             <td>
-                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/cancel.png'); ?>">
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><?php esc_html_e("FAQs by Product Tags", "faq-for-woocommerce"); ?></p>
+                                <p><?php esc_html_e("Assign product tags to FAQs. It will minimize your time to connect FAQs with products.", "faq-for-woocommerce"); ?></p>
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
                             </td>
                             <td>
                                 <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
@@ -284,7 +296,6 @@
                 <h3 class="ffw-why-pro-haading"><?php esc_html_e('Why Pro?', 'faq-for-woocommerce'); ?></h3>
 
                 <ul class="ffw-why-pro-features">
-                    <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("FAQs by Product Categories", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Variation Product FAQs", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Beautiful FAQs Templates", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display Location", "faq-for-woocommerce"); ?></span></li>
@@ -322,6 +333,8 @@
                 <h3 class="ffw-free-xplainer">Free XPlainer features</h3>
                 <ul class="ffw-free-xplainer-features">
                     <li class="ffw-free-xplainer-features-content"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done-purple.png'); ?>" alt=""><span><?php esc_html_e("Unlimited FAQs", "faq-for-woocommerce"); ?></span></li>
+                    <li class="ffw-free-xplainer-features-content"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done-purple.png'); ?>" alt=""><span><?php esc_html_e("FAQs by Product Categories", "faq-for-woocommerce"); ?></span></li>
+                    <li class="ffw-free-xplainer-features-content"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done-purple.png'); ?>" alt=""><span><?php esc_html_e("FAQs by Product Tags", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-free-xplainer-features-content"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done-purple.png'); ?>" alt=""><span><?php esc_html_e("AI Generated FAQs", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-free-xplainer-features-content"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done-purple.png'); ?>" alt=""><span><?php esc_html_e("Schema Support", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-free-xplainer-features-content"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done-purple.png'); ?>" alt=""><span><?php esc_html_e("Shortcode Support", "faq-for-woocommerce"); ?></span></li>

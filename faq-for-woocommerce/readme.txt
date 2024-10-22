@@ -1,10 +1,10 @@
 ﻿=== XPlainer - Product FAQs for WooCommerce & AI FAQ Generator ===
-Contributors: optemiz, nayanchamp7, azha18
+Contributors: optemiz, happydevs, nayanchamp7, azha18
 Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.6
 Requires PHP: 5.6
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,8 @@ Now, let’s get into the freshly baked features of the XPlainer - Product FAQ f
 Here’s a glimpse of the top features of this ultimate FAQ plugin for [__WooCommerce__](https://wordpress.org/plugins/woocommerce):
 
 * Unlimited FAQs
+* FAQs by Product Categories
+* FAQs by Product Tags
 * AI FAQs Generator (since 1.7.0)
 * Individual product FAQ
 * Gutenberg Editor support
@@ -62,7 +64,6 @@ Here’s a glimpse of the top features of this ultimate FAQ plugin for [__WooCom
 * FAQ tab reorder setting
 * Show/hide FAQ answers on page load
 * Option of Expand/Collapse All FAQs
-* 💎 FAQs by Product Categories (PRO)
 * 💎 Variation Product FAQs (PRO)
 * 💎 More Beautiful FAQs Templates (PRO)
 * 💎 Display Location [display anywhere on Product page] (PRO)
@@ -245,9 +246,13 @@ With XPlainer Pro, your sales will increase dramatically because it will enhance
 
 ### Pro Features of XPlainer:
 
-## 👕 FAQs by Product Categories (PRO FEATURE) ##
+## 👕 FAQs by Product Categories ##
 
 Assign product categories to FAQs. It will minimize your time to connect FAQs with products.
+
+## 👕 FAQs by Product Tags ##
+
+Assign product tags to FAQs. It will minimize your time to connect FAQs with products.
 
 ## 👕 Variation Product FAQs (PRO FEATURE) ##
 
@@ -381,6 +386,10 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.7.5 =
+* Added: FAQs by Product Tags - controls added.
+* Added: FAQs by Product Categories - controls added.
 
 = 1.7.4 =
 * Added: AppSero latest version compatability.

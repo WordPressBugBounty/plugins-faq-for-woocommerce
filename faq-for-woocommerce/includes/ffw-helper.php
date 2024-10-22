@@ -17,32 +17,53 @@ if( ! function_exists( 'ffw_get_product_faqs' ) ) {
             
             $faq_post_ids = [];
             $faq_cat_post_ids = [];
+            $faq_tag_post_ids = [];
 
-            if(ffw_is_pro_activated()) {
-                // get category faq ids.
-                $terms = get_the_terms( $product_id, 'product_cat' );
+            // get categories.
+            $cat_terms = get_the_terms( $product_id, 'product_cat' );
     
-                if(!empty($terms)) {
-                    $cat_faq_post_ids_data = [];
-                    foreach ( $terms as $term ) {
-                        $cat_id = $term->term_id;
-                        $cat_faq_post_ids = get_term_meta($cat_id, 'ffw_cat_faq_post_ids', true);
-    
-                        if(!empty($cat_faq_post_ids)) {
-                            // array_push($cat_faq_post_ids_data, $cat_faq_post_ids);
-                            $cat_faq_post_ids_data = array_merge($cat_faq_post_ids_data, $cat_faq_post_ids);
-                        }
+            // fetch category faqs ids.
+            if(!empty($cat_terms)) {
+                $cat_faq_post_ids_data = [];
+                foreach ( $cat_terms as $term ) {
+                    $cat_id = $term->term_id;
+                    $cat_faq_post_ids = get_term_meta($cat_id, 'ffw_cat_faq_post_ids', true);
+
+                    if(!empty($cat_faq_post_ids)) {
+                        $cat_faq_post_ids_data = array_merge($cat_faq_post_ids_data, $cat_faq_post_ids);
                     }
+                }
+
+                $cat_faq_post_ids_data = array_unique($cat_faq_post_ids_data);
+
+                if(!empty($cat_faq_post_ids_data)) {
+                    $faq_cat_post_ids = apply_filters('ffw_filter_faq_post_ids_by_cat', $cat_faq_post_ids_data);
+                }
+            }
+            
+            // get tags.
+            $tag_terms = get_the_terms( $product_id, 'product_tag' );
     
-                    $cat_faq_post_ids_data = array_unique($cat_faq_post_ids_data);
-    
-                    if(!empty($cat_faq_post_ids_data)) {
-                        $faq_cat_post_ids = apply_filters('ffw_filter_faq_post_ids_by_cat', $cat_faq_post_ids_data);
+            // fetch tag faqs ids.
+            if(!empty($tag_terms)) {
+                $tag_faq_post_ids_data = [];
+                foreach ( $tag_terms as $term ) {
+                    $tag_id = $term->term_id;
+                    $tag_faq_post_ids = get_term_meta($tag_id, 'ffw_tag_faq_post_ids', true);
+
+                    if(!empty($tag_faq_post_ids)) {
+                        $tag_faq_post_ids_data = array_merge($tag_faq_post_ids_data, $tag_faq_post_ids);
                     }
+                }
+
+                $tag_faq_post_ids_data = array_unique($tag_faq_post_ids_data);
+
+                if(!empty($tag_faq_post_ids_data)) {
+                    $faq_tag_post_ids = apply_filters('ffw_filter_faq_post_ids_by_tag', $tag_faq_post_ids_data);
                 }
             }
 
-            // When no product category is assigned, bring faqs by product ids.
+            // fetch product faqs ids When no product category is assigned.
             // get product faq ids.
             $product_faq_post_ids = get_post_meta($product_id, 'ffw_product_faq_post_ids', true);
             $faq_post_ids = apply_filters('ffw_filter_faq_post_ids_by_product', $product_faq_post_ids);
@@ -52,6 +73,7 @@ if( ! function_exists( 'ffw_get_product_faqs' ) ) {
             }
 
             $faq_ids = array_merge($faq_cat_post_ids, $faq_post_ids);
+            $faq_ids = array_merge($faq_tag_post_ids, $faq_ids);
 
             // merge global faqs.
             $faq_global_post_ids = apply_filters("ffw_filter_global_faq_post_ids", $faq_post_ids);

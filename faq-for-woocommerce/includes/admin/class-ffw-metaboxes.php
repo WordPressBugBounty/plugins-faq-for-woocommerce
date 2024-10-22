@@ -24,8 +24,8 @@ if (!class_exists('FFW_Metaboxes', false)) :
         {
             add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
             add_action( 'save_post', array( $this, 'save' ) );
-            add_action( 'ffw_metabox_content_item', array( $this, 'global_faqs_box' ), 10 );
-            add_action( 'ffw_metabox_content_item', array( $this, 'product_attribute_box' ), 10 );
+            add_action( 'ffw_metabox_content_item', array( $this, 'global_faqs_box' ), 20 );
+            add_action( 'ffw_metabox_content_item', array( $this, 'product_attribute_box' ), 20 );
             add_action( 'ffw_metabox_content_item', array( $this, 'product_search_box' ) );
         }
 
@@ -186,34 +186,23 @@ if (!class_exists('FFW_Metaboxes', false)) :
                     <th scope="row" class="titledesc">
                         <label for="ffw_faq_categories">
                             <span><?php esc_html_e( 'Product Categories', 'faq-for-woocommerce' ); ?></span>
-
-                            <?php if(!ffw_is_pro_activated()): ?>
-                                <div class="ffw-get-pro-wrapper">
-                                    <div class="ffw-get-pro-badge">
-                                        <span><?php esc_html_e('pro', 'faq-for-woocommerce'); ?></span>
-                                    </div>
-                                </div>
-
-                            <?php endif; ?>
                         </label>
                     </th>
                     <td class="forminp forminp-multi-select-search">
                         <select
-                                name="ffw_faq_categories[]"
-                                multiple="multiple"
-                                id="ffw_faq_categories"
-                                class="ffw-select2 ffw-category-select2"
-                                placeholder="search categories"
-
-                                <?php !ffw_is_pro_activated() ? 'disabled' : ''; ?>
+                            name="ffw_faq_categories[]"
+                            multiple="multiple"
+                            id="ffw_faq_categories"
+                            class="ffw-select2 ffw-category-select2"
+                            placeholder="<?php esc_html_e('search categories', 'faq-for-woocommerce'); ?>"
                         >
                         <?php
                         $settings = FAQ_Woocommerce_Settings::instance();
                         $categories =  $settings->get_product_categories();
 
+                        $cat_ids = [];
                         if( isset($categories) && ! empty($categories) ) {
                             $disabled = !ffw_is_pro_activated() ? esc_attr('disabled') : '';
-                            $cat_ids = [];
                             foreach ( $categories as $cat_id => $cat_name ) {
                                 $faq_ids = get_term_meta($cat_id, 'ffw_cat_faq_post_ids', true);
 
@@ -223,7 +212,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                                         $selected = selected(in_array($faq_id, $faq_ids), true, false);
                                     }
                                     
-                                    echo '<option '. esc_attr($disabled) .' value="' . esc_attr( $cat_id ) . '" ' . esc_attr($selected) . '>' . wp_kses_post( $cat_name ) . '</option>';
+                                    echo '<option value="' . esc_attr( $cat_id ) . '" ' . esc_attr($selected) . '>' . wp_kses_post( $cat_name ) . '</option>';
                                 
                                     if($selected) {
                                         array_push($cat_ids, $cat_id);
@@ -237,6 +226,54 @@ if (!class_exists('FFW_Metaboxes', false)) :
                         </select>
                         <input type="hidden" name="ffw_faq_save_categories" value="<?php echo esc_html(implode(',', $cat_ids)); ?>">
                         <p class="description"><?php esc_html_e('Select product categories for the FAQ.', 'faq-for-woocommerce'); ?></p>
+                    </td>
+                </tr>
+                
+                <tr class="<?php echo esc_attr($classlist); ?>">
+                    <th scope="row" class="titledesc">
+                        <label for="ffw_faq_tags">
+                            <span><?php esc_html_e( 'Product Tags', 'faq-for-woocommerce' ); ?></span>
+                        </label>
+                    </th>
+                    <td class="forminp forminp-multi-select-search">
+                        <select
+                            name="ffw_faq_tags[]"
+                            multiple="multiple"
+                            id="ffw_faq_tags"
+                            class="ffw-select2 ffw-tag-select2"
+                            placeholder="<?php esc_html_e('search tags', 'faq-for-woocommerce'); ?>"
+                        >
+                        <?php
+                        $settings   = FAQ_Woocommerce_Settings::instance();
+                        $tags       =  $settings->get_product_tags();
+
+                        $tag_ids = [];
+                        if( isset($tags) && ! empty($tags) ) {
+                            $disabled = !ffw_is_pro_activated() ? esc_attr('disabled') : '';
+
+                            foreach ( $tags as $tag_id => $tag_name ) {
+                                $faq_ids = get_term_meta($tag_id, 'ffw_tag_faq_post_ids', true);
+
+                                if ( !empty($tag_name) ) {
+                                    $selected = '';
+                                    if( isset($faq_ids) && ! empty($faq_ids) && is_array($faq_ids) ) {
+                                        $selected = selected(in_array($faq_id, $faq_ids), true, false);
+                                    }
+                                    
+                                    echo '<option value="' . esc_attr( $tag_id ) . '" ' . esc_attr($selected) . '>' . wp_kses_post( $tag_name ) . '</option>';
+                                
+                                    if($selected) {
+                                        array_push($tag_ids, $tag_id);
+                                    }
+                                }
+                            }
+
+                            $tag_ids = array_unique($tag_ids);
+                        }
+                        ?>
+                        </select>
+                        <input type="hidden" name="ffw_faq_save_tags" value="<?php echo esc_html(implode(',', $tag_ids)); ?>">
+                        <p class="description"><?php esc_html_e('Select product tags for the FAQ.', 'faq-for-woocommerce'); ?></p>
                     </td>
                 </tr>
             <?php
@@ -355,17 +392,8 @@ if (!class_exists('FFW_Metaboxes', false)) :
                     $saved_product_ids = sanitize_text_field($_POST['ffw_faq_save_products']);
 
                     if(!empty($saved_product_ids)) {
-                        $saved_product_ids = explode(',', $saved_product_ids);
-                        $removed_product_ids = array_diff($saved_product_ids, $product_ids);
-
-                        error_log('product ids');
-                        error_log(print_r($product_ids, true));
-                        
-                        error_log('saved product ids');
-                        error_log(print_r($saved_product_ids, true));
-
-                        error_log('removed product ids');
-                        error_log(print_r($removed_product_ids, true));
+                        $saved_product_ids      = explode(',', $saved_product_ids);
+                        $removed_product_ids    = array_diff($saved_product_ids, $product_ids);
                     }
                 }
 
@@ -409,6 +437,12 @@ if (!class_exists('FFW_Metaboxes', false)) :
                         ffw_insert_faqs_by_product($post_id, $product_id);
                     }
                 }
+
+                /**
+                 * Categories Conditions and Savings.
+                 * 
+                 * @since 1.6.0
+                 */
 
                 // save categories ids.
                 if( isset($_POST['ffw_faq_categories']) && !empty($_POST['ffw_faq_categories']) ) {
@@ -477,6 +511,82 @@ if (!class_exists('FFW_Metaboxes', false)) :
 
                         // Update the meta field.
                         update_term_meta( $cat_id, 'ffw_cat_faq_post_ids', $faq_ids );
+                    }
+                }
+
+                /**
+                 * Tag Conditions and Savings.
+                 * 
+                 * @since 1.7.5
+                 */
+
+                // save tags ids.
+                if( isset($_POST['ffw_faq_tags']) && !empty($_POST['ffw_faq_tags']) ) {
+                    // sanitize the faqs tags field value.
+                    $tag_ids = $_POST['ffw_faq_tags'];
+                }
+
+                // Reference for saved previous tag ids.
+                // It'll help to check if new selected tag ids are removed or not.
+                if(isset($_POST['ffw_faq_save_tags']) && !empty($_POST['ffw_faq_save_tags'])) {
+                    $saved_tag_ids = sanitize_text_field($_POST['ffw_faq_save_tags']);
+
+                    if(!empty($saved_tag_ids)) {
+                        $saved_tag_ids = explode(',', $saved_tag_ids);
+                        $removed_tag_ids = array_diff($saved_tag_ids, $tag_ids);
+                    }
+                }
+
+                /**
+                 * Let's remove faq for the removed tag ids.
+                 * 
+                 * @since 1.6.0
+                 */
+                if( isset($removed_tag_ids) && is_array($removed_tag_ids) && !empty($removed_tag_ids) ) {
+                    foreach($removed_tag_ids as $removed_tag_id) {
+
+                        // get tag faqs.
+                        $faq_ids = get_term_meta($removed_tag_id, 'ffw_tag_faq_post_ids', true);
+
+                        // search curret faq id to saved ids and remove if found.
+                        if( !empty($faq_ids) ) {
+                            $index = array_search($post_id, $faq_ids);
+
+                            if(isset($faq_ids[$index])) {
+                                unset($faq_ids[$index]);
+
+                                // Update the meta field.
+                                update_term_meta( $removed_tag_id, 'ffw_tag_faq_post_ids', $faq_ids );
+                            }
+                        }
+                        
+                    }
+                }
+
+                /**
+                 * Add faq post id to the tags.
+                 * 
+                 * @since 1.7.5
+                 */
+                if( isset($tag_ids) && is_array($tag_ids) && !empty($tag_ids) ) {
+                    foreach($tag_ids as $tag_id) {
+
+                        // get tags faqs.
+                        $faq_ids = get_term_meta($tag_id, 'ffw_tag_faq_post_ids', true);
+
+                        // when no faqs is set, put empty array.
+                        if( empty($faq_ids) ) {
+                            $faq_ids = [];
+                        }
+
+                        //push the faq id.
+                        array_push($faq_ids, $post_id);
+
+                        //remove duplicate faq id.
+                        $faq_ids = array_unique($faq_ids);
+
+                        // Update the meta field.
+                        update_term_meta( $tag_id, 'ffw_tag_faq_post_ids', $faq_ids );
                     }
                 }
 
