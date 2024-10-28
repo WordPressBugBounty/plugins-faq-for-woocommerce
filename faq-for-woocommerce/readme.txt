@@ -1,4 +1,4 @@
-﻿=== XPlainer - Product FAQs for WooCommerce & AI FAQ Generator ===
+=== XPlainer - Product FAQs for WooCommerce & AI FAQ Generator ===
 Contributors: optemiz, happydevs, nayanchamp7, azha18
 Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
@@ -83,6 +83,14 @@ The XPlainer Product FAQ for WooCommerce plugin allows you to add unlimited FAQs
 ## 🎨 INDIVIDUAL PRODUCT FAQ ##
 
 Every product is special. So, it’s very common for customers to have specific questions about specific products. As an owner, it’s your sole duty to convert those product visitors into probable buyers by answering their custom questions with this FAQ accordion plugin.
+
+## 👕 FAQs by Product Categories ##
+
+Assign product categories to FAQs. It will minimize your time to connect FAQs with products.
+
+## 👕 FAQs by Product Tags ##
+
+Assign product tags to FAQs. It will minimize your time to connect FAQs with products.
 
 ## 📭 FAQ POST SUPPORT ##
 
@@ -246,13 +254,6 @@ With XPlainer Pro, your sales will increase dramatically because it will enhance
 
 ### Pro Features of XPlainer:
 
-## 👕 FAQs by Product Categories ##
-
-Assign product categories to FAQs. It will minimize your time to connect FAQs with products.
-
-## 👕 FAQs by Product Tags ##
-
-Assign product tags to FAQs. It will minimize your time to connect FAQs with products.
 
 ## 👕 Variation Product FAQs (PRO FEATURE) ##
 
