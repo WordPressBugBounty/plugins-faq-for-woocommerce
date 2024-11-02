@@ -90,30 +90,48 @@ if( ! function_exists( 'ffw_get_product_faqs' ) ) {
             
             $faq_ids = array_unique($faq_ids);
 
-            $faq_lists = [];
+            $faq_list = ffw_get_faq_list_by_faq_ids($faq_ids);
 
-            if( isset($faq_ids) && is_array($faq_ids) ) {
-                $new_faq = [];
-                foreach ( $faq_ids as $post_id ) {
-
-                    // skip trash or draft FAQ posts
-                    $post_status = get_post_status($post_id);
-                    if( "publish" !== $post_status ) {
-                        continue;
-                    }
-
-                    // make faq data
-                    $new_faq['id']       = $post_id;
-                    $new_faq['question'] = get_the_title($post_id);
-                    $new_faq['answer']   = get_the_content(null, false, $post_id);
-                    array_push($faq_lists, $new_faq);
-                }
-            }
-
-            $faq_lists = ! empty($faq_lists) && is_array($faq_lists) ? $faq_lists : [];
-
-            return apply_filters('ffw_get_product_faqs_data', $faq_lists);
+            return $faq_list;
         }
+    }
+}
+
+/**
+ * Get FAQs list by faq ids.
+ * 
+ * @return array|void
+ */
+if( ! function_exists( 'ffw_get_faq_list_by_faq_ids' ) ) {
+    function ffw_get_faq_list_by_faq_ids($faq_ids) {
+
+        if(empty($faq_ids)) {
+            return;
+        }
+
+        $faq_lists = [];
+
+        if( isset($faq_ids) && is_array($faq_ids) ) {
+            $new_faq = [];
+            foreach ( $faq_ids as $post_id ) {
+
+                // skip trash or draft FAQ posts
+                $post_status = get_post_status($post_id);
+                if( "publish" !== $post_status ) {
+                    continue;
+                }
+
+                // make faq data
+                $new_faq['id']       = $post_id;
+                $new_faq['question'] = get_the_title($post_id);
+                $new_faq['answer']   = get_the_content(null, false, $post_id);
+                array_push($faq_lists, $new_faq);
+            }
+        }
+
+        $faq_lists = ! empty($faq_lists) && is_array($faq_lists) ? $faq_lists : [];
+
+        return apply_filters('ffw_get_product_faqs_data', $faq_lists);
     }
 }
 
@@ -262,8 +280,9 @@ if ( ! function_exists('ffw_show_template_shortcode') ) {
         $arguments['cat_ids']   = $cat_ids;
         $arguments['order_by']  = $atts['order_by'];
         $arguments['order']     = $atts['order'];
+        $arguments['template']     = $atts['template'];
 
-		return ffw_get_template($template, $product_id, $arguments, true);
+		return ffw_get_template($product_id, $arguments, true);
 	}
 }
 add_shortcode('ffw_template', 'ffw_show_template_shortcode');
@@ -271,24 +290,49 @@ add_shortcode('ffw_template', 'ffw_show_template_shortcode');
 /**
  * Get template to show in front.
  *
- * @param int $layout template number
- * @param int $id product id
+ * @param int $id product or archive id.
  *
  * @return void
  * @since  1.1.3
  *
  */
 if ( ! function_exists('ffw_get_template') ) {
-	function ffw_get_template( $layout, $id, $args, $is_shortcode = false ) {
+	function ffw_get_template( $id, $args, $is_shortcode = false ) {
 		$content = '';
+        $archive_type  = '';
+
+        //get layout.
+        $options = get_option( 'ffw_general_settings' );
+        $layout = isset( $options['ffw_layout'] ) ? (int) $options['ffw_layout'] : 1;
+
+        // get layout from shortcode.
+        if( $is_shortcode ) {
+            if( ( isset($args['template']) && ! empty($args['template']) ) ) {
+                $layout = (int) $args['template'];
+            }
+        }
 
         $shortcode_wrap_class = $is_shortcode ? ['ffw-main-wrapper-shortcode'] : [];
         if( ( isset($args['cat_ids']) && ! empty($args['cat_ids']) ) ) {
             $faqs = ffw_get_product_faqs_by_cat_ids_in_shortcode($args);
             $display_schema_type = 'shortcode';
-        }else {
+        } else {
+
             $faqs = ffw_get_product_faqs($id);
             $display_schema_type = 'product_page';
+
+            if( ffw_is_pro_activated() ) {
+                if( is_product_category() || is_product_tag() ) {
+                    $archive_type  = is_product_tag() ? 'product_tag' : 'product_category';
+
+                    $faqs = ffw_get_archive_faqs($id, $archive_type);
+                }
+            }
+        }
+
+        //skip, for empty faqs.
+        if(empty($faqs)) {
+            return;
         }
 
         $wrapper_classes = apply_filters('ffw_filter_template_wrapper_classes', ['ffw-main-wrapper'], $layout, $id);
@@ -301,7 +345,6 @@ if ( ! function_exists('ffw_get_template') ) {
         // Get registered option
         $options    = get_option( 'ffw_general_settings' );
         $width      = (isset($options['ffw_width']) && !empty($options['ffw_width'])) ? $options['ffw_width'] : '100';
-        $ffw_display_all_answers = isset( $options['ffw_display_all_faq_answers'] ) ? $options['ffw_display_all_faq_answers'] : "2";
 
         //init layout name
         $layout_name = '';
@@ -331,7 +374,7 @@ if ( ! function_exists('ffw_get_template') ) {
 
 		ob_start();
 
-		$content .= '<div style="width: '.$width.'%;max-width: 100%;" class="'. esc_attr($wrapper_classes) .'" id="ffw-main-wrapper" data-product_id="'. esc_attr($id) .'" data-layout="'. esc_attr($layout) .'" >';
+		$content .= '<div style="width: '.$width.'%;max-width: 100%;" class="'. esc_attr($wrapper_classes) .'" id="ffw-main-wrapper" data-item_id="'. esc_attr($id) .'" data-layout="'. esc_attr($layout) .'" data-archive_type="'. esc_attr($archive_type) .'" >';
 
         $content .= '<input type="hidden" id="ffw-hidden-faqs" value="' . base64_encode(wp_json_encode($faqs)) . '" />';
 
@@ -701,10 +744,10 @@ if( ! function_exists('ffw_post_init') ) {
 
 
         $labels = array(
-            'name'                  => _x( 'XPlainer FAQs', 'FAQ', 'faq-for-woocommerce' ),
+            'name'                  => _x( 'Happy FAQs', 'FAQ', 'faq-for-woocommerce' ),
             'singular_name'         => _x( 'FAQ', 'FAQ', 'faq-for-woocommerce' ),
-            'menu_name'             => _x( 'XPlainer', 'XPlainer', 'faq-for-woocommerce' ),
-            'name_admin_bar'        => _x( 'XPlainer', 'XPlainer', 'faq-for-woocommerce' ),
+            'menu_name'             => _x( 'Happy FAQs', 'Happy FAQs', 'faq-for-woocommerce' ),
+            'name_admin_bar'        => _x( 'Happy FAQs', 'Happy FAQs', 'faq-for-woocommerce' ),
             'add_new'               => esc_html__( 'Add New FAQ', 'faq-for-woocommerce' ),
             'add_new_item'          => esc_html__( 'Add New FAQ', 'faq-for-woocommerce' ),
             'new_item'              => esc_html__( 'New FAQ', 'faq-for-woocommerce' ),
@@ -982,7 +1025,7 @@ add_filter( 'wp_robots', 'ffw_page_indexing' );
  * @since 1.4.1
  */
 function ffw_get_settings_page_menu_title() {
-    return apply_filters('ffw_filter_settings_page_menu_title', esc_html__('XPlainer FAQ', 'faq-for-woocommerce'));
+    return apply_filters('ffw_filter_settings_page_menu_title', esc_html__('Happy WooCommerce FAQs', 'faq-for-woocommerce'));
 }
 
 /**

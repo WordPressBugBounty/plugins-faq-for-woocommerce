@@ -185,7 +185,7 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
         public function ffw_woocommerce_dependency_check() {
             $plugin_url = self_admin_url( 'plugin-install.php?s=woocommerce&tab=search&type=term' );
             $plugin_url  = sprintf( '<a href="%s">%s</a>', $plugin_url, esc_html__( 'WooCommerce', 'faq-for-woocommerce' ) );
-            $plugin_name = sprintf( '<code>%s</code>', esc_html__( 'XPlainer', 'faq-for-woocommerce' ) );
+            $plugin_name = sprintf( '<code>%s</code>', esc_html__( 'Happy FAQs', 'faq-for-woocommerce' ) );
             $wc_name     = sprintf( '<code>%s</code>', esc_html__( 'WooCommerce', 'faq-for-woocommerce' ) );
             $wcVersion  = defined( 'WC_VERSION' ) ? '<code>' . WC_VERSION . '</code>' : '<code>UNKNOWN</code>';
             $minVersion = '<code>' . FFW_MIN_WC_VERSION . '</code>';

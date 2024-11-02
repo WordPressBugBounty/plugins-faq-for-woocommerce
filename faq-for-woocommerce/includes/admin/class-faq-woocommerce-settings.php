@@ -68,10 +68,28 @@ class FAQ_Woocommerce_Settings {
                     'callback' => '',
                     'fields' => [
                         [
+                            'id' => 'ffw_tab_label',
+                            'label' => esc_html__( 'Tab Label', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_tab_label',
+                        ],
+                        [
                             'id' => 'ffw_display_location',
-                            'label' => esc_html__( 'Display Location', 'faq-for-woocommerce' ),
+                            'label' => esc_html__( 'Display Location (Single Product Page)', 'faq-for-woocommerce' ),
                             'region' => 'free',
                             'callback' => 'ffw_display_location',
+                        ],
+                        [
+                            'id' => 'ffw_enable_archive_pages_faqs',
+                            'label' => esc_html__( 'Enable FAQs in Archive', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_enable_archive_pages_faqs',
+                        ],
+                        [
+                            'id' => 'ffw_display_location_archive',
+                            'label' => esc_html__( 'Display Location (Archive Page)', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_display_location_archive',
                         ],
                         // [
                         //     'id' => 'ffw_display_condition',
@@ -79,12 +97,6 @@ class FAQ_Woocommerce_Settings {
                         //     'region' => 'free',
                         //     'callback' => 'ffw_display_condition',
                         // ],
-                        [
-                            'id' => 'ffw_tab_label',
-                            'label' => esc_html__( 'Tab Label', 'faq-for-woocommerce' ),
-                            'region' => 'free',
-                            'callback' => 'ffw_tab_label',
-                        ],
                         [
                             'id' => 'ffw_tab_priority',
                             'label' => esc_html__( 'Tab Priority', 'faq-for-woocommerce' ),
@@ -684,7 +696,7 @@ class FAQ_Woocommerce_Settings {
     }
 
     /**
-     * Display Location.
+     * Display Location for Product Pages.
      */
     function ffw_display_location() {
         $options = $this->options;
@@ -711,6 +723,59 @@ class FAQ_Woocommerce_Settings {
         </select>
         <?php
         echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display location of FAQs in product page, Where it should be displayed.', 'faq-for-woocommerce'));
+    }
+    
+    /**
+     * Display Location for Archieve Pages.
+     * 
+     * @return void
+     */
+    function ffw_display_location_archive() {
+        $options = $this->options;
+		$options = ! empty( $options ) ? $options : [];
+		$ffw_display_location_archive = isset( $options['ffw_display_location_archive'] ) ? $options['ffw_display_location_archive'] : "before_main_content";
+
+        if (!ffw_is_pro_activated()): ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <select class="ffw-display-all-answers" name='ffw_general_settings[ffw_display_location_archive]'>
+            <option value="before_main_content" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "before_main_content" ); ?>><?php esc_html_e('Before Main Content [Pro]', 'faq-for-woocommerce'); ?></option>
+            <option value="archive_description" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "archive_description" ); ?>><?php esc_html_e('Before Archive Description [Pro]', 'faq-for-woocommerce'); ?></option>
+            <option value="before_shop_loop" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "before_shop_loop" ); ?>><?php esc_html_e('Before Shop Loop [Pro]', 'faq-for-woocommerce'); ?></option>
+            <option value="after_shop_loop" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "after_shop_loop" ); ?>><?php esc_html_e('After Shop Loop [Pro]', 'faq-for-woocommerce'); ?></option>
+            <option value="after_main_content" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "after_main_content" ); ?>><?php esc_html_e('After Main Content [Pro]', 'faq-for-woocommerce'); ?></option>
+            
+        </select>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display location of FAQs in archive pages (product category & tag pages). Assign product categories or tags to the FAQs.', 'faq-for-woocommerce'));
+    }
+
+    /**
+     * Enable FAQs in Archive Page
+     *
+     * @since 1.7.6
+     */
+    function ffw_enable_archive_pages_faqs() {
+        ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-free-setting-switcher ffw-enable-archive-pages-faqs" checked="checked">
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable to display FAQs in Archive Pages (product categories, tags).', 'faq-for-woocommerce'));
     }
 
     /**
@@ -1570,7 +1635,7 @@ class FAQ_Woocommerce_Settings {
     function ffw_ai_faqs_max_token() {
         $val = ( isset( $this->options['ffw_ai_faqs_max_token'] ) ) ? $this->options['ffw_ai_faqs_max_token'] : 2000;
         echo '<input type="number" placeholder="Set Max Token" class="ffw-max-token" name="ffw_general_settings[ffw_ai_faqs_max_token]" value="'. esc_html($val) .'" />';
-        echo sprintf(wp_kses_post('<p class="ffw-setting-description"><span>&#9432;</span>FAQs will be generated based on the Token limit you have set. For more information, check out this <a href="%s">link</a>.</p>'), esc_url('https://optemiz.com'));
+        echo sprintf(wp_kses_post('<p class="ffw-setting-description"><span>&#9432;</span>FAQs will be generated based on the Token limit you have set. For more information, check out this <a href="%s">link</a>.</p>'), esc_url('https://happydevs.net'));
     }
 
     /**
@@ -1598,8 +1663,8 @@ class FAQ_Woocommerce_Settings {
                             </div>
                             <?php
                                 echo sprintf('<h3>%s</h3>', esc_html__("Be A PRO", "faq-for-woocommerce"));
-                                echo sprintf('<p>%s</p>', esc_html__("Grab the best features of XPlainer to increase your sell.", "faq-for-woocommerce"));
-                                echo sprintf('<a class="ffw-go-pro-modal-link" target="__blank" href="%2$s">%1$s</a>', esc_html__("Upgrade Now", "faq-for-woocommerce"), esc_url(FFW_PRO_URL));
+                                echo sprintf('<p>%s</p>', esc_html__("Grab the best features of Happy WooCommerce FAQs to increase your sell.", "faq-for-woocommerce"));
+                                echo sprintf('<a class="ffw-go-pro-modal-link ffw-primary-btn"" target="__blank" href="%2$s">%1$s</a>', esc_html__("Upgrade Now", "faq-for-woocommerce"), esc_url(FFW_PRO_URL));
                             ?>
                         </div>
                     </div>
@@ -1609,7 +1674,7 @@ class FAQ_Woocommerce_Settings {
             <form action='options.php' method='post'>
                 <?php
 
-                echo wp_kses_post(ffw_dashboard_header());
+                echo ffw_dashboard_header();
 
                 ?>
                 <div class="ffw-dashboard-body-section-wrapper">

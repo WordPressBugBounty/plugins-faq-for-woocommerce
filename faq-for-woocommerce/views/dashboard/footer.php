@@ -8,7 +8,7 @@
                 echo sprintf('<h2 class="ffw-logo-text">%s</h2>', esc_html(ffw_get_settings_page_menu_title()) );
             ?>   
         </div>
-            <p class="ffw-footer-contents"><?php esc_html_e("Elevate user experience with XPlainer: WordPress Product FAQ plugin. Build brand, enrich sells and make your customer happy.", "faq-for-woocommerce"); ?></p>
+            <p class="ffw-footer-contents"><?php esc_html_e("Elevate user experience with Happy WooCommerce FAQs: WordPress Product FAQ plugin. Build brand, enrich sells and make your customer happy.", "faq-for-woocommerce"); ?></p>
             <ul class="ffw-footer-menus">
                 <li><a class="ffw-footer-menu" href="<?php echo esc_url(FFW_DOC_URL); ?>"><?php esc_html_e("Docs", "faq-for-woocommerce"); ?></a></li>
                 <li><a class="ffw-footer-menu" href="<?php echo esc_url(FFW_SUPPORT_URL); ?>"><?php esc_html_e("Support", "faq-for-woocommerce"); ?></a></li>

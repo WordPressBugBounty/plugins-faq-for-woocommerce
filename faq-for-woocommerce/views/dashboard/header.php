@@ -15,7 +15,7 @@
                             $menu_title = ffw_get_settings_page_menu_title();
                             $plugin_version = apply_filters('ffw_show_settings_page_plugin_version', esc_html(FFW_VERSION));
                             echo sprintf('<h2 class="ffw-logo-text">%s<span class="ffw-version">V: %s</span></h2>', esc_html($menu_title), esc_html($plugin_version) );
-                            echo wp_kses_post( '<p>Easily create product FAQs to increase your sell</p>' );
+                            echo wp_kses_post( '<p>Easily create WooCommerce FAQs to increase your sell</p>' );
                         ?>
                     </div>   
                 </div>

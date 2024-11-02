@@ -161,7 +161,7 @@ function ffw_new_product_tab( $tabs ) {
             $tabs['ffw_faqs_tab'] = array(
                 'title'    => esc_html__( $tab_label, 'faq-for-woocommerce' ),
                 'priority' => apply_filters('ffw_tab_priority', $priority),
-                'callback' => 'ffw_display_faqs',
+                'callback' => 'ffw_display_faqs_in_product_pages',
             );
         }
 
@@ -174,19 +174,54 @@ function ffw_new_product_tab( $tabs ) {
 }
 
 /**
- * Display FAQs
+ * Display FAQs in Product pages.
  *
  * @return void
  */
-function ffw_display_faqs() {
+function ffw_display_faqs_in_product_pages() {
 	global $product;
 	$id = $product->get_id();
 
-	//get layout
-	$options = get_option( 'ffw_general_settings' );
-	$layout = isset( $options['ffw_layout'] ) ? (int) $options['ffw_layout'] : 1;
+	$content = ffw_get_template($id, false);
 
-	$content = ffw_get_template($layout, $id, false);
+    echo $content;
+}
+
+/**
+ * Display FAQs in Archive pages.
+ *
+ * @return void
+ */
+function ffw_display_faqs_in_archive_pages() {
+
+    $is_archive = false;
+    if( is_product_category() ) {
+        $is_archive = true;
+    }elseif( is_product_tag() ) {
+        $is_archive = true;
+    }
+
+    //skip, if current page is not product archive page.
+    if( ! $is_archive ) {
+        return;
+    }
+
+	//get option.
+	$options = get_option( 'ffw_general_settings' );
+
+    //skip, when archive pages is not enabled.
+    if(!isset($options['enable_archive_pages_faqs'])) {
+        return;
+    }
+
+    $term = get_queried_object();
+
+    //skip, when term not exists.
+    if(empty($term) || !property_exists($term, 'term_id')) {
+        return;
+    }
+
+	$content = ffw_get_template($term->term_id, false);
 
     echo $content;
 }

@@ -8,14 +8,13 @@
     font-family: 'Inter', sans-serif;
     
     .ffw-primary-btn{
+        background-color: var(--success-dark);
+        color: var(--primary-backgraund) !important;
         padding: 12px 16px;
-        background-color: var(--success-lite);
         border-radius: 4px;
-        color: var(--success-dark);
         transition: .2s ease-in-out;
         &:hover{
-            background-color: var(--success-lite-hover);
-            color: var(--neutral-white);
+            background-color: var(--success-dark-lite);
         }
     }
 

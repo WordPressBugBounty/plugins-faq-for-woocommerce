@@ -1,12 +1,18 @@
 :root{
-    --primary-backgraund: #6009a9;
-    --purple-lite: #901FEF;
+    --primary-backgraund-purple: #6009a9;
+    --purple-lite-backup: #901FEF;
+    --primary-backgraund: #202020;
+    --secondary-black-backgraund: #18181b;
+    --blue-lite: #222222;
+    --blue-dark: #2771b1;
+    --blue-soft: #f4f5ff;
     --secondary-backgraund: #F4F5FF;
     --secondary-backgraund-dark:#cfcfdb;
     --neutral-white: #ffffff;
     --heading-color: #1E242D;
     --primary-text-color: #636E7E;
-    --success-dark: #166534;
+    --success-dark: #ffd54d;
+    --success-dark-lite: #fbde53;
     --success-lite: #BBF7D0;
     --success-lite-hover: #6fe398;
     --green: #22C55E;
@@ -14,7 +20,8 @@
 }
 
 /* Themes Styles */
-$base_color: #7b2dd9;
+$base_color: #222222;
+$base_color_purple: #7b2dd9;
 $background_color: #f4f5ff;
 $pro_badge_bg: #fff3f3;
 $pro_badge_color: #ee5253;

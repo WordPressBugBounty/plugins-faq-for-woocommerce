@@ -49,7 +49,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
             if ( in_array( $post_type, $post_types ) ) {
                 add_meta_box(
                     'ffw_faq_meta_settings',
-                    esc_html__( 'XPlainer FAQ Panel', 'faq-for-woocommerce' ),
+                    esc_html__( 'Happy FAQs Panel', 'faq-for-woocommerce' ),
                     array( $this, 'meta_box_content' ),
                     $post_type,
                     'normal',

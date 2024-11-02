@@ -26,6 +26,7 @@ class FFW_Admin_Notices {
      */
     public function __construct() {
         add_action( 'admin_notices', [$this, 'review_notice'] );
+        add_action( 'admin_notices', [$this, 'rebranding_notice'] );
         //add_action( 'admin_notices', [$this, 'discount_banner_notice'] );
         add_action( 'wp_ajax_ffw_save_review_notice', [ $this, 'ffw_save_review_notice' ] );
         add_action( 'wp_ajax_ffw_hide_notice', [ $this, 'ffw_hide_notice' ] );
@@ -54,6 +55,19 @@ class FFW_Admin_Notices {
         </div>
         <?php
     }
+    
+    /**
+     * Rebranding notice.
+     * 
+     * @return void
+     */
+    public function rebranding_notice() {
+        ?>
+        <div class="notice notice-success is-dismissible" style="background: #0A0A0A;border-left-color: #fff;padding: 10px 50px;">
+            <p style="color: #fff;font-size: 18px;margin:0;"><?php _e('<strong style="color: #fff;text-decoration: line-through;">XPlainer Product FAQs</strong> is rebranded to <strong style="color: #fdfc1e;">`Happy WooCommerce FAQs`</strong>. <a href="https://happydevs.net/happy-woocommerce-faqs-pro" style="color: #bbf7d0;">Get <strong>20% discount</strong></a> on rebranding, Coupon: <strong style="color: #fdfc1e;">"IMHAPPY"</strong>.', 'faq-for-woocommerce'); ?></p>
+        </div>
+        <?php
+    }
 
     /**
      * Display review notice
@@ -63,7 +77,7 @@ class FFW_Admin_Notices {
     public function review_notice() {
         global $plugin_page;
         $nonce         = wp_create_nonce( 'ffw_admin' );
-        $pluginName    = sprintf( '<b>%s</b>', esc_html__( 'XPlainer - Product FAQ for WooCommerce', 'faq-for-woocommerce' ) );
+        $pluginName    = sprintf( '<b>%s</b>', esc_html__( 'Happy WooCommerce FAQs', 'faq-for-woocommerce' ) );
         $has_notice    = false;
         $user_id       = get_current_user_id();
 

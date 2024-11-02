@@ -19,7 +19,7 @@
                         <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/rating.png'); ?>" alt="">
                     </div>
                     <div class="ffw-testimonial-text-wrapper">
-                        <p class="ffw-testimonial-text"><span>XPlainer</span> transformed our customer support game. With their FAQ plugin, our clients can find answers to their questions instantly. Our workload reduced, and the analytics helped us improve the user experience. <span class="ffw-text-bolds">A real game-changer!</span></p>
+                        <p class="ffw-testimonial-text"><span>Happy WooCommerce FAQs</span> transformed our customer support game. With their FAQ plugin, our clients can find answers to their questions instantly. Our workload reduced, and the analytics helped us improve the user experience. <span class="ffw-text-bolds">A real game-changer!</span></p>
                     </div>
                     <div class="ffw-profile-photo">
                         <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/reviewer-avatar.png'); ?>" alt="">
@@ -42,8 +42,8 @@
             </div>
             <div class="ffw-free-vs-pro-section-wrapper">
                 <div class="ffw-free-vs-pro-section">
-                    <h3 class="ffw-free-vs-pro-heading"><?php esc_html_e("XPlainer Free vs Pro", "faq-for-woocommerce"); ?></h3>
-                    <p class="ffw-free-vs-pro-sub-heading"><?php esc_html_e("Get the most out of XPlainer FAQ by upgrading to Pro and unlocking all of the powerful features.", "faq-for-woocommerce"); ?></p>
+                    <h3 class="ffw-free-vs-pro-heading"><?php esc_html_e("Happy WooCommerce FAQs Free vs Pro", "faq-for-woocommerce"); ?></h3>
+                    <p class="ffw-free-vs-pro-sub-heading"><?php esc_html_e("Get the most out of Happy WooCommerce FAQs by upgrading to Pro and unlocking all of the powerful features.", "faq-for-woocommerce"); ?></p>
 
                     <table class="ffw-free-vs-pro-table">
                         <tr>
@@ -209,8 +209,20 @@
                         </tr>
                         <tr>
                             <td>
-                                <p><?php esc_html_e("Display Location", "faq-for-woocommerce"); ?></p>
+                                <p><?php esc_html_e("Display in Product Pages", "faq-for-woocommerce"); ?></p>
                                 <p><?php esc_html_e("Let's display faqs anywhere in the product page. You may like to show the faqs after `add to cart button` or `social share button`, `top of the page`, `bottom of the page` etc.", "faq-for-woocommerce"); ?></p>
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/cancel.png'); ?>">
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><?php esc_html_e("Display in Product Archive Pages (Category & Tag)", "faq-for-woocommerce"); ?></p>
+                                <p><?php esc_html_e("You may have some FAQs to show in product category or tags pages. Premium version cover it nicely.", "faq-for-woocommerce"); ?></p>
                             </td>
                             <td>
                                 <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/cancel.png'); ?>">
@@ -298,7 +310,8 @@
                 <ul class="ffw-why-pro-features">
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Variation Product FAQs", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Beautiful FAQs Templates", "faq-for-woocommerce"); ?></span></li>
-                    <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display Location", "faq-for-woocommerce"); ?></span></li>
+                    <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display in Product Pages", "faq-for-woocommerce"); ?></span></li>
+                    <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display in Archive Pages", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Dynamic Product Attributes", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Global FAQs", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("RTL Support", "faq-for-woocommerce"); ?></span></li>
@@ -312,25 +325,25 @@
             </div>
 
             <div class="ffw-other-plugin-section-wrapper">
-                <h3 class="ffw-other-plugin-heading">Other Plugins by Optemiz</h3>
+                <h3 class="ffw-other-plugin-heading"><?php esc_html_e('Other Plugins by HappyDevs', 'faq-for-woocommerce'); ?></h3>
                 <div class="ffw-other-plugin-item">
                     <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/patternly.png'); ?>" alt="">
                     <div class="ffw-other-plugin-contents">
-                        <h4 class="ffw-other-plugin-content-heading"><a href="https://wordpress.org/plugins/patternly">Patternly</a></h4>
-                        <p class="ffw-other-plugin-content-para">Patternly is Gutenberg templates library for quickly creating professional websites</p>
+                        <h4 class="ffw-other-plugin-content-heading"><a href="https://wordpress.org/plugins/patternly"><?php esc_html_e('Patternly', 'faq-for-woocommerce'); ?></a></h4>
+                        <p class="ffw-other-plugin-content-para"><?php esc_html_e('Patternly is Gutenberg templates library for quickly creating professional websites', 'faq-for-woocommerce'); ?></p>
                     </div>
                 </div>
                 <div class="ffw-other-plugin-item">
                     <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/temptool.png'); ?>" alt="">
                     <div class="ffw-other-plugin-contents">
-                        <h4 class="ffw-other-plugin-content-heading"><a href="https://wordpress.org/plugins/current-template-name">TempTool</a></h4>
-                        <p class="ffw-other-plugin-content-para">TempTool shows your current template file information</p>
+                        <h4 class="ffw-other-plugin-content-heading"><a href="https://wordpress.org/plugins/current-template-name"><?php esc_html_e('Pagely', 'faq-for-woocommerce'); ?></a></h4>
+                        <p class="ffw-other-plugin-content-para"><?php esc_html_e('Pagely shows your current template file information', 'faq-for-woocommerce'); ?></p>
                     </div>
                 </div>
             </div>
 
             <div class="ffw-free-xplainer-wrapper">
-                <h3 class="ffw-free-xplainer">Free XPlainer features</h3>
+                <h3 class="ffw-free-xplainer">Free features</h3>
                 <ul class="ffw-free-xplainer-features">
                     <li class="ffw-free-xplainer-features-content"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done-purple.png'); ?>" alt=""><span><?php esc_html_e("Unlimited FAQs", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-free-xplainer-features-content"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done-purple.png'); ?>" alt=""><span><?php esc_html_e("FAQs by Product Categories", "faq-for-woocommerce"); ?></span></li>

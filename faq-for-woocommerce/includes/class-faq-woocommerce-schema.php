@@ -76,13 +76,7 @@ class FAQ_Woocommerce_Schema {
      */
     public function display_schema() {
         if( $this->schema_enable && !empty($this->faqs) && !empty($this->disply_type) ) {
-            if( "shortcode" === $this->disply_type ) {
-                $this->process_faqs_schema($this->faqs, $this->disply_type);
-            }else {
-                if( is_product() ) {
-                    $this->process_faqs_schema($this->faqs, $this->disply_type);
-                }
-            }
+            $this->process_faqs_schema($this->faqs, $this->disply_type);
         }
     }
 
@@ -121,7 +115,7 @@ class FAQ_Woocommerce_Schema {
 
         if( !empty($faq_lists) ) {
             ?>
-            <!-- faq schema by XPlainer - FAQ for Woocommerce -->
+            <!-- faq schema by Happy WooCommerce FAQs - FAQ for Woocommerce -->
             <script type="application/ld+json">
                 <?php
                 $markup["@context"]     = "https://schema.org";

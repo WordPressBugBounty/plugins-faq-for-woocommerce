@@ -6,7 +6,7 @@
  * @package  FAQ_Woocommerce\Admin\Menu
  * @version  1.0.0
  *
- * @link    https://optemiz.com/
+ * @link    https://happydevs.net/
  * @since   1.0.0
  */
 

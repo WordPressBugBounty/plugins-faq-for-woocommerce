@@ -24,7 +24,7 @@ class FAQ_Woocommerce_Admin {
         add_action( 'init', array( $this, 'shutdown' ));
         add_filter( 'plugin_action_links_' . FFW_BASENAME,  array( $this, 'ffw_plugin_action_links' ) );
 
-        //add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
+        add_filter( 'admin_footer', array( $this, 'admin_styles' ), 1 );
         //add_filter( 'update_footer', array( $this, 'admin_footer_version'), '', 9999 );
     }
 
@@ -62,20 +62,19 @@ class FAQ_Woocommerce_Admin {
     }
 
     /**
-     * Change the admin footer text on woocommerce-faq admin pages.
+     * Admin custom styles.
      *
-     * @since  1.0.0
-     * @param  string $footer_text text to be rendered in the footer.
+     * @since  1.7.6
      * @return string
      */
-    public function admin_footer_text( $footer_text ) {
-        if ( ! current_user_can( 'manage_woocommerce' ) || ! function_exists( 'wc_get_screen_ids' ) ) {
-            return $footer_text;
-        }
-
-        $footer_text = esc_html__( 'Thank you for using XPlainer – Product FAQ for WooCommerce.', 'faq-for-woocommerce' );
-
-        return $footer_text;
+    public function admin_styles() {
+        ?>
+        <style>
+            .menu-icon-ffw .wp-menu-image:before {
+                color: #fdfc1e !important;
+            }
+        </style>
+        <?php
     }
 
 
@@ -88,7 +87,7 @@ class FAQ_Woocommerce_Admin {
      */
     public function ffw_plugin_action_links($links) {
         $links = array_merge( array(
-            '<a href="' . esc_url( 'https://optemiz.com/docs/faq-for-woocommerce/' ) . '">' . esc_html__( 'Documentation', 'faq-for-woocommerce' ) . '</a>'
+            '<a href="' . esc_url( 'https://happydevs.net/docs/faq-for-woocommerce/' ) . '">' . esc_html__( 'Documentation', 'faq-for-woocommerce' ) . '</a>'
         ), $links );
 
         return $links;

@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: XPlainer - Product FAQs for WooCommerce
+ * Plugin Name: Happy WooCommerce FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
  * Description: This plugin shows faqs question and answers for woocommerce products with comment, FAQ schema and AI support.
- * Version: 1.7.5
- * Author: Optemiz
- * Author URI: https://optemiz.com/
+ * Version: 1.7.6
+ * Author: HappyDevs
+ * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
  * Domain Path: /i18n/languages/
  *
@@ -29,7 +29,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '1.7.5' );
+	define( 'FFW_VERSION', '1.7.6' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {
@@ -53,7 +53,7 @@ if ( ! defined( 'FFW_FILTERED_PLUGIN_URL' ) ) {
 }
 
 if ( ! defined( 'FFW_PRO_URL' ) ) {
-    define( 'FFW_PRO_URL', "https://optemiz.com/xplainer" );
+    define( 'FFW_PRO_URL', "https://happydevs.net/happy-woocommerce-faqs-pro" );
 }
 
 if ( ! defined( 'FFW_FREE_URL' ) ) {
@@ -61,7 +61,7 @@ if ( ! defined( 'FFW_FREE_URL' ) ) {
 }
 
 if ( ! defined( 'FFW_SITE_URL' ) ) {
-    define( 'FFW_SITE_URL', 'https://optemiz.com' );
+    define( 'FFW_SITE_URL', 'https://happydevs.net' );
 }
 
 if ( ! defined( 'FFW_REVIEW_URL' ) ) {
@@ -69,7 +69,7 @@ if ( ! defined( 'FFW_REVIEW_URL' ) ) {
 }
 
 if ( ! defined( 'FFW_DOC_URL' ) ) {
-    define( 'FFW_DOC_URL', 'https://optemiz.com/docs/faq-for-woocommerce/' );
+    define( 'FFW_DOC_URL', 'https://happydevs.net/docs/faq-for-woocommerce/' );
 }
 
 if ( ! defined( 'FFW_REVIEW_REQUEST_URL' ) ) {
@@ -81,7 +81,7 @@ if ( ! defined( 'FFW_VIDEOS_URL' ) ) {
 }
 
 if ( ! defined( 'FFW_SUPPORT_URL' ) ) {
-    define( 'FFW_SUPPORT_URL', apply_filters("ffw_filter_support_url", 'https://optemiz.com/submit-ticket') );
+    define( 'FFW_SUPPORT_URL', apply_filters("ffw_filter_support_url", 'https://happydevs.net/support') );
 }
 
 if ( ! defined( 'FFW_FACEBOOK_URL' ) ) {
@@ -89,7 +89,7 @@ if ( ! defined( 'FFW_FACEBOOK_URL' ) ) {
 }
 
 if ( ! defined( 'FFW_LINKEDIN_URL' ) ) {
-    define( 'FFW_LINKEDIN_URL', 'https://www.linkedin.com/company/optemiz/' );
+    define( 'FFW_LINKEDIN_URL', 'https://www.linkedin.com/company/happydevsteam/' );
 }
 
 if ( ! defined( 'FFW_MIN_WC_VERSION' ) ) {
@@ -116,13 +116,13 @@ include_once FFW_FILE_DIR . '/includes/class-faq-woocommerce.php';
  */
 function appsero_init_tracker_faq_for_woocommerce() {
 
-    $client = new Appsero\Client( 'c989292b-3c3e-454a-a216-cc0df37fb6d9', 'XPlainer – Product FAQ for WooCommerce', __FILE__ );
+    $client = new Appsero\Client( 'c989292b-3c3e-454a-a216-cc0df37fb6d9', 'Happy WooCommerce FAQs', __FILE__ );
 
     // Active insights
     $client->insights()->init();
 
     $opt_tracker             = new Optemiz\PluginTracker\Tracker();
-    $opt_tracker->api_url    = 'https://optemiz.com';
+    $opt_tracker->api_url    = 'https://happydevs.net';
     $opt_tracker->slug       = 'faq-for-woocommerce';
     $opt_tracker->plugin_base_path = 'faq-for-woocommerce/faq-for-woocommerce.php';
     
