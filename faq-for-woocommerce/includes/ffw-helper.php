@@ -330,91 +330,12 @@ if ( ! function_exists('ffw_get_template') ) {
             }
         }
 
-        //skip, for empty faqs.
-        if(empty($faqs)) {
-            return;
-        }
-
-        $wrapper_classes = apply_filters('ffw_filter_template_wrapper_classes', ['ffw-main-wrapper'], $layout, $id);
-        $wrapper_classes = array_merge($wrapper_classes, $shortcode_wrap_class);
-        $wrapper_classes = implode(' ', $wrapper_classes);
-
-        //faq schema
-        new FAQ_Woocommerce_Schema($faqs, $display_schema_type);
-
-        // Get registered option
-        $options    = get_option( 'ffw_general_settings' );
-        $width      = (isset($options['ffw_width']) && !empty($options['ffw_width'])) ? $options['ffw_width'] : '100';
-
-        //init layout name
-        $layout_name = '';
-
-        // enqueue template CSS.
-		if ( 1 === $layout ) {
-            $layout_name = "ffw-classic-layout";
-			wp_enqueue_style( 'ffw_classic_styles' );
-		}elseif ( 2 === $layout ) {
-            $layout_name = "ffw-whitish-layout";
-			wp_enqueue_style( 'ffw_whitish_styles' );
-		}elseif ( 3 === $layout ) {
-            $layout_name = "ffw-trip-layout";
-			wp_enqueue_style( 'ffw_trip_styles' );
-		}elseif ( 4 === $layout ) {
-            $layout_name = "ffw-pop-layout";
-			wp_enqueue_style( 'ffw_pop_styles' );
-		}elseif ( 5 === $layout ) {
-            $layout_name = "ffw-basic-layout";
-			wp_enqueue_style( 'ffw_basic_styles' );
-		}
-
-        do_action('ffw_enqueue_templates_styles', $layout);
-
-		// general styles
-        wp_enqueue_style( 'ffw_public_styles' );
-
-		ob_start();
-
-		$content .= '<div style="width: '.$width.'%;max-width: 100%;" class="'. esc_attr($wrapper_classes) .'" id="ffw-main-wrapper" data-item_id="'. esc_attr($id) .'" data-layout="'. esc_attr($layout) .'" data-archive_type="'. esc_attr($archive_type) .'" >';
-
-        $content .= '<input type="hidden" id="ffw-hidden-faqs" value="' . base64_encode(wp_json_encode($faqs)) . '" />';
-
-        do_action('ffw_search_input');
-
-		do_action('ffw_before_faq_start');
-
-        do_action('ffw_expand_collapse_all');
-
-        $ffw_wrapper_classes = ['ffw-wrapper', $layout_name];
-
-        if( 3 === $layout ) {
-            $ffw_wrapper_classes = array_merge($ffw_wrapper_classes, ['ffw-trip-wrapper']);
-        }elseif ( 4 === $layout ) {
-            $ffw_wrapper_classes = array_merge($ffw_wrapper_classes, ['ffw-pop-wrapper']);
-        }
-
-        $ffw_wrapper_classes = apply_filters("ffw_filter_layout_wrapper_classes", $ffw_wrapper_classes, $layout);
-        $ffw_wrapper_classes = implode(' ', $ffw_wrapper_classes);
-
-		//get faq templates
-		if ( 1 === $layout || 2 === $layout ) {
-			include FFW_FILE_DIR . '/views/ffw-classic-template.php';
-		} elseif ( 3 === $layout ) {
-			include FFW_FILE_DIR . '/views/ffw-trip-template.php';
-		} elseif ( 4 === $layout ) {
-			include FFW_FILE_DIR . '/views/ffw-pop-template.php';
-		} elseif ( 5 === $layout ) {
-			include FFW_FILE_DIR . '/views/ffw-basic-template.php';
-		}
-
-        do_action('ffw_includes_templates_file', $layout, $faqs, $id);
-
-		echo '<br>';
-
-		do_action('ffw_after_faq_end');
-
-		$content .= ob_get_clean();
-
-		return $content . '</div>';
+        $args = [];
+        $args['id'] = $id;
+        $args['layout'] = $layout;
+        $args['shortcode_wrap_class'] = $shortcode_wrap_class;
+        $args['display_schema_type'] = $display_schema_type;
+        echo ffw_get_template_by_faqs($faqs, $args);
 	}
 }
 
@@ -494,6 +415,110 @@ if ( ! function_exists('ffw_get_layout') ) {
 
 		return $content;
 	}
+}
+
+if( ! function_exists('ffw_get_template_by_faqs') ) {
+    function ffw_get_template_by_faqs($faqs, $args = []) {
+        //skip, for empty faqs.
+        if(empty($faqs)) {
+            return;
+        }
+
+        $content = '';
+        $archive_type  = '';
+
+        $id = isset($args['id']) ? $args['id'] : '';
+        $layout = isset($args['layout']) ? $args['layout'] : '';
+        $shortcode_wrap_class = isset($args['shortcode_wrap_class']) ? $args['shortcode_wrap_class'] : [];
+        $display_schema_type = isset($args['display_schema_type']) ? $args['display_schema_type'] : 'product_page';
+
+        if( empty($layout) ) {
+            //get layout.
+            $options = get_option( 'ffw_general_settings' );
+            $layout = isset( $options['ffw_layout'] ) ? (int) $options['ffw_layout'] : 1;
+        }
+
+        $wrapper_classes = apply_filters('ffw_filter_template_wrapper_classes', ['ffw-main-wrapper'], $layout, $id);
+        $wrapper_classes = array_merge($wrapper_classes, $shortcode_wrap_class);
+        $wrapper_classes = implode(' ', $wrapper_classes);
+
+        //faq schema.
+        new FAQ_Woocommerce_Schema($faqs, $display_schema_type);
+
+        // Get registered option
+        $options    = get_option( 'ffw_general_settings' );
+        $width      = (isset($options['ffw_width']) && !empty($options['ffw_width'])) ? $options['ffw_width'] : '100';
+
+        //init layout name
+        $layout_name = '';
+
+        // enqueue template CSS.
+        if ( 1 === $layout ) {
+            $layout_name = "ffw-classic-layout";
+            wp_enqueue_style( 'ffw_classic_styles' );
+        }elseif ( 2 === $layout ) {
+            $layout_name = "ffw-whitish-layout";
+            wp_enqueue_style( 'ffw_whitish_styles' );
+        }elseif ( 3 === $layout ) {
+            $layout_name = "ffw-trip-layout";
+            wp_enqueue_style( 'ffw_trip_styles' );
+        }elseif ( 4 === $layout ) {
+            $layout_name = "ffw-pop-layout";
+            wp_enqueue_style( 'ffw_pop_styles' );
+        }elseif ( 5 === $layout ) {
+            $layout_name = "ffw-basic-layout";
+            wp_enqueue_style( 'ffw_basic_styles' );
+        }
+
+        do_action('ffw_enqueue_templates_styles', $layout);
+
+        // general styles
+        wp_enqueue_style( 'ffw_public_styles' );
+
+        ob_start();
+
+        $content .= '<div style="width: '.$width.'%;max-width: 100%;" class="'. esc_attr($wrapper_classes) .'" id="ffw-main-wrapper" data-item_id="'. esc_attr($id) .'" data-layout="'. esc_attr($layout) .'" data-archive_type="'. esc_attr($archive_type) .'" >';
+
+        $content .= '<input type="hidden" id="ffw-hidden-faqs" value="' . base64_encode(wp_json_encode($faqs)) . '" />';
+
+        do_action('ffw_search_input');
+
+        do_action('ffw_before_faq_start');
+
+        do_action('ffw_expand_collapse_all');
+
+        $ffw_wrapper_classes = ['ffw-wrapper', $layout_name];
+
+        if( 3 === $layout ) {
+            $ffw_wrapper_classes = array_merge($ffw_wrapper_classes, ['ffw-trip-wrapper']);
+        }elseif ( 4 === $layout ) {
+            $ffw_wrapper_classes = array_merge($ffw_wrapper_classes, ['ffw-pop-wrapper']);
+        }
+
+        $ffw_wrapper_classes = apply_filters("ffw_filter_layout_wrapper_classes", $ffw_wrapper_classes, $layout);
+        $ffw_wrapper_classes = implode(' ', $ffw_wrapper_classes);
+
+        //get faq templates
+        if ( 1 === $layout || 2 === $layout ) {
+            include FFW_FILE_DIR . '/views/ffw-classic-template.php';
+        } elseif ( 3 === $layout ) {
+            include FFW_FILE_DIR . '/views/ffw-trip-template.php';
+        } elseif ( 4 === $layout ) {
+            include FFW_FILE_DIR . '/views/ffw-pop-template.php';
+        } elseif ( 5 === $layout ) {
+            include FFW_FILE_DIR . '/views/ffw-basic-template.php';
+        }
+
+        do_action('ffw_includes_templates_file', $layout, $faqs, $id);
+
+        echo '<br>';
+
+        do_action('ffw_after_faq_end');
+
+        $content .= ob_get_clean();
+
+        return $content . '</div>';
+    }
 }
 
 /**

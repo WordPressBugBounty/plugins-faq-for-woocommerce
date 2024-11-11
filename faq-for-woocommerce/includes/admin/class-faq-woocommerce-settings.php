@@ -91,6 +91,42 @@ class FAQ_Woocommerce_Settings {
                             'region' => 'free',
                             'callback' => 'ffw_display_location_archive',
                         ],
+                        [
+                            'id' => 'ffw_enable_shop_page_faqs',
+                            'label' => esc_html__( 'Enable FAQs in Shop', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_enable_shop_page_faqs',
+                        ],
+                        [
+                            'id' => 'ffw_display_location_shop',
+                            'label' => esc_html__( 'Display Location (Shop Page)', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_display_location_shop',
+                        ],
+                        [
+                            'id' => 'ffw_enable_cart_page_faqs',
+                            'label' => esc_html__( 'Enable FAQs in Cart', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_enable_cart_page_faqs',
+                        ],
+                        [
+                            'id' => 'ffw_display_location_cart',
+                            'label' => esc_html__( 'Display Location (Cart Page)', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_display_location_cart',
+                        ],
+                        [
+                            'id' => 'ffw_enable_checkout_page_faqs',
+                            'label' => esc_html__( 'Enable FAQs in Checkout', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_enable_checkout_page_faqs',
+                        ],
+                        [
+                            'id' => 'ffw_display_location_checkout',
+                            'label' => esc_html__( 'Display Location (Checkout Page)', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_display_location_checkout',
+                        ],
                         // [
                         //     'id' => 'ffw_display_condition',
                         //     'label' => esc_html__( 'Display Condition', 'faq-for-woocommerce' ),
@@ -724,37 +760,6 @@ class FAQ_Woocommerce_Settings {
         <?php
         echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display location of FAQs in product page, Where it should be displayed.', 'faq-for-woocommerce'));
     }
-    
-    /**
-     * Display Location for Archieve Pages.
-     * 
-     * @return void
-     */
-    function ffw_display_location_archive() {
-        $options = $this->options;
-		$options = ! empty( $options ) ? $options : [];
-		$ffw_display_location_archive = isset( $options['ffw_display_location_archive'] ) ? $options['ffw_display_location_archive'] : "before_main_content";
-
-        if (!ffw_is_pro_activated()): ?>
-        <div class="ffw-get-pro-wrapper">
-            <div class="ffw-get-pro-badge">
-                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
-                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
-            </div>
-        </div>
-        <?php endif; ?>
-
-        <select class="ffw-display-all-answers" name='ffw_general_settings[ffw_display_location_archive]'>
-            <option value="before_main_content" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "before_main_content" ); ?>><?php esc_html_e('Before Main Content [Pro]', 'faq-for-woocommerce'); ?></option>
-            <option value="archive_description" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "archive_description" ); ?>><?php esc_html_e('Before Archive Description [Pro]', 'faq-for-woocommerce'); ?></option>
-            <option value="before_shop_loop" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "before_shop_loop" ); ?>><?php esc_html_e('Before Shop Loop [Pro]', 'faq-for-woocommerce'); ?></option>
-            <option value="after_shop_loop" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "after_shop_loop" ); ?>><?php esc_html_e('After Shop Loop [Pro]', 'faq-for-woocommerce'); ?></option>
-            <option value="after_main_content" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "after_main_content" ); ?>><?php esc_html_e('After Main Content [Pro]', 'faq-for-woocommerce'); ?></option>
-            
-        </select>
-        <?php
-        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display location of FAQs in archive pages (product category & tag pages). Assign product categories or tags to the FAQs.', 'faq-for-woocommerce'));
-    }
 
     /**
      * Enable FAQs in Archive Page
@@ -777,6 +782,213 @@ class FAQ_Woocommerce_Settings {
         <?php
         echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable to display FAQs in Archive Pages (product categories, tags).', 'faq-for-woocommerce'));
     }
+    
+    /**
+     * Display Location for Archieve Pages.
+     * 
+     * @return void
+     */
+    function ffw_display_location_archive() {
+        $options = $this->options;
+		$options = ! empty( $options ) ? $options : [];
+		$ffw_display_location_archive = isset( $options['ffw_display_location_archive'] ) ? $options['ffw_display_location_archive'] : "before_main_content";
+
+        if (!ffw_is_pro_activated()): ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <select class="ffw-display-all-answers" name='ffw_general_settings[ffw_display_location_archive]'>
+            <option value="before_main_content" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "before_main_content" ); ?>><?php esc_html_e('Before Main Content', 'faq-for-woocommerce'); ?></option>
+            <option value="archive_description" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "archive_description" ); ?>><?php esc_html_e('Before Archive Description', 'faq-for-woocommerce'); ?></option>
+            <option value="before_shop_loop" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "before_shop_loop" ); ?>><?php esc_html_e('Before Shop Loop', 'faq-for-woocommerce'); ?></option>
+            <option value="after_shop_loop" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "after_shop_loop" ); ?>><?php esc_html_e('After Shop Loop', 'faq-for-woocommerce'); ?></option>
+            <option value="after_main_content" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_archive, "after_main_content" ); ?>><?php esc_html_e('After Main Content', 'faq-for-woocommerce'); ?></option>
+        </select>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display location of FAQs in archive pages (product category & tag pages). Assign product categories or tags to the FAQs.', 'faq-for-woocommerce'));
+    }
+    
+    /**
+     * Enable FAQs in Shop Page
+     *
+     * @since 1.7.7
+     */
+    function ffw_enable_shop_page_faqs() {
+        ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-free-setting-switcher ffw-enable-shop-page-faqs" checked="checked">
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable to display FAQs in Shop Page.', 'faq-for-woocommerce'));
+    }
+    
+    /**
+     * Display Location for Shop Page.
+     * 
+     * @since 1.7.7
+     * @return void
+     */
+    function ffw_display_location_shop() {
+        $options = $this->options;
+		$options = ! empty( $options ) ? $options : [];
+		$ffw_display_location_shop = isset( $options['ffw_display_location_shop'] ) ? $options['ffw_display_location_shop'] : "before_main_content";
+
+        if (!ffw_is_pro_activated()): ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <select class="ffw-display-all-answers" name='ffw_general_settings[ffw_display_location_shop]'>
+            <option value="before_main_content" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_shop, "before_main_content" ); ?>><?php esc_html_e('Before Main Content', 'faq-for-woocommerce'); ?></option>
+            <option value="archive_description" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_shop, "archive_description" ); ?>><?php esc_html_e('Before Archive Description', 'faq-for-woocommerce'); ?></option>
+            <option value="before_shop_loop" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_shop, "before_shop_loop" ); ?>><?php esc_html_e('Before Shop Loop', 'faq-for-woocommerce'); ?></option>
+            <option value="after_shop_loop" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_shop, "after_shop_loop" ); ?>><?php esc_html_e('After Shop Loop', 'faq-for-woocommerce'); ?></option>
+            <option value="after_main_content" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_shop, "after_main_content" ); ?>><?php esc_html_e('After Main Content', 'faq-for-woocommerce'); ?></option>
+        </select>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display location of FAQs in shop page. Assign faq location as `Shop Page` to the FAQs.', 'faq-for-woocommerce'));
+    }
+    
+    /**
+     * Enable FAQs in Cart Page
+     *
+     * @since 1.7.7
+     */
+    function ffw_enable_cart_page_faqs() {
+        ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-free-setting-switcher ffw-enable-cart-page-faqs" checked="checked">
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable to display FAQs in Cart Page.', 'faq-for-woocommerce'));
+    }
+    
+    /**
+     * Display Location for Cart Page.
+     * 
+     * @since 1.7.7
+     * @return void
+     */
+    function ffw_display_location_cart() {
+        $options = $this->options;
+		$options = ! empty( $options ) ? $options : [];
+		$ffw_display_location_cart = isset( $options['ffw_display_location_cart'] ) ? $options['ffw_display_location_cart'] : "before_cart";
+
+        if (!ffw_is_pro_activated()): ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <select class="ffw-display-all-answers" name='ffw_general_settings[ffw_display_location_cart]'>
+            <option value="before_cart" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "before_cart" ); ?>><?php esc_html_e('Before Cart', 'faq-for-woocommerce'); ?></option>
+            <option value="after_cart" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "after_cart" ); ?>><?php esc_html_e('After Cart', 'faq-for-woocommerce'); ?></option>
+            <option value="before_cart_table" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "before_cart_table" ); ?>><?php esc_html_e('Before Cart Table', 'faq-for-woocommerce'); ?></option>
+            <option value="after_cart_table" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "after_cart_table" ); ?>><?php esc_html_e('After Cart Table', 'faq-for-woocommerce'); ?></option>
+            <option value="before_cart_contents" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "before_cart_contents" ); ?>><?php esc_html_e('Before Cart Content', 'faq-for-woocommerce'); ?></option>
+            <option value="after_cart_contents" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "after_cart_contents" ); ?>><?php esc_html_e('After Cart Content', 'faq-for-woocommerce'); ?></option>
+            <option value="before_cart_totals" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "before_cart_totals" ); ?>><?php esc_html_e('Before Cart Total', 'faq-for-woocommerce'); ?></option>
+            <option value="after_cart_totals" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "after_cart_totals" ); ?>><?php esc_html_e('After Cart Total', 'faq-for-woocommerce'); ?></option>
+            <option value="cart_totals_before_shipping" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "cart_totals_before_shipping" ); ?>><?php esc_html_e('Before Shopping', 'faq-for-woocommerce'); ?></option>
+            <option value="cart_totals_after_shipping" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "cart_totals_after_shipping" ); ?>><?php esc_html_e('After Shopping', 'faq-for-woocommerce'); ?></option>
+            <option value="cart_totals_before_order_total" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "cart_totals_before_order_total" ); ?>><?php esc_html_e('Before Order Total', 'faq-for-woocommerce'); ?></option>
+            <option value="cart_totals_after_order_total" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_cart, "cart_totals_after_order_total" ); ?>><?php esc_html_e('After Order Total', 'faq-for-woocommerce'); ?></option>
+        </select>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display location of FAQs in cart page. Assign faq location as `Cart Page` to the FAQs.', 'faq-for-woocommerce'));
+    }
+    
+    /**
+     * Enable FAQs in Checkout Page
+     *
+     * @since 1.7.7
+     */
+    function ffw_enable_checkout_page_faqs() {
+        ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-free-setting-switcher ffw-enable-checkout-page-faqs" checked="checked">
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable to display FAQs in Checkout Page.', 'faq-for-woocommerce'));
+    }
+    
+    /**
+     * Display Location for Checkout Page.
+     * 
+     * @since 1.7.7
+     * @return void
+     */
+    function ffw_display_location_checkout() {
+        $options = $this->options;
+		$options = ! empty( $options ) ? $options : [];
+		$ffw_display_location_checkout = isset( $options['ffw_display_location_checkout'] ) ? $options['ffw_display_location_checkout'] : "before_checkout_form";
+
+        if (!ffw_is_pro_activated()): ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <select class="ffw-display-all-answers" name='ffw_general_settings[ffw_display_location_checkout]'>
+            <option value="before_checkout_form" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "before_checkout_form" ); ?>><?php esc_html_e('Before Checkout Form', 'faq-for-woocommerce'); ?></option>
+            <option value="after_checkout_form" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "after_checkout_form" ); ?>><?php esc_html_e('After Checkout Form', 'faq-for-woocommerce'); ?></option>
+            <option value="checkout_before_customer_details" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "checkout_before_customer_details" ); ?>><?php esc_html_e('Before Customer Details', 'faq-for-woocommerce'); ?></option>
+            <option value="checkout_after_customer_details" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "checkout_after_customer_details" ); ?>><?php esc_html_e('After Customer Details', 'faq-for-woocommerce'); ?></option>
+            <option value="before_checkout_billing_form" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "before_checkout_billing_form" ); ?>><?php esc_html_e('Before Customer Billing', 'faq-for-woocommerce'); ?></option>
+            <option value="after_checkout_billing_form" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "after_checkout_billing_form" ); ?>><?php esc_html_e('After Customer Billing', 'faq-for-woocommerce'); ?></option>
+            <option value="before_checkout_shipping_form" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "before_checkout_shipping_form" ); ?>><?php esc_html_e('Before Customer Shipping', 'faq-for-woocommerce'); ?></option>
+            <option value="after_checkout_shipping_form" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "after_checkout_shipping_form" ); ?>><?php esc_html_e('After Customer Shipping', 'faq-for-woocommerce'); ?></option>
+            <option value="before_order_notes" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "before_order_notes" ); ?>><?php esc_html_e('Before Order Notes', 'faq-for-woocommerce'); ?></option>
+            <option value="after_order_notes" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "after_order_notes" ); ?>><?php esc_html_e('After Order Notes', 'faq-for-woocommerce'); ?></option>
+            <option value="checkout_before_order_review" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "checkout_before_order_review" ); ?>><?php esc_html_e('Before Order Review', 'faq-for-woocommerce'); ?></option>
+            <option value="checkout_after_order_review" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "checkout_before_order_review" ); ?>><?php esc_html_e('After Order Review', 'faq-for-woocommerce'); ?></option>
+            <option value="review_order_before_payment" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "review_order_before_payment" ); ?>><?php esc_html_e('Before Order Payment', 'faq-for-woocommerce'); ?></option>
+            <option value="review_order_after_payment" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "review_order_after_payment" ); ?>><?php esc_html_e('After Order Payment', 'faq-for-woocommerce'); ?></option>
+            <option value="review_order_before_submit" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "review_order_before_submit" ); ?>><?php esc_html_e('Before Submit Button', 'faq-for-woocommerce'); ?></option>
+            <option value="review_order_after_submit" <?php echo !ffw_is_pro_activated() ? esc_attr('disabled') : ''; ?> <?php selected( $ffw_display_location_checkout, "review_order_after_submit" ); ?>><?php esc_html_e('After Submit Button', 'faq-for-woocommerce'); ?></option>
+        </select>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display location of FAQs in cart page. Assign faq location as `Checkout Page` to the FAQs.', 'faq-for-woocommerce'));
+    }
 
     /**
      * FAQ Tab Priority Callback.
@@ -786,7 +998,6 @@ class FAQ_Woocommerce_Settings {
         echo '<input type="number" placeholder="100" class="ffw-tab-priority" name="ffw_general_settings[ffw_tab_priority]" value="'. esc_html($val) .'" />';
         echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Reorder faq tab according to its priority. Increase or decrease with 10 volume.', 'faq-for-woocommerce'));
     }
-
 
 	/**
 	 * Before FAQ Callback.

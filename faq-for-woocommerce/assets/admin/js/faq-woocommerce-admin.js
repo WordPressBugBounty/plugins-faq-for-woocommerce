@@ -56,12 +56,19 @@ jQuery(document).ready(function ($) {
             // modal form
             var $modal = $('#ffw-popup-form-wrapper .ffw-modal-frame');
 
-            // init select2
+            // display in pages.
+            $('.ffw-display_in_pages-select2').select2({
+                placeholder: "Select Woo Pages",
+                // allowClear: true
+            });
+            
+            // faq categories.
             $('.ffw-category-select2').select2({
                 placeholder: "Select categories",
                 // allowClear: true
             });
             
+            // faq tags.
             $('.ffw-tag-select2').select2({
                 placeholder: "Select tags",
                 // allowClear: true

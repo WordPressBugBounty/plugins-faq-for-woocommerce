@@ -226,6 +226,73 @@ function ffw_display_faqs_in_archive_pages() {
     echo $content;
 }
 
+/**
+ * Display FAQs in Shop page.
+ *
+ * @return void
+ */
+function ffw_display_faqs_in_shop_page() {
+	//get option.
+	$options = get_option( 'ffw_general_settings' );
+
+    //skip, when shop page is not enabled.
+    if(!isset($options['enable_shop_page_faqs'])) {
+        return;
+    }
+
+    //get shop faqs.
+	$faq_ids = get_option( 'ffw_shop_page_faqs' );
+
+    $faqs = ffw_get_faq_list_by_faq_ids($faq_ids);
+
+    echo ffw_get_template_by_faqs($faqs);
+}
+
+/**
+ * Display FAQs in Cart page.
+ *
+ * @return void
+ */
+function ffw_display_faqs_in_cart_page() {
+	//get option.
+	$options = get_option( 'ffw_general_settings' );
+
+    //skip, when cart page is not enabled.
+    if(!isset($options['enable_cart_page_faqs'])) {
+        return;
+    }
+
+    //get cart faqs.
+	$faq_ids = get_option( 'ffw_cart_page_faqs' );
+
+    $faqs = ffw_get_faq_list_by_faq_ids($faq_ids);
+
+    echo ffw_get_template_by_faqs($faqs);
+}
+
+/**
+ * Display FAQs in Checkout page.
+ *
+ * @return void
+ */
+function ffw_display_faqs_in_checkout_page() {
+
+	//get option.
+	$options = get_option( 'ffw_general_settings' );
+
+    //skip, when checkout page is not enabled.
+    if(!isset($options['enable_checkout_page_faqs'])) {
+        return;
+    }
+
+    //get checkout faqs.
+	$faq_ids = get_option( 'ffw_checkout_page_faqs' );
+
+    $faqs = ffw_get_faq_list_by_faq_ids($faq_ids);
+
+    echo ffw_get_template_by_faqs($faqs);
+}
+
 add_action('ffw_before_faq_start', 'ffw_before_faq_start');
 function ffw_before_faq_start() {
     $options = get_option( 'ffw_general_settings' );

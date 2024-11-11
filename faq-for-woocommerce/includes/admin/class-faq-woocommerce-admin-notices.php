@@ -26,10 +26,12 @@ class FFW_Admin_Notices {
      */
     public function __construct() {
         add_action( 'admin_notices', [$this, 'review_notice'] );
-        add_action( 'admin_notices', [$this, 'rebranding_notice'] );
+        add_action( 'admin_notices', [$this, 'coupon_notice'] );
         //add_action( 'admin_notices', [$this, 'discount_banner_notice'] );
         add_action( 'wp_ajax_ffw_save_review_notice', [ $this, 'ffw_save_review_notice' ] );
-        add_action( 'wp_ajax_ffw_hide_notice', [ $this, 'ffw_hide_notice' ] );
+        add_action( 'wp_ajax_ffw_hide_coupon_notice', [ $this, 'ffw_hide_coupon_notice' ] );
+
+        add_action( 'admin_print_footer_scripts', [ $this, 'ffw_admin_footer_scripts' ] );
     }
 
     /**
@@ -57,13 +59,19 @@ class FFW_Admin_Notices {
     }
     
     /**
-     * Rebranding notice.
+     * Coupon notice.
      * 
      * @return void
      */
-    public function rebranding_notice() {
+    public function coupon_notice() {
+        
+        $is_coupon_notice_hide = get_option('ffw_coupon_notice_hide', false);
+
+        if( $is_coupon_notice_hide ) {
+            return;
+        }
         ?>
-        <div class="notice notice-success is-dismissible" style="background: #0A0A0A;border-left-color: #fff;padding: 10px 50px;">
+        <div class="ffw-coupon-notice notice notice-success is-dismissible" style="background: #0A0A0A;border-left-color: #fff;padding: 10px 50px;">
             <p style="color: #fff;font-size: 18px;margin:0;"><?php _e('<strong style="color: #fff;text-decoration: line-through;">XPlainer Product FAQs</strong> is rebranded to <strong style="color: #fdfc1e;">`Happy WooCommerce FAQs`</strong>. <a href="https://happydevs.net/happy-woocommerce-faqs-pro" style="color: #bbf7d0;">Get <strong>20% discount</strong></a> on rebranding, Coupon: <strong style="color: #fdfc1e;">"IMHAPPY"</strong>.', 'faq-for-woocommerce'); ?></p>
         </div>
         <?php
@@ -102,8 +110,6 @@ class FFW_Admin_Notices {
         } else {
             $show_notice = false;
         }
-
-
 
         // Review Notice.
         if ( $show_notice ) {
@@ -161,7 +167,8 @@ class FFW_Admin_Notices {
                             });
 
                     })(jQuery)
-                </script><?php
+                </script>
+                <?php
             }, 99 );
         }
     }
@@ -173,7 +180,7 @@ class FFW_Admin_Notices {
 
         // check and validate nonce.
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
-            wp_send_json_error( esc_html__( 'Invalid nonce', 'stock-alert' ) );
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
         }
 
         //check user access or not.
@@ -203,6 +210,48 @@ class FFW_Admin_Notices {
 
         wp_send_json_error( esc_html__( 'Invalid Request.', 'faq-for-woocommerce' ) );
         wp_die();
+    }
+    
+    /**
+     * Hide coupon notice.
+     * 
+     * @return void
+     */
+    public function ffw_hide_coupon_notice() {
+        // check and validate nonce.
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
+        }
+
+        update_option('ffw_coupon_notice_hide', true);
+
+        wp_send_json_success( esc_html__( 'Coupon notice hide successfull.', 'faq-for-woocommerce' ) );
+        wp_die();
+    }
+
+    /**
+     * Admin footer scripts
+     * 
+     * @return void
+     */
+    public function ffw_admin_footer_scripts() {
+        $nonce  = wp_create_nonce( 'ffw_admin' );
+        ?>
+        <script>
+            (function($){
+                "use strict";
+                $(document).on('click', '.ffw-coupon-notice .notice-dismiss', function (e) {
+                    e.preventDefault();
+
+                    let nonce = '<?php echo esc_html($nonce); ?>';
+
+                    wp.ajax.post( 'ffw_hide_coupon_notice', {
+                        nonce: '<?php echo esc_html($nonce); ?>'
+                    });
+                })
+            })(jQuery)
+        </script>
+        <?php
     }
 }
 

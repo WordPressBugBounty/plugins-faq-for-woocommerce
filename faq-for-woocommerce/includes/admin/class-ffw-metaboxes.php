@@ -142,6 +142,8 @@ if (!class_exists('FFW_Metaboxes', false)) :
 
                 $classlist = implode(' ', $classlist);
             ?>
+
+                <!-- FAQ Product Option -->
                 <tr class="<?php echo esc_attr($classlist); ?>">
                     <th scope="row" class="titledesc">
                         <label for="ffw_faq_products">
@@ -182,6 +184,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                     </td>
                 </tr>
 
+                <!-- FAQ Categories Option -->
                 <tr class="<?php echo esc_attr($classlist); ?>">
                     <th scope="row" class="titledesc">
                         <label for="ffw_faq_categories">
@@ -229,6 +232,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                     </td>
                 </tr>
                 
+                <!-- FAQ Tags Option -->
                 <tr class="<?php echo esc_attr($classlist); ?>">
                     <th scope="row" class="titledesc">
                         <label for="ffw_faq_tags">
@@ -274,6 +278,65 @@ if (!class_exists('FFW_Metaboxes', false)) :
                         </select>
                         <input type="hidden" name="ffw_faq_save_tags" value="<?php echo esc_html(implode(',', $tag_ids)); ?>">
                         <p class="description"><?php esc_html_e('Select product tags for the FAQ.', 'faq-for-woocommerce'); ?></p>
+                    </td>
+                </tr>
+
+                <!-- Display in Pages Option -->
+                <tr>
+                    <th scope="row" class="titledesc">
+                        <label for="ffw_faq_type">
+                            <span><?php esc_html_e( 'Display in Pages', 'faq-for-woocommerce' ); ?></span>
+                        </label>
+                    </th>
+                    <td class="">
+                        <select
+                            name="ffw_display_in_pages[]"
+                            multiple="multiple"
+                            id="ffw_display_in_pages"
+                            class="ffw-select2 ffw-display_in_pages-select2"
+                            placeholder="<?php esc_html_e('Select Woo Pages', 'faq-for-woocommerce'); ?>"
+                        >
+                        <?php
+                        $page_types =  [
+                            'product_and_archive_page' => esc_html__('Product & Archive Page', 'faq-for-woocommerce'),
+                            'shop_page' => esc_html__('Shop Page', 'faq-for-woocommerce'),
+                            'cart_page' => esc_html__('Cart Page', 'faq-for-woocommerce'),
+                            'checkout_page' => esc_html__('Checkout Page', 'faq-for-woocommerce'),
+                            // 'account_page' => esc_html__('Account Page', 'faq-for-woocommerce'),
+                        ];
+
+                        $page_type_ids = [];
+                        if( isset($page_types) && ! empty($page_types) ) {
+                            $disabled = !ffw_is_pro_activated() ? esc_attr('disabled') : '';
+                            foreach ( $page_types as $page_type_id => $page_type ) {
+                                $page_faq_saved_ids = get_option("ffw_{$page_type_id}_faqs");
+
+                                $selected = '';
+                                $disabled = '';
+                                $pro_label = '';
+                                if( !ffw_is_pro_activated() && $page_type_id !== 'product_and_archive_page' ) {
+                                    $disabled = 'disabled';
+                                    $pro_label = ' [PRO]';
+                                }
+
+                                if( isset($page_faq_saved_ids) && ! empty($page_faq_saved_ids) && is_array($page_faq_saved_ids) ) {
+                                    $selected = selected(in_array($faq_id, $page_faq_saved_ids), true, false);
+                                }
+
+                                ?>
+                                <option value="<?php echo esc_attr($page_type_id); ?>" <?php echo esc_attr($selected); ?> <?php echo esc_attr($disabled); ?> ><?php echo wp_kses_post( $page_type ); ?><?php echo wp_kses_post( $pro_label ); ?></option>
+                                <?php
+                                if($selected) {
+                                    array_push($page_type_ids, $page_type_id);
+                                }
+                            }
+
+                            $page_type_ids = array_unique($page_type_ids);
+                        }
+                        ?>
+                        </select>
+                        <input type="hidden" name="ffw_page_save_types" value="<?php echo esc_html(implode(',', $page_type_ids)); ?>">
+                        <p class="description"><?php esc_html_e('Select pages to display FAQs.', 'faq-for-woocommerce'); ?></p>
                     </td>
                 </tr>
             <?php
@@ -379,6 +442,9 @@ if (!class_exists('FFW_Metaboxes', false)) :
 
                 $product_ids = [];
                 $cat_ids = [];
+                $removed_product_ids = [];
+                $removed_cat_ids = [];
+                $removed_tag_ids = [];
 
                 // save product ids.
                 if( isset($_POST['ffw_faq_products']) && !empty($_POST['ffw_faq_products']) ) {
@@ -589,7 +655,84 @@ if (!class_exists('FFW_Metaboxes', false)) :
                         update_term_meta( $tag_id, 'ffw_tag_faq_post_ids', $faq_ids );
                     }
                 }
+            }
 
+            /**
+             * Display Pages Conditions and Savings.
+             * 
+             * @since 1.7.7
+             */
+            $page_types = [];
+            $removed_page_types = [];
+
+            // save pages types.
+            if( isset($_POST['ffw_display_in_pages']) && !empty($_POST['ffw_display_in_pages']) ) {
+                // sanitize the pages field value.
+                $page_types = $_POST['ffw_display_in_pages'];
+            }
+
+            // Reference for saved previous tag ids.
+            // It'll help to check if new selected tag ids are removed or not.
+            if(isset($_POST['ffw_page_save_types']) && !empty($_POST['ffw_page_save_types'])) {
+                $saved_page_types = sanitize_text_field($_POST['ffw_page_save_types']);
+
+                if(!empty($saved_page_types)) {
+                    $saved_page_types = explode(',', $saved_page_types);
+                    $removed_page_types = array_diff($saved_page_types, $page_types);
+                }
+            }
+
+            /**
+             * Let's remove faq for the removed page types.
+             * 
+             * @since 1.6.0
+             */
+            if( isset($removed_page_types) && is_array($removed_page_types) && !empty($removed_page_types) ) {
+                foreach($removed_page_types as $removed_page_type) {
+
+                    // get page's faqs.
+                    $faq_ids = get_option("ffw_{$removed_page_type}_faqs");
+
+                    // search curret faq id to saved ids and remove if found.
+                    if( !empty($faq_ids) ) {
+                        $index = array_search($post_id, $faq_ids);
+
+                        if(isset($faq_ids[$index])) {
+                            unset($faq_ids[$index]);
+
+                            // Update pages faqs.
+                            update_option( "ffw_{$removed_page_type}_faqs", $faq_ids );
+                        }
+                    }
+                    
+                }
+            }
+
+            /**
+             * Add faq post id to the page type.
+             * 
+             * @since 1.7.7
+             */
+            if( isset($page_types) && is_array($page_types) && !empty($page_types) ) {
+                foreach($page_types as $page_type) {
+
+                    // get page's faqs.
+                    $faq_ids = get_option("ffw_{$page_type}_faqs");
+
+                    // when no faqs is set, put empty array.
+                    if( empty($faq_ids) ) {
+                        $faq_ids = [];
+                    }
+
+                    //push the faq id.
+                    array_push($faq_ids, $post_id);
+
+                    //remove duplicate faq id.
+                    $faq_ids = array_unique($faq_ids);
+
+                    // Update pages faqs.
+                    update_option( "ffw_{$page_type}_faqs", $faq_ids );
+                }
             }
 
         }

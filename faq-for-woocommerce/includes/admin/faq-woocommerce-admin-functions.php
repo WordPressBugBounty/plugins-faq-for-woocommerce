@@ -111,7 +111,7 @@ if ( ! function_exists( 'ffw_insert_new_faq' ) ) {
 
         // check and validate nonce.
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
-            wp_send_json_error( esc_html__( 'Invalid nonce', 'stock-alert' ) );
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
         }
 
         //check user access or not.
@@ -207,7 +207,7 @@ if ( ! function_exists( 'ffw_hide_discount_notice' ) ) {
 
         // check and validate nonce.
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
-            wp_send_json_error( esc_html__( 'Invalid nonce', 'stock-alert' ) );
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
         }
 
         //check user access or not.
@@ -249,7 +249,7 @@ if ( ! function_exists( 'ffw_delete_all_faqs' ) ) {
 
         // check and validate nonce.
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
-            wp_send_json_error( esc_html__( 'Invalid nonce', 'stock-alert' ) );
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
         }
 
         //check user access or not.
@@ -313,7 +313,7 @@ if ( ! function_exists( 'ffw_delete_single_faq' ) ) {
 
         // check and validate nonce.
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
-            wp_send_json_error( esc_html__( 'Invalid nonce', 'stock-alert' ) );
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
         }
 
         //check user access or not.
@@ -381,7 +381,7 @@ if ( ! function_exists( 'ffw_sort_faq_data' ) ) {
 
         // check and validate nonce.
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
-            wp_send_json_error( esc_html__( 'Invalid nonce', 'stock-alert' ) );
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
         }
 
         //check user access or not.
@@ -451,7 +451,7 @@ if ( ! function_exists( 'ffw_insert_data_from_search' ) ) {
 
         // check and validate nonce.
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
-            wp_send_json_error( esc_html__( 'Invalid nonce', 'stock-alert' ) );
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
         }
 
         //check user access or not.
@@ -552,7 +552,7 @@ if ( ! function_exists( 'ffw_activate_template' ) ) {
 
         // check and validate nonce.
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'ffw_admin' ) ) {
-            wp_send_json_error( esc_html__( 'Invalid nonce', 'stock-alert' ) );
+            wp_send_json_error( esc_html__( 'Invalid nonce', 'faq-for-woocommerce' ) );
         }
         
         if ( ! isset( $_REQUEST['template_id'] ) ) {

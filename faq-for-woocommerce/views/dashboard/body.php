@@ -233,6 +233,42 @@
                         </tr>
                         <tr>
                             <td>
+                                <p><?php esc_html_e("Display in Shop Page (Shop FAQs)", "faq-for-woocommerce"); ?></p>
+                                <p><?php esc_html_e("You may have Order, Payment, Shipping related FAQs to show in shop page. Premium version cover it nicely.", "faq-for-woocommerce"); ?></p>
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/cancel.png'); ?>">
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><?php esc_html_e("Display in Cart Page (Cart FAQs)", "faq-for-woocommerce"); ?></p>
+                                <p><?php esc_html_e("You may have Discount, Order, Payment FAQs to show in shop page. Premium version cover it nicely.", "faq-for-woocommerce"); ?></p>
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/cancel.png'); ?>">
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><?php esc_html_e("Display in Checkout Page (Checkout FAQs)", "faq-for-woocommerce"); ?></p>
+                                <p><?php esc_html_e("You may have Shipping, Order, Payment FAQs to show in checkout page. Premium version cover it nicely.", "faq-for-woocommerce"); ?></p>
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/cancel.png'); ?>">
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <p><?php esc_html_e("Dynamic Product Attributes", "faq-for-woocommerce"); ?></p>
                                 <p><?php esc_html_e("Add product attribute to the answers and it will show the value. Suppose, adding `{product_price}` it will show $30.00", "faq-for-woocommerce"); ?></p>
                             </td>
@@ -312,6 +348,9 @@
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Beautiful FAQs Templates", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display in Product Pages", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display in Archive Pages", "faq-for-woocommerce"); ?></span></li>
+                    <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display in Shop Page (Shop FAQs)", "faq-for-woocommerce"); ?></span></li>
+                    <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display in Cart Page (Cart FAQs)", "faq-for-woocommerce"); ?></span></li>
+                    <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display in Checkout Page (Checkout FAQs)", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Dynamic Product Attributes", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Global FAQs", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("RTL Support", "faq-for-woocommerce"); ?></span></li>

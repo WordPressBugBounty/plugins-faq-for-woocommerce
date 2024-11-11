@@ -4,7 +4,7 @@ Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.6
 Requires PHP: 5.6
-Stable tag: 1.7.6
+Stable tag: 1.7.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,9 @@ Here’s a glimpse of the top features of this ultimate FAQ plugin for [__WooCom
 * 💎 More Beautiful FAQs Templates (PRO)
 * 💎 Display in Product Pages [display on Product page] (PRO)
 * 💎 Display in Archive Pages [display on Product Categories & Tags page] (PRO)
+* 💎 Display in Shop Page (Shop Page FAQs) (PRO)
+* 💎 Display in Cart Page (Cart Page FAQs) (PRO)
+* 💎 Display in Checkout Page (Checkout Page FAQs) (PRO)
 * 💎 DYNAMIC PRODUCT ATTRIBUTE (PRO)
 * 💎 Global FAQS (PRO)
 * 💎 RTL Support (PRO)
@@ -255,13 +258,25 @@ Easily create FAQs for variation products and easily engage with your customers 
 
 With premium FAQ templates, you can display standard product FAQs and boost your sales.
 
-## 🟦 Display in Product Pages (PRO FEATURE) ##
+## 👕 Display in Product Pages (PRO FEATURE) ##
 
 Display faqs anywhere on the product pages, it will give you the flexibility to adjust faqs with your design theme interface.
 
 ## 🚪 Display in Archive Pages (PRO FEATURE) ##
 
 Display faqs on the product archive pages (product category and tag). Archive WooCommerce FAQs can be displayed for ecommerce customers.
+
+## 🟦 Display in Shop Page (PRO FEATURE) ##
+
+Display shop related faqs anywhere on the shop page, you may have shipping, payment, order, discount related FAQs to display in Shop page.
+
+## 🛒 Display in Cart Page (PRO FEATURE) ##
+
+Display cart related faqs anywhere on the cart page, you may have shipping, payment, order, discount related FAQs to display in Cart page.
+
+## 🛍️ Display in Checkout Page (PRO FEATURE) ##
+
+Display checkout related faqs anywhere on the checkout page, you may have shipping, payment, order, discount related FAQs to display in Checkout page.
 
 ## ⚛️ DYNAMIC PRODUCT ATTRIBUTE (PRO FEATURE) ##
 
@@ -387,6 +402,10 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.7.7 =
+* Fixed: Discount Banner is not closing - issue has been fixed.
+* Added: Compatability to display FAQs in Shop Page, Cart Page and Checkout Page (Advanced Version).
 
 = 1.7.6 =
 * Added: Rebranding to Happy WooCommerce FAQs.
