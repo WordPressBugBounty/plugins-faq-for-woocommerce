@@ -2,9 +2,9 @@
 Contributors: happydevs, optemiz, nayanchamp7, azha18
 Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
-Tested Up To: 6.6
+Tested Up To: 6.7
 Requires PHP: 5.6
-Stable tag: 1.7.7
+Stable tag: 1.7.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -402,6 +402,10 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.7.8 =
+* Added: WordPress 6.7 compatability added
+* Fixed: Shortcode content appears before content - issue has been fixed.
 
 = 1.7.7 =
 * Fixed: Discount Banner is not closing - issue has been fixed.

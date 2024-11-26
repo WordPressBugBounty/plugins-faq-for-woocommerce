@@ -335,7 +335,12 @@ if ( ! function_exists('ffw_get_template') ) {
         $args['layout'] = $layout;
         $args['shortcode_wrap_class'] = $shortcode_wrap_class;
         $args['display_schema_type'] = $display_schema_type;
-        echo ffw_get_template_by_faqs($faqs, $args);
+
+        if ($is_shortcode) {
+            return ffw_get_template_by_faqs($faqs, $args);
+        } else {
+            echo ffw_get_template_by_faqs($faqs, $args);
+        }
 	}
 }
 
