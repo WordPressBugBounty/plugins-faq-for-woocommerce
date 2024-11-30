@@ -51,6 +51,7 @@
                 $is_setting_page = false;
                 $is_template_page = false;
                 $is_ai_page = false;
+                $is_customer_question_page = false;
 
                 $screen = get_current_screen();
 
@@ -80,11 +81,16 @@
                         $is_template_page = true;
                     }
                 }
+
+                if (isset($_GET['post_type']) && $_GET['post_type'] === "ffw_customer_qna") {
+                    $is_customer_question_page = true;
+                }
             ?>
 
             <li class="ffw-menu <?php echo $is_dashboard_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ffw-dashboard")); ?>"><?php esc_html_e("Dashboard", "faq-for-woocommerce"); ?></a></li>
             <li class="ffw-menu <?php echo $is_faq_list_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw")); ?>"><?php esc_html_e("FAQS", "faq-for-woocommerce"); ?></a></li>
             <li class="ffw-menu <?php echo $is_ai_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ai-faqs")); ?>"><span><?php esc_html_e("AI FAQs", "faq-for-woocommerce"); ?></span></a></li>
+            <li class="ffw-menu <?php echo $is_customer_question_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw_customer_qna")); ?>"><span><?php esc_html_e("Customer Questions", "faq-for-woocommerce"); ?></span></a></li>
             <li class="ffw-menu <?php echo $is_template_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ffw-templates")); ?>"><span><?php esc_html_e("Templates", "faq-for-woocommerce"); ?></span></a></li>
             <li class="ffw-menu <?php echo $is_setting_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=woocommerce-faq")); ?>"><?php esc_html_e("Settings", "faq-for-woocommerce"); ?></a></li>
         </ul>

@@ -185,6 +185,18 @@
                         </tr>
                         <tr>
                             <td>
+                                <p><?php esc_html_e("Customer Asking Questions", "faq-for-woocommerce"); ?></p>
+                                <p><?php esc_html_e("Feature to make customer capable to ask a question on product, shipping, payment, coupon, order etc.", "faq-for-woocommerce"); ?></p>
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/cancel.png'); ?>">
+                            </td>
+                            <td>
+                                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/ok.png'); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <p><?php esc_html_e("Variation Product FAQs", "faq-for-woocommerce"); ?></p>
                                 <p><?php esc_html_e("Easily create FAQs for variation products and easily engage with your customers by answering their variation queries about the child products.", "faq-for-woocommerce"); ?></p>
                             </td>
@@ -344,6 +356,7 @@
                 <h3 class="ffw-why-pro-haading"><?php esc_html_e('Why Pro?', 'faq-for-woocommerce'); ?></h3>
 
                 <ul class="ffw-why-pro-features">
+                    <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Customer Asking Questions", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Variation Product FAQs", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Beautiful FAQs Templates", "faq-for-woocommerce"); ?></span></li>
                     <li class="ffw-why-pro-features-contents"><img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/done.png'); ?>" alt=""><span><?php esc_html_e("Display in Product Pages", "faq-for-woocommerce"); ?></span></li>

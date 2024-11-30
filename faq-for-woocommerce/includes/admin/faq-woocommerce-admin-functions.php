@@ -680,4 +680,48 @@ function ffw_is_user_capable() {
     return false;
 }
 
+/**
+ * Customer list image section.
+ *
+ * @return boolean
+ */
+function ffw_add_pro_customer_list_section() {
+    $screen = get_current_screen();
 
+    if (ffw_is_pro_activated()) {
+        return;
+    }
+
+    if ($screen->post_type === 'ffw_customer_qna' && $screen->base === 'edit') {
+        ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $('.wrap').append('<a href="<?php echo esc_url(FFW_PRO_URL); ?>" class="ffw-customer-question-list-image-wrap"></a>');
+            });
+        </script>
+        <style>
+            body .wrap {
+                position: relative;
+            }
+
+            body .wrap > * {
+                display: none;
+            }
+
+            body .wrap .ffw-customer-question-list-image-wrap {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 820px;
+                overflow: hidden;
+                z-index: 999;
+                display: block;
+                background: url(<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/customer-question-list.png'); ?>) no-repeat;
+                background-size: contain;
+            }
+        </style>
+        <?php
+    }
+}
+add_action('admin_footer', 'ffw_add_pro_customer_list_section');

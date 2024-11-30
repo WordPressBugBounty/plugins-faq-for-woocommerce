@@ -158,6 +158,12 @@ class FAQ_Woocommerce_Settings {
                             'callback' => 'ffw_global_faqs_appearance',
                         ],
                         [
+                            'id' => 'ffw_enable_customer_questions',
+                            'label' => esc_html__( 'Enable Customer Questions', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_enable_customer_questions',
+                        ],
+                        [
                             'id' => 'ffw_post_index',
                             'label' => esc_html__( 'FAQ Post Behaviour', 'faq-for-woocommerce' ),
                             'region' => 'free',
@@ -1145,6 +1151,28 @@ class FAQ_Woocommerce_Settings {
         </div>
         <?php
         echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable Global FAQs to set specific FAQ for `All the products`.', 'faq-for-woocommerce'));
+    }
+    
+    /**
+     * Enable Customer Questions
+     *
+     * @since 1.4.1
+     */
+    function ffw_enable_customer_questions() {
+        ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-free-setting-switcher ffw-enable-customer-questions" checked="checked">
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable Customer Questions to make customer capable to ask a question.', 'faq-for-woocommerce'));
     }
 
 	/**

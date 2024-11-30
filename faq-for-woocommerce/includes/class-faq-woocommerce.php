@@ -158,9 +158,6 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
             // Before init action.
             do_action('before_faq_woocommerce_init');
 
-            // Set up localisation.
-            $this->load_plugin_textdomain();
-
             add_action( 'admin_notices', array( $this, 'ffw_admin_notices' ) );
 
             // Init action.
@@ -214,14 +211,6 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
                 );
                 printf( '<div class="error"><p><strong>%1$s</strong></p></div>', $message ); // phpcs:ignore
             }
-        }
-
-        /**
-         * Load Localisation files.
-         *
-         */
-        public function load_plugin_textdomain() {
-            load_plugin_textdomain('faq-woocommerce', false, plugin_basename(dirname(FFW_PLUGIN_URL)) . '/i18n/languages');
         }
 
         /**

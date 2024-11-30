@@ -4,7 +4,7 @@ Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.7
 Requires PHP: 5.6
-Stable tag: 1.7.8
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,7 @@ Here’s a glimpse of the top features of this ultimate FAQ plugin for [__WooCom
 * FAQ tab reorder setting
 * Show/hide FAQ answers on page load
 * Option of Expand/Collapse All FAQs
+* 💎 Customer Asking Questions (PRO)
 * 💎 Variation Product FAQs (PRO)
 * 💎 More Beautiful FAQs Templates (PRO)
 * 💎 Display in Product Pages [display on Product page] (PRO)
@@ -250,7 +251,11 @@ Assign product categories to FAQs. It will minimize your time to connect FAQs wi
 
 Assign product tags to FAQs. It will minimize your time to connect FAQs with products.
 
-## 👕 Variation Product FAQs (PRO FEATURE) ##
+## ❓ Customer Asking Questions (PRO FEATURE) ##
+
+Feature to make customer capable to ask a question on product, shipping, payment, coupon, order etc.
+
+## 👟 Variation Product FAQs (PRO FEATURE) ##
 
 Easily create FAQs for variation products and easily engage with your customers by answering their variation queries about the child products.
 
@@ -402,6 +407,9 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.8.0 =
+* Added: Customer Question Asking compatability - Advanced Version
 
 = 1.7.8 =
 * Added: WordPress 6.7 compatability added

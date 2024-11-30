@@ -3,7 +3,7 @@
  * Plugin Name: Happy WooCommerce FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
  * Description: This plugin shows faqs question and answers for woocommerce products with comment, FAQ schema and AI support.
- * Version: 1.7.8
+ * Version: 1.8.0
  * Author: HappyDevs
  * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
@@ -11,7 +11,7 @@
  *
  * WP Requirement & Test
  * Requires at least: 4.4
- * Tested up to: 6.6
+ * Tested up to: 6.7
  * Requires PHP: 5.6
  *
  * WC Requirement & Test
@@ -29,7 +29,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '1.7.8' );
+	define( 'FFW_VERSION', '1.8.0' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {
@@ -139,13 +139,37 @@ appsero_init_tracker_faq_for_woocommerce();
  * @since  1.0.0
  * @return FAQ_Woocommerce
  */
-function FAQ_Woocommerce_init() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-    return FAQ_Woocommerce::instance();
+if (! function_exists('ffw') ) {
+    function ffw() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+        return FAQ_Woocommerce::instance();
+    }
 }
 
-// Global for backwards compatibility.
-$GLOBALS['faq_woocommerce_init'] = FAQ_Woocommerce_init();
+/**
+ * Plugin class init
+ *
+ * @return void
+ */
+function ffw_init()
+{
+    if (! class_exists('WooCommerce', false) ) {
+        return false;
+    }
 
+    ffw();
+}
+
+add_action('plugins_loaded', 'ffw_init');
+
+/**
+ * Load textdomain.
+ *
+ * @return void
+ */
+function ffw_load_textdomain() {
+    load_plugin_textdomain('faq-for-woocommerce', false, plugin_dir_path(__FILE__) . 'languages');
+}
+add_action('init', 'ffw_load_textdomain');
 
 /**
  * HPOS compatability.

@@ -72,7 +72,7 @@ if ( ! class_exists( 'FAQ_Woocommerce_Admin_Assets', false ) ) :
                     wp_enqueue_script( 'select2' );
                 }
 
-                if('ffw' == $post_type) {
+                if('ffw' == $post_type || 'ffw_customer_qna' == $post_type) {
                     wp_enqueue_style( 'ffw_admin_styles' );
 
                     ?>
@@ -145,6 +145,8 @@ if ( ! class_exists( 'FAQ_Woocommerce_Admin_Assets', false ) ) :
             } elseif( isset($_GET['post_type']) && 'ffw' === $_GET['post_type'] ) {
                 wp_enqueue_script( 'ffw_admin' );
             } elseif( isset($_GET['page']) && 'woocommerce-faq' === $_GET['page'] ) {
+                wp_enqueue_script( 'ffw_admin' );
+            } elseif( isset($_GET['post_type']) && 'ffw_customer_qna' === $_GET['post_type'] ) {
                 wp_enqueue_script( 'ffw_admin' );
             }
 

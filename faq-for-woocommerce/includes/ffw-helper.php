@@ -486,10 +486,8 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
 
         $content .= '<input type="hidden" id="ffw-hidden-faqs" value="' . base64_encode(wp_json_encode($faqs)) . '" />';
 
-        do_action('ffw_search_input');
-
+        do_action('ffw_faq_header');
         do_action('ffw_before_faq_start');
-
         do_action('ffw_expand_collapse_all');
 
         $ffw_wrapper_classes = ['ffw-wrapper', $layout_name];
@@ -522,9 +520,29 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
 
         $content .= ob_get_clean();
 
-        return $content . '</div>';
+        return $content . '</>';
     }
 }
+
+/**
+ * FAQ Header
+ *
+ * @return void
+ */
+function ffw_faq_header() {
+    ?>
+    <div class="ffw-faq-header">
+        <?php
+        do_action('ffw_search_input');
+
+        if (ffw_is_pro_activated()) {
+            echo do_shortcode('[ffw_customer_question_form]');
+        }
+        ?>
+    </div>
+    <?php
+}
+add_action('ffw_faq_header', 'ffw_faq_header');
 
 /**
  * Get random product id which has faq list.
@@ -850,6 +868,189 @@ if( ! function_exists('ffw_post_init') ) {
 }
 
 /**
+ * Register Customer Question Post Type.
+ *
+ * @return void
+ */
+function ffw_register_customer_question_post_type() {
+    $labels = array(
+        'name'                  => _x( 'Customer Questions', 'FAQ', 'faq-for-woocommerce' ),
+        'singular_name'         => _x( 'Customer Questions', 'FAQ', 'faq-for-woocommerce' ),
+        'menu_name'             => _x( 'Customer Questions', 'Happy FAQs', 'faq-for-woocommerce' ),
+        'name_admin_bar'        => _x( 'Customer Questions', 'Happy FAQs', 'faq-for-woocommerce' ),
+        'edit_item'             => esc_html__( 'Edit Question', 'faq-for-woocommerce' ),
+        'view_item'             => esc_html__( 'View Question', 'faq-for-woocommerce' ),
+        'all_items'             => esc_html__( 'All Questions', 'faq-for-woocommerce' ),
+        'search_items'          => esc_html__( 'Search Questions', 'faq-for-woocommerce' ),
+        'parent_item_colon'     => esc_html__( 'Parent Questions:', 'faq-for-woocommerce' ),
+        'not_found'             => esc_html__( 'No questions found.', 'faq-for-woocommerce' ),
+        'not_found_in_trash'    => esc_html__( 'No questions found in Trash.', 'faq-for-woocommerce' ),
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => false,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'ffw_customer_qna' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'show_in_rest'       => false,
+        'supports'           => array( 'title' ),
+        'taxonomies'         => array( ),
+        'menu_icon'          => 'dashicons-editor-help'
+    );
+
+    register_post_type( 'ffw_customer_qna', $args );
+}
+add_action('init', 'ffw_register_customer_question_post_type');
+
+/**
+ * Filter Customer Question Title as 'Questions'.
+ *
+ * @return void
+ */
+add_filter('manage_edit-ffw_customer_qna_columns', 'ffw_filter_customer_question_list_title');
+function ffw_filter_customer_question_list_title($columns) {
+    if (isset($columns['title'])) {
+        $columns['title'] = __('Questions', 'faq-for-woocommerce');
+    }
+
+    if (isset($columns['date'])) {
+        $columns['date'] = __('Submitted On', 'faq-for-woocommerce');
+    }
+
+    return $columns;
+}
+
+/**
+ * Add column to customer questions list
+ *
+ * @param array $columns The current columns.
+ * @return array Modified columns.
+ */
+function ffw_add_column_to_customer_questions_list($columns) {
+    $columns['customer_name'] = esc_html__('Name', 'faq-for-woocommerce');
+    $columns['customer_email'] = esc_html__('Email', 'faq-for-woocommerce');
+    $columns['location'] = esc_html__('Location', 'faq-for-woocommerce');
+    $columns['action'] = esc_html__('Action', 'faq-for-woocommerce');
+    return $columns;
+}
+add_filter('manage_ffw_customer_qna_posts_columns', 'ffw_add_column_to_customer_questions_list');
+
+/**
+ * Manage columns to customer questions list
+ *
+ * @param string $column The name of the column.
+ * @param int $post_id The post ID.
+ */
+function ffw_manage_column_to_customer_questions_list($column, $post_id) {
+    if ($column === 'customer_name') {
+        $meta_value = get_post_meta($post_id, 'ffw_customer_name', true);
+        echo $meta_value ? esc_html($meta_value) : __('Empty', 'faq-for-woocommerce');
+    }
+
+    if ($column === 'customer_email') {
+        $meta_value = get_post_meta($post_id, 'ffw_customer_email', true);
+        echo $meta_value ? esc_html($meta_value) : __('Empty', 'faq-for-woocommerce');
+    }
+
+    if ($column === 'location') {
+        $meta_value = get_post_meta($post_id, 'ffw_customer_question_location', true);
+        echo $meta_value ? esc_html($meta_value) : __('Empty', 'faq-for-woocommerce');
+    }
+    
+    if ($column === 'action') {
+        do_action('ffw_customer_question_list_actions', $post_id);
+    }
+}
+add_action('manage_ffw_customer_qna_posts_custom_column', 'ffw_manage_column_to_customer_questions_list', 10, 2);
+
+/**
+ * Rearrange columns to customer questions list
+ *
+ * @param array $columns Existing columns.
+ * 
+ * @return array
+ */
+function ffw_rearrange_columns_to_customer_questions_list($columns) {
+    $columns = array(
+        'cb'             => $columns['cb'],
+        'title'          => $columns['title'],
+        'customer_name'  => __('Customer Name', 'faq-for-woocommerce'),
+        'customer_email' => __('Customer Email', 'faq-for-woocommerce'),
+        'location'       => __('Location', 'faq-for-woocommerce'),
+        'date'           => $columns['date'],
+        'action'         => __('Action', 'faq-for-woocommerce'),
+    );
+
+    return $columns;
+}
+add_filter('manage_ffw_customer_qna_posts_columns', 'ffw_rearrange_columns_to_customer_questions_list', 10);
+
+/**
+ * Hide Customer Question Page Title Action.
+ *
+ * @return void
+ */
+function ffw_hide_add_new_button($hook) {
+    $post_type = 'ffw_customer_qna';
+
+    if ($hook === 'edit.php' && isset($_GET['post_type']) && $_GET['post_type'] === $post_type) {
+        echo '<style>
+            .page-title-action { 
+                display: none !important; 
+            }
+        </style>';
+    }
+}
+add_action('admin_enqueue_scripts', 'ffw_hide_add_new_button');
+
+/**
+ * Remove Edit and Quick Edit actions from Customer Question List.
+ *
+ * @param array $actions The row actions for the post.
+ * @param WP_Post $post The post object.
+ * @return array Modified row actions.
+ */
+function remove_edit_quickedit_from_custom_post_type($actions, $post) {
+    if ($post->post_type === 'ffw_customer_qna') {
+        unset($actions['edit']);
+        unset($actions['inline hide-if-no-js']);
+    }
+
+    return $actions;
+}
+add_filter('post_row_actions', 'remove_edit_quickedit_from_custom_post_type', 10, 2);
+
+
+/**
+ * Add or Remove Customer Question Menus.
+ *
+ * @return void
+ */
+function ffw_manage_customer_question_submenu() {
+    $parent_post_type = 'ffw';
+    $customer_question_post_type = 'ffw_customer_qna';
+
+    remove_menu_page("edit.php?post_type={$customer_question_post_type}");
+    remove_submenu_page("edit.php?post_type={$customer_question_post_type}", 'post-new.php?post_type=' . $customer_question_post_type);
+
+    add_submenu_page(
+        "edit.php?post_type={$parent_post_type}",
+        __('Customer Questions'),
+        __('Customer Questions'),
+        'manage_options',
+        "edit.php?post_type={$customer_question_post_type}"
+    );
+}
+add_action('admin_menu', 'ffw_manage_customer_question_submenu');
+
+/**
  * Filter title placeholder for "ffw" post type.
  *
  * @since 1.6.3
@@ -1159,4 +1360,37 @@ function ffw_get_available_user_roles() {
     $roles = array_keys($roles);
 
     return apply_filters('ffw_filter_available_user_roles', $roles);
+}
+
+/**
+ * Get template full path.
+ *
+ * @param string $template_name Template name.
+ * @param array  $args          Arguments. (default: array).
+ * @param string $template_path Template path. (default: '').
+ *
+ * @return void
+ */
+function ffw_include_template( $template_name, $args = array(), $template_path = '' ) {
+
+	if(empty($template_path)) {
+		$template_path = untrailingslashit(plugin_dir_path(FFW_FILE)) . '/templates/';
+	}
+
+	// Allow 3rd party plugin filter template file from their plugin.
+	$template_name = apply_filters( 'ffw_include_template', $template_name, $args, $template_path );
+
+	if ( ! file_exists( $template_path . $template_name ) ) {
+		/* translators: %s template */
+		wc_doing_it_wrong( __FUNCTION__, sprintf( __( '%s does not exist.', 'faq-for-woocommerce' ), '<code>' . $template_name . '</code>' ), '1.0.0' );
+		return;
+	}
+
+	extract($args);
+
+	do_action( 'ffw_before_template_part', $template_name, $template_path, $args );
+
+	include $template_path . $template_name;
+
+	do_action( 'ffw_after_template_part', $template_name, $template_path, $args );
 }
