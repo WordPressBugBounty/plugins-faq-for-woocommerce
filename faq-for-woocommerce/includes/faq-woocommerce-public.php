@@ -165,8 +165,6 @@ function ffw_new_product_tab( $tabs ) {
             );
         }
 
-	}else {
-		$tabs = [];
 	}
 
 	return $tabs;
