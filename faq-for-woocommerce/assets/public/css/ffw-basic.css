@@ -1,15 +1,11 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
-}
-
 .ffw-accordion-container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-flow: column;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 .ffw-accordion-container .ffw-accordion {
   width: calc(100% - 60px);

@@ -87,8 +87,9 @@ if( ! function_exists( 'ffw_get_product_faqs' ) ) {
                 $faq_ids = array_merge($faq_global_post_ids, $faq_ids);
             }
 
-            
-            $faq_ids = array_unique($faq_ids);
+            if(!empty($faq_ids)) {
+                $faq_ids = array_unique($faq_ids);
+            }
 
             $faq_list = ffw_get_faq_list_by_faq_ids($faq_ids);
 
@@ -534,10 +535,7 @@ function ffw_faq_header() {
     <div class="ffw-faq-header">
         <?php
         do_action('ffw_search_input');
-
-        if (ffw_is_pro_activated()) {
-            echo do_shortcode('[ffw_customer_question_form]');
-        }
+        echo do_shortcode('[ffw_customer_question_form]');
         ?>
     </div>
     <?php
