@@ -4,7 +4,7 @@ Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.7
 Requires PHP: 5.6
-Stable tag: 1.8.3
+Stable tag: 1.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -407,6 +407,9 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.8.4 =
+* Fixed: Shortcode override - issue has been fixed
 
 = 1.8.3 =
 * Fixed: Customer Question Form shortcode displaying - issue has been fixed

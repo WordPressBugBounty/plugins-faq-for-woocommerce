@@ -535,7 +535,10 @@ function ffw_faq_header() {
     <div class="ffw-faq-header">
         <?php
         do_action('ffw_search_input');
-        echo do_shortcode('[ffw_customer_question_form]');
+
+        if( ffw_is_pro_activated() ) {
+            echo do_shortcode('[ffw_customer_question_form]');
+        }
         ?>
     </div>
     <?php
