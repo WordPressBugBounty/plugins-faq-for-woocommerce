@@ -1,10 +1,10 @@
-﻿=== Happy WooCommerce FAQs & AI FAQ Generator (Formarly XPlainer) ===
+﻿=== Happy WooCommerce FAQs & AI FAQ Generator ===
 Contributors: happydevs, optemiz, nayanchamp7, azha18
 Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.7
 Requires PHP: 5.6
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,12 +12,12 @@ WooCommerce Product FAQs and accordion plugin create FAQs with Google FAQ schema
 
 == Description ==
 
-Happy WooCommerce FAQs (Formarly `XPlainer`) is a feature-packed, flexible, and robust product FAQ plugin for WooCommerce. It might be your best shot if you want to increase sales by answering your customer’s most commonly asked questionnaires smartly.
+Happy WooCommerce FAQs is a feature-packed, flexible, and robust product FAQ plugin for WooCommerce. It might be your best shot if you want to increase sales by answering your customer’s most commonly asked questionnaires smartly.
 
 👉 [__Upgrade to PRO__](https://happydevs.net/happy-woocommerce-faqs-pro)
 👉 [__Documentation__](https://happydevs.net/docs/faq-for-woocommerce/overview/)
 👉 [__Support__](https://wordpress.org/support/plugin/faq-for-woocommerce/)
-👉 [__Tutorials__](https://www.youtube.com/watch?v=oGLDl0GKh-k&list=PLrEy7YvtgxPhl75Cjd8JeGMeiv_knlPgA)
+👉 [__Video Tutorials__](https://www.youtube.com/watch?v=CnsPBdgIbaU&list=PLqgTGQxEn_rZbnleeeuK18QJ984t6o3ZX&ab_channel=HappyDevs)
 
 The main purpose of this FAQ plugin for [__WooCommerce__](https://wordpress.org/plugins/woocommerce) is to generate product FAQs and display those in an eye-pleasing way. While displaying the product FAQ list, you get multiple templates with relative designs. Right now, there are 5 templates (free version), and more are cooking up.
 
@@ -407,6 +407,9 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.8.5 =
+* Added: Video playlist in readme file.
 
 = 1.8.4 =
 * Fixed: Shortcode override - issue has been fixed
