@@ -4,7 +4,7 @@ Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.7
 Requires PHP: 5.6
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,9 +16,14 @@ WooCommerce Product FAQs and accordion plugin create FAQs with Google FAQ schema
 
 **Happy WooCommerce FAQs** is a feature-packed, flexible, and robust **product FAQ** plugin for WooCommerce. It might be your best shot if you want to increase sales by answering your customer’s most commonly asked questionnaires smartly.
 
+[Demo](https://demo.happydevs.net/happyfaqs/product/beanie-with-logo/) | [Documentation](https://happydevs.net/docs/faq-for-woocommerce/overview) | [Video Tutorials](https://www.youtube.com/watch?v=CnsPBdgIbaU&list=PLqgTGQxEn_rZbnleeeuK18QJ984t6o3ZX&ab_channel=HappyDevs) | [Get Support](https://happydevs.net/support)
+
 [youtube https://www.youtube.com/watch?v=CnsPBdgIbaU]
 
-[Premium Version](https://happydevs.net/happy-woocommerce-faqs-pro) | [Documentation](https://happydevs.net/docs/faq-for-woocommerce/overview) | [Video Tutorials](https://www.youtube.com/watch?v=CnsPBdgIbaU&list=PLqgTGQxEn_rZbnleeeuK18QJ984t6o3ZX&ab_channel=HappyDevs) | [Get Support](https://happydevs.net/support)
+> **Upgrade to Happy FAQs PRO**<br />
+> Upgrade to [Happy FAQs PRO now](https://octol.io/fs-repo-up) to get the priority e-mail support and gain an access to all the PRO features!
+
+[Premium Version](https://happydevs.net/happy-woocommerce-faqs-pro)
 
 > This advanced WooCommerce Question Answer plugin can skyrocket your sales and increase your business’s online visibility. Indeed, a tool that should not be missed for any product site.
 
@@ -377,6 +382,9 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.8.7 =
+* Fixed: Duplicate function issue for free and premium version fixed.
 
 = 1.8.6 =
 * Added: WooCommerce 9.6 compatibility added.
