@@ -768,6 +768,28 @@ class FAQ_Woocommerce_Settings {
     }
 
     /**
+     * Enable FAQs in Product Page
+     *
+     * @since 1.8.8
+     */
+    function ffw_enable_product_pages_faqs() {
+        $checked = 'checked="checked"';
+        
+        if( isset($this->options['enable_product_pages_faqs']) && $this->options['enable_product_pages_faqs'] !== 'on' ) {
+            $checked = '';
+        }
+        ?>
+        <div class="ffw-switch-wrapper">
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-enable-product-pages-faqs" name="ffw_general_settings[enable_product_pages_faqs]" <?php echo esc_attr($checked); ?>>
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable to display FAQs in product single page.', 'faq-for-woocommerce'));
+    }
+    
+    /**
      * Enable FAQs in Archive Page
      *
      * @since 1.7.6

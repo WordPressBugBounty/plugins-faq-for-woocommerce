@@ -17,9 +17,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 class FAQ_Woocommerce_Public {
 
     /**
+     * Get settings option.
+     *
+     * @since 1.0.0
+     */
+    public $options = [];
+
+    /**
+     * Instance.
+     *
+     * The instance will be created if it does not exist yet.
+     *
+     * @return self The main instance.
+     * @since  1.0.0
+     */
+    public static function instance(): self
+    {
+        static $instance = null;
+        if (is_null($instance) ) {
+            $instance = new self();
+        }
+
+        return $instance;
+    }
+
+    /**
      * Constructor.
      */
     public function __construct() {
+        $options = get_option( 'ffw_general_settings' );
+		$this->options = ! empty( $options ) ? $options : [];
+
+        // Hooks.
         add_action( 'wp_enqueue_scripts', array( $this, 'ffw_public_styles' ), 999 );
         add_action( 'wp_enqueue_scripts', array( $this, 'ffw_public_scripts' ), true );
         add_action( 'init', array( $this, 'includes' ) );
@@ -67,8 +96,8 @@ class FAQ_Woocommerce_Public {
     public function ffw_public_scripts() {
         global $wp_query, $post;
 
-		//get layout
-		$options = get_option( 'ffw_general_settings' );
+		//get options.
+        $options = $this->options;
 		$layout = isset( $options['ffw_layout'] ) ? (int) $options['ffw_layout'] : 1;
 
         // Register scripts.

@@ -28,6 +28,11 @@
 					background: transparent !important;
 					color: #8d57ce !important;
 
+					.ffw-question {
+						width: calc(100% - 30px);
+						display: block;
+					}
+
 					&:hover, &:focus {
 						cursor: pointer;
 						color: #8d57ce !important;

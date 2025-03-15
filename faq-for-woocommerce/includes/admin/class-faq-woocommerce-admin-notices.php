@@ -26,7 +26,7 @@ class FFW_Admin_Notices {
      */
     public function __construct() {
         add_action( 'admin_notices', [$this, 'review_notice'] );
-        add_action( 'admin_notices', [$this, 'coupon_notice'] );
+        // add_action( 'admin_notices', [$this, 'coupon_notice'] );
         //add_action( 'admin_notices', [$this, 'discount_banner_notice'] );
         add_action( 'wp_ajax_ffw_save_review_notice', [ $this, 'ffw_save_review_notice' ] );
         add_action( 'wp_ajax_ffw_hide_coupon_notice', [ $this, 'ffw_hide_coupon_notice' ] );

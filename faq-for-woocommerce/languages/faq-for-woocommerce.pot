@@ -1,2073 +1,511 @@
-# Copyright (C) 2024 HappyDevs
-# This file is distributed under the same license as the Happy WooCommerce FAQs plugin.
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Happy WooCommerce FAQs 1.8.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/faq-for-woocommerce\n"
+"Project-Id-Version: FAQ for Woocommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-02 13:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-10T06:12:50+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: faq-for-woocommerce\n"
-
-#. Plugin Name of the plugin
-#: faq-for-woocommerce.php
-#: includes/admin/class-faq-woocommerce-admin-notices.php:88
-#: includes/ffw-helper.php:1256
-msgid "Happy WooCommerce FAQs"
-msgstr ""
-
-#. Plugin URI of the plugin
-#: faq-for-woocommerce.php
-msgid "https://wordpress.org/plugins/faq-for-woocommerce/"
-msgstr ""
-
-#. Description of the plugin
-#: faq-for-woocommerce.php
-msgid "This plugin shows faqs question and answers for woocommerce products with comment, FAQ schema and AI support."
-msgstr ""
-
-#. Author of the plugin
-#: faq-for-woocommerce.php
-msgid "HappyDevs"
-msgstr ""
-
-#. Author URI of the plugin
-#: faq-for-woocommerce.php
-msgid "https://happydevs.net"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-assets.php:133
-#: views/ai-faqs/body.php:76
-msgid "No Item selected"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-menus.php:55
-#: includes/admin/class-faq-woocommerce-settings.php:2074
-#: views/dashboard/header.php:92
-msgid "AI FAQs"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-menus.php:56
-#: views/dashboard/header.php:94
-msgid "Templates"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-menus.php:59
-#: views/templates.php:44
-msgid "Upgrade"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-menus.php:97
-#: includes/class-faq-woocommerce.php:145
-#: views/dashboard/header.php:95
-msgid "Settings"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:55
-msgid "Buy Now"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:75
-msgid "<strong style=\"color: #fff;text-decoration: line-through;\">XPlainer Product FAQs</strong> is rebranded to <strong style=\"color: #fdfc1e;\">`Happy WooCommerce FAQs`</strong>. <a href=\"https://happydevs.net/happy-woocommerce-faqs-pro\" style=\"color: #bbf7d0;\">Get <strong>20% discount</strong></a> on rebranding, Coupon: <strong style=\"color: #fdfc1e;\">\"IMHAPPY\"</strong>."
-msgstr ""
-
-#. translators: 1: plugin name,2: Slightly Smiling Face (Emoji), 3: line break 'br' tag
-#: includes/admin/class-faq-woocommerce-admin-notices.php:127
-msgid "Cool! This is great that you have made %3$s+ FAQs with %1$s. Can you please take 60 seconds to leave your feedback. This encourages us to continue providing the best features for you. %2$s"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:135
-msgid "Remind me later"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:136
-msgid "I already did!"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:137
-msgid "Review Here"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:183
-#: includes/admin/class-faq-woocommerce-admin-notices.php:223
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:119
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:255
-#: includes/admin/faq-woocommerce-admin-functions.php:114
-#: includes/admin/faq-woocommerce-admin-functions.php:210
-#: includes/admin/faq-woocommerce-admin-functions.php:252
-#: includes/admin/faq-woocommerce-admin-functions.php:316
-#: includes/admin/faq-woocommerce-admin-functions.php:384
-#: includes/admin/faq-woocommerce-admin-functions.php:454
-#: includes/admin/faq-woocommerce-admin-functions.php:555
-msgid "Invalid nonce"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:188
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:124
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:260
-#: includes/admin/faq-woocommerce-admin-functions.php:119
-#: includes/admin/faq-woocommerce-admin-functions.php:215
-#: includes/admin/faq-woocommerce-admin-functions.php:257
-#: includes/admin/faq-woocommerce-admin-functions.php:321
-#: includes/admin/faq-woocommerce-admin-functions.php:389
-#: includes/admin/faq-woocommerce-admin-functions.php:459
-#: includes/admin/faq-woocommerce-admin-functions.php:549
-msgid "Current user is not capable to perform it."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:211
-#: includes/admin/faq-woocommerce-admin-functions.php:124
-#: includes/admin/faq-woocommerce-admin-functions.php:262
-#: includes/admin/faq-woocommerce-admin-functions.php:326
-#: includes/admin/faq-woocommerce-admin-functions.php:394
-#: includes/admin/faq-woocommerce-admin-functions.php:464
-msgid "Invalid Request."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin-notices.php:228
-msgid "Coupon notice hide successfull."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-admin.php:90
-#: includes/template-parts/sidebar.php:18
-msgid "Documentation"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:132
-msgid "Keywords are missing."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:140
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:268
-msgid "Product is missing."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:154
-msgid "English (United States)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:202
-msgid "Q"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:213
-msgid "A"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:229
-msgid "FAQs are generated successfully!"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:241
-msgid "FAQs generation failed!"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:276
-msgid "FAQs are missing."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:284
-msgid "No FAQs is selected."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:321
-msgid "FAQs are inserted successfully!"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-ai-faqs.php:331
-msgid "FAQs insertion failed!"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-dashboard.php:29
-#: includes/admin/class-faq-woocommerce-dashboard.php:30
-#: views/dashboard/header.php:90
-msgid "Dashboard"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:72
-msgid "Tab Label"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:78
-msgid "Display Location (Single Product Page)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:84
-msgid "Enable FAQs in Archive"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:90
-msgid "Display Location (Archive Page)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:96
-msgid "Enable FAQs in Shop"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:102
-msgid "Display Location (Shop Page)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:108
-msgid "Enable FAQs in Cart"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:114
-msgid "Display Location (Cart Page)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:120
-msgid "Enable FAQs in Checkout"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:126
-msgid "Display Location (Checkout Page)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:138
-msgid "Tab Priority"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:144
-msgid "Editor"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:150
-msgid "Enable Global FAQs"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:156
-msgid "Global FAQs Appearance"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:162
-msgid "Enable Customer Questions"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:168
-msgid "FAQ Post Behaviour"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:174
-msgid "Enable Dynamic Attributes"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:180
-msgid "Display All Answers"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:186
-#: includes/admin/class-faq-woocommerce-settings.php:1310
-#: includes/admin/class-faq-woocommerce-settings.php:1312
-#: includes/faq-woocommerce-public.php:309
-#: views/dashboard/body.php:116
-#: views/dashboard/body.php:407
-msgid "Expand/Collapse All"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:192
-msgid "Enable RTL"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:198
-msgid "Expand/Collapse All Label"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:204
-msgid "Set Access Role"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:210
-msgid "Enable Search Box"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:216
-msgid "Enable Multi Column"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:222
-msgid "Search Box Position"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:228
-msgid "FAQ Counter"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:234
-msgid "FAQ Counter in Product List"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:240
-msgid "Hide General Shortcode Preview"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:246
-msgid "Hide Dynamic Shortcode Preview in Product Page"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:252
-msgid "Before FAQ"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:258
-msgid "After FAQ"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:272
-msgid "Width (%)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:278
-msgid "Question Text Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:284
-msgid "Question Background Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:290
-msgid "Question Background Secondary Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:296
-msgid "Question Border Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:302
-msgid "Question Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:308
-msgid "Answer Background Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:314
-msgid "Answer Text Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:320
-msgid "Answer Border Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:326
-msgid "Custom CSS"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:340
-msgid "Enable/Disable Schema"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:346
-msgid "Schema Description Type"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:360
-msgid "Enable Comment"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:366
-msgid "Sort Comment Ordering"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:372
-msgid "Comment Avatar"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:378
-msgid "Comment Section Title"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:384
-msgid "Comment Form Title"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:390
-msgid "Comment Reply Form Title"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:396
-msgid "Comment Reply Button Text"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:402
-msgid "Comment Submit Button Text"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:414
-msgid "Form Section Title Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:420
-msgid "Form Section Title Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:426
-msgid "Avatar Style"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:432
-msgid "Comment Date Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:438
-msgid "Comment Date Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:444
-msgid "Comment Content Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:450
-msgid "Comment Content Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:456
-#: includes/admin/class-faq-woocommerce-settings.php:462
-msgid "Author Name Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:468
-msgid "Author Name Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:474
-msgid "Reply Button Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:480
-msgid "Reply Button Text Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:486
-msgid "Submit Button Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:492
-msgid "Submit Button Text Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:498
-msgid "Submit Button Background"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:504
-msgid "Form Border Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:510
-msgid "Form Title Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:516
-msgid "Form Title Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:522
-msgid "Reply Form Title Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:528
-msgid "Reply Form Title Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:534
-msgid "Reply Form Submit Button Text"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:540
-msgid "Reply Form Submit Button Font Size"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:546
-msgid "Reply Form Submit Button Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:552
-msgid "Reply Form Submit Button Background"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:558
-msgid "Reply Form Border Color"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:572
-msgid "AI Model"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:578
-msgid "API Key"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:584
-msgid "Set Max Tokens"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:658
-msgid "Schema can be disabled from the product page by selecting disable."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:673
-msgid "Description (with HTML)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:674
-msgid "Description (without HTML)"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:677
-msgid "Select schema description type."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:692
-#: includes/admin/class-faq-woocommerce-settings.php:752
-#: includes/admin/class-faq-woocommerce-settings.php:780
-#: includes/admin/class-faq-woocommerce-settings.php:806
-#: includes/admin/class-faq-woocommerce-settings.php:832
-#: includes/admin/class-faq-woocommerce-settings.php:859
-#: includes/admin/class-faq-woocommerce-settings.php:885
-#: includes/admin/class-faq-woocommerce-settings.php:912
-#: includes/admin/class-faq-woocommerce-settings.php:945
-#: includes/admin/class-faq-woocommerce-settings.php:972
-#: includes/admin/class-faq-woocommerce-settings.php:1034
-#: includes/admin/class-faq-woocommerce-settings.php:1056
-#: includes/admin/class-faq-woocommerce-settings.php:1078
-#: includes/admin/class-faq-woocommerce-settings.php:1100
-#: includes/admin/class-faq-woocommerce-settings.php:1122
-#: includes/admin/class-faq-woocommerce-settings.php:1144
-#: includes/admin/class-faq-woocommerce-settings.php:1166
-#: views/templates.php:31
-msgid "PRO"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:698
-msgid "By Product"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:699
-msgid "By Product Categories"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:702
-msgid "Choose the display condition for FAQs in product page, How FAQs will be fetched."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:711
-msgid "Change the faq tab label, it will affect in the product page description faq tab."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:733
-msgid "Gutenberg"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:734
-msgid "Classic"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:737
-msgid "Choose the answer editor from gutenberg or classic editor."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:758
-msgid "Product Tab"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:759
-msgid "Top of Product page [Pro]"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:760
-msgid "Before Product Summary [Pro]"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:761
-msgid "After `Add To Cart` Button [Pro]"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:762
-msgid "After Product Meta [Pro]"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:763
-msgid "After Social Share Buttons [Pro]"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:764
-msgid "Bottom of Product page [Pro]"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:767
-msgid "Choose the display location of FAQs in product page, Where it should be displayed."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:789
-msgid "Enable to display FAQs in Archive Pages (product categories, tags)."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:812
-#: includes/admin/class-faq-woocommerce-settings.php:865
-msgid "Before Main Content"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:813
-#: includes/admin/class-faq-woocommerce-settings.php:866
-msgid "Before Archive Description"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:814
-#: includes/admin/class-faq-woocommerce-settings.php:867
-msgid "Before Shop Loop"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:815
-#: includes/admin/class-faq-woocommerce-settings.php:868
-msgid "After Shop Loop"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:816
-#: includes/admin/class-faq-woocommerce-settings.php:869
-msgid "After Main Content"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:819
-msgid "Choose the display location of FAQs in archive pages (product category & tag pages). Assign product categories or tags to the FAQs."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:841
-msgid "Enable to display FAQs in Shop Page."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:872
-msgid "Choose the display location of FAQs in shop page. Assign faq location as `Shop Page` to the FAQs."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:894
-msgid "Enable to display FAQs in Cart Page."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:918
-msgid "Before Cart"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:919
-msgid "After Cart"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:920
-msgid "Before Cart Table"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:921
-msgid "After Cart Table"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:922
-msgid "Before Cart Content"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:923
-msgid "After Cart Content"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:924
-msgid "Before Cart Total"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:925
-msgid "After Cart Total"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:926
-msgid "Before Shopping"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:927
-msgid "After Shopping"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:928
-msgid "Before Order Total"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:929
-msgid "After Order Total"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:932
-msgid "Choose the display location of FAQs in cart page. Assign faq location as `Cart Page` to the FAQs."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:954
-msgid "Enable to display FAQs in Checkout Page."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:978
-msgid "Before Checkout Form"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:979
-msgid "After Checkout Form"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:980
-msgid "Before Customer Details"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:981
-msgid "After Customer Details"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:982
-msgid "Before Customer Billing"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:983
-msgid "After Customer Billing"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:984
-msgid "Before Customer Shipping"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:985
-msgid "After Customer Shipping"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:986
-msgid "Before Order Notes"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:987
-msgid "After Order Notes"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:988
-msgid "Before Order Review"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:989
-msgid "After Order Review"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:990
-msgid "Before Order Payment"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:991
-msgid "After Order Payment"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:992
-msgid "Before Submit Button"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:993
-msgid "After Submit Button"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:996
-msgid "Choose the display location of FAQs in cart page. Assign faq location as `Checkout Page` to the FAQs."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1005
-msgid "Reorder faq tab according to its priority. Increase or decrease with 10 volume."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1021
-msgid "Before faq content will appear just before first faq accordion start."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1043
-msgid "Enable RTL mode, FAQs are shown in `right to left` view."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1065
-msgid "Enable to show any product attributes value inside answers dynamically."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1087
-msgid "Enable to show FAQs in multiple column mode."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1109
-msgid "Enable search box, customer can easily search FAQs as they want."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1131
-msgid "Select the search box position."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1153
-msgid "Enable Global FAQs to set specific FAQ for `All the products`."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1175
-msgid "Enable Customer Questions to make customer capable to ask a question."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1200
-msgid "Which role of user should have access to FAQ posts?"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1212
-#: includes/admin/class-faq-woocommerce-settings.php:1228
-#: includes/admin/class-faq-woocommerce-settings.php:1244
-#: includes/admin/class-faq-woocommerce-settings.php:1261
-#: includes/admin/class-faq-woocommerce-settings.php:1277
-#: includes/admin/class-faq-woocommerce-settings.php:1527
-msgid "Show"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1213
-#: includes/admin/class-faq-woocommerce-settings.php:1229
-#: includes/admin/class-faq-woocommerce-settings.php:1245
-#: includes/admin/class-faq-woocommerce-settings.php:1262
-#: includes/admin/class-faq-woocommerce-settings.php:1278
-#: includes/admin/class-faq-woocommerce-settings.php:1528
-msgid "Hide"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1216
-msgid "Show/Hide FAQs counter in front faqs tab."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1232
-msgid "Hide FAQs counter column from product list table."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1248
-msgid "Hide FAQs general shortcode like [ffw_template]"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1265
-msgid "Hide dynamic shortcode preview in single product page."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1281
-msgid "Display all the answers when the page loads."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1295
-#: includes/admin/class-faq-woocommerce-settings.php:1826
-msgid "Enable"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1296
-#: includes/admin/class-faq-woocommerce-settings.php:1827
-msgid "Disable"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1299
-msgid "Enable to open and close all FAQs simultaneously."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1314
-msgid "Set a label for expend/collapse all button."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1329
-msgid "Display First"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1330
-msgid "Display Last"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1333
-msgid "Select whether Global FAQs will display first or last of other FAQs. Make sure Global FAQs setting is enabled."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1347
-msgid "Noindex"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1348
-msgid "Index"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1351
-msgid "Index/Noindex FAQ posts."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1367
-msgid "Before faq content will appear just after last faq accordion end."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1374
-msgid "This is where you can set faq options.The following options affect the faqs are displayed on the frontend."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1383
-msgid "Control faq wrapper width by percentage."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1392
-msgid "Custom css is the most priority css, you can customize anything."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1401
-msgid "Change the faq question text color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1410
-msgid "Change the faq question background color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1419
-msgid "Change the faq question background color, this setting is for only pop layout."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1428
-msgid "Change the faq question border color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1438
-msgid "Change the faq question font size, move the range control for increase/decrease font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1447
-msgid "Change the faq answer text color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1456
-msgid "Change the faq answer background color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1465
-msgid "Change the faq answer border color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1483
-msgid "Comment General Settings"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1499
-msgid "Enable/Disable FAQs comment feature."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1511
-msgid "Ascending"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1512
-msgid "Descending"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1515
-msgid "Change to sort the faq comments ordeirng."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1531
-msgid "Change to show/hide the faq comments avatar."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1538
-#: includes/ffw-helper.php:1101
-msgid "Comments"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1540
-msgid "Put comments section title."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1547
-#: includes/ffw-helper.php:1126
-msgid "Comment Box"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1549
-msgid "Put comments form title."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1556
-#: includes/class-ffw-walker-comment.php:28
-msgid "Write a Reply"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1558
-msgid "Put comments reply form title."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1565
-#: includes/ffw-helper.php:757
-msgid "Reply"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1567
-msgid "Put comments reply button text."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1574
-#: includes/admin/class-faq-woocommerce-settings.php:2069
-#: includes/ffw-helper.php:1127
-msgid "Comment"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1576
-msgid "Put comments submit button text."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1583
-#: includes/class-ffw-walker-comment.php:29
-msgid "Reply Comment"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1585
-msgid "Put comments reply form submit button text."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1598
-msgid "Circle"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1599
-msgid "Rectangle"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1602
-msgid "Change comments avatar style."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1612
-msgid "Put comments date-time font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1622
-msgid "Change the faq comments date color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1631
-msgid "Change the faq comments content color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1640
-msgid "Change the faq comments section title color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1649
-msgid "Change the faq comments author name color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1658
-msgid "Change the faq comments reply button text color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1667
-msgid "Change the faq comments submit button background color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1676
-msgid "Change the faq comments form border color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1685
-msgid "Change the faq comments form title color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1694
-msgid "Change the faq comments reply form title color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1703
-msgid "Change the faq comments form submit button color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1712
-msgid "Change the faq comments reply form submit button text color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1721
-msgid "Change the faq comments reply form submit button background color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1730
-msgid "Change the faq comments reply form border color."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1739
-msgid "Put comments content font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1748
-msgid "Put comments author name font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1757
-msgid "Put comments reply button font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1766
-msgid "Put comments submit button font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1775
-msgid "Put comments Section title font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1784
-msgid "Put comments form title font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1793
-msgid "Put comments reply form title font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1802
-msgid "Put comments reply form submit button font size."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1811
-msgid "Comment Style Settings"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1830
-msgid "Enable to generate AI based product FAQs."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1904
-msgid "Be A PRO"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1905
-msgid "Grab the best features of Happy WooCommerce FAQs to increase your sell."
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:1906
-msgid "Upgrade Now"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:2054
-msgid "General"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:2059
-msgid "Style"
-msgstr ""
-
-#: includes/admin/class-faq-woocommerce-settings.php:2064
-msgid "Schema"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:52
-msgid "Happy FAQs Panel"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:150
-msgid "Products"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:160
-#: views/ai-faqs/body.php:20
-msgid "Search for a product&hellip;"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:181
-msgid "Search and Select products for the FAQ."
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:182
-msgid "If product categories are assigned, FAQs will be fetched from the product categories first."
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:191
-msgid "Product Categories"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:200
-msgid "search categories"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:231
-msgid "Select product categories for the FAQ."
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:239
-msgid "Product Tags"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:248
-msgid "search tags"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:280
-msgid "Select product tags for the FAQ."
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:288
-msgid "Display in Pages"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:297
-msgid "Select Woo Pages"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:301
-msgid "Product & Archive Page"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:302
-msgid "Shop Page"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:303
-msgid "Cart Page"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:304
-msgid "Checkout Page"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:339
-msgid "Select pages to display FAQs."
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:352
-#: views/dashboard/body.php:296
-#: views/dashboard/body.php:368
-msgid "Global FAQs"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:355
-#: includes/admin/class-ffw-metaboxes.php:386
-msgid "pro"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:370
-msgid "Enable to make this faq as Global FAQ, the faq will be displayed for all the products if enabled."
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:383
-msgid "Product Attributes"
-msgstr ""
-
-#: includes/admin/class-ffw-metaboxes.php:395
-msgid "Select any product attribute and Paste the copied attribute to the product content."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:56
-msgid "FAQ List"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:60
-msgid "Manage current product FAQs here."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:61
-msgid "These controls will work if only products are assigned to FAQs instead of product categories."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:67
-msgid "Select a FAQ"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:78
-msgid "Quick Add"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:79
-msgid "Delete All"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:95
-msgid "Please publish the product first to insert the faqs"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:129
-#: includes/admin/faq-woocommerce-admin-functions.php:267
-#: includes/admin/faq-woocommerce-admin-functions.php:331
-#: includes/admin/faq-woocommerce-admin-functions.php:399
-msgid "Not in Edit page."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:134
-msgid "No Question added."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:139
-msgid "No Answer added."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:163
-msgid "Update Successful!"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:165
-#: includes/admin/faq-woocommerce-admin-functions.php:279
-#: includes/admin/faq-woocommerce-admin-functions.php:360
-#: includes/admin/faq-woocommerce-admin-functions.php:417
-#: includes/admin/faq-woocommerce-admin-functions.php:501
-msgid "Something Wrong!"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:189
-msgid "No faq added."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:224
-msgid "Dismissal discounted notice."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:231
-msgid "Could not able to dismiss discounted notice."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:277
-msgid "Deleted All FAQ Successfull!"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:295
-#: includes/admin/faq-woocommerce-admin-functions.php:363
-#: includes/admin/faq-woocommerce-admin-functions.php:433
-msgid "No faq deleted."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:350
-msgid "Delete Successfull!"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:415
-msgid "Updated All FAQ Successfully!"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:469
-msgid "No product id."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:499
-msgid "FAQ updated Successfully!"
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:519
-msgid "No faq datas."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:543
-msgid "Nonce missing."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:559
-msgid "Template id missing."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:574
-msgid "FAQ option is updated."
-msgstr ""
-
-#: includes/admin/faq-woocommerce-admin-functions.php:583
-msgid "FAQ option is not updated."
-msgstr ""
-
-#: includes/class-faq-comments.php:78
-msgid "Comments are closed."
-msgstr ""
-
-#: includes/class-faq-woocommerce-schema.php:122
-msgid "FAQPage"
-msgstr ""
-
-#: includes/class-faq-woocommerce.php:61
-msgid "Cloning is forbidden."
-msgstr ""
-
-#: includes/class-faq-woocommerce.php:70
-msgid "Unserializing instances of this class is forbidden."
-msgstr ""
-
-#: includes/class-faq-woocommerce.php:146
-msgid "Go Pro"
-msgstr ""
-
-#: includes/class-faq-woocommerce.php:184
-#: includes/class-faq-woocommerce.php:186
-msgid "WooCommerce"
-msgstr ""
-
-#: includes/class-faq-woocommerce.php:185
-msgid "Happy FAQs"
-msgstr ""
-
-#. translators: 1: this plugin name, 2: required plugin name, 3: required plugin name and installation url
-#: includes/class-faq-woocommerce.php:194
-msgid "%1$s requires %2$s to be installed and active. You can installed/activate %3$s here."
-msgstr ""
-
-#. translators: 1: this plugin name, 2: required plugin name, 3: required plugin required version, 4: required plugin current version, 5: required plugin update url and name
-#: includes/class-faq-woocommerce.php:205
-msgid "%1$s requires %2$s version %3$s or above and %4$s found. Please upgrade %2$s to the latest version here %5$s"
-msgstr ""
-
-#: includes/class-ffw-walker-comment.php:53
-msgid "says:"
-msgstr ""
-
-#. translators: 1: Comment date, 2: Comment time.
-#: includes/class-ffw-walker-comment.php:65
-msgid "%1$s at %2$s"
-msgstr ""
-
-#: includes/class-ffw-walker-comment.php:78
-msgid "Edit"
-msgstr ""
-
-#: includes/class-ffw-walker-comment.php:94
-msgid "Your comment is awaiting moderation."
-msgstr ""
-
-#: includes/class-ffw-walker-comment.php:109
-msgid "By Author"
-msgstr ""
-
-#: includes/faq-woocommerce-public.php:144
-#: includes/ffw-helper.php:699
-msgid "FAQs"
-msgstr ""
-
-#: includes/ffw-helper.php:719
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.2; wp-5.7\n"
+"X-Domain: faq-for-woocommerce"
+
+#. 1: this plugin name, 2: required plugin name, 3: required plugin name and installation url
+#: includes/class-faq-woocommerce.php:204
+#, php-format
+msgid ""
+"%1$s requires %2$s to be installed and active. You can installed/activate "
+"%3$s here."
+msgstr ""
+
+#. 1: this plugin name, 2: required plugin name, 3: required plugin required version, 4: required plugin current version, 5: required plugin update url and name
+#: includes/class-faq-woocommerce.php:215
+#, php-format
+msgid ""
+"%1$s requires %2$s version %3$s or above and %4$s found. Please upgrade %2$s "
+"to the latest version here %5$s"
+msgstr ""
+
+#. 1: plugin name,2: Slightly Smiling Face (Emoji), 3: line break 'br' tag
+#: includes/admin/class-faq-woocommerce-admin-notices.php:70
+#, php-format
+msgid ""
+"%3$s Enjoying %1$s? If yes, please leave a quick rating to encourage us for "
+"contributing more special features for you.%4$s Your quick review is our "
+"inspiration. Thanks for using %1$s %2$s"
+msgstr ""
+
+#: includes/ffw-helper.php:330
 msgid "0"
 msgstr ""
 
-#: includes/ffw-helper.php:792
-msgctxt "FAQ"
-msgid "Happy FAQs"
+#: includes/admin/class-faq-woocommerce-settings.php:459
+msgid ""
+"<p>This is where you can set faq options.The following options affect the "
+"faqs are displayed on the frontend.</p>"
 msgstr ""
 
-#: includes/ffw-helper.php:793
-msgctxt "FAQ"
-msgid "FAQ"
+#: includes/admin/class-faq-woocommerce-admin.php:71
+msgid "Add New"
 msgstr ""
 
-#: includes/ffw-helper.php:794
-#: includes/ffw-helper.php:795
-msgctxt "Happy FAQs"
-msgid "Happy FAQs"
-msgstr ""
-
-#: includes/ffw-helper.php:796
-#: includes/ffw-helper.php:797
+#: includes/admin/class-faq-woocommerce-admin.php:72
 msgid "Add New FAQ"
 msgstr ""
 
-#: includes/ffw-helper.php:798
-msgid "New FAQ"
+#: includes/admin/class-faq-woocommerce-settings.php:303
+msgid "Administrator"
 msgstr ""
 
-#: includes/ffw-helper.php:799
-msgid "Edit FAQ"
+#: includes/admin/class-faq-woocommerce-settings.php:125
+msgid "After FAQ"
 msgstr ""
 
-#: includes/ffw-helper.php:800
-msgid "View FAQ"
-msgstr ""
-
-#: includes/ffw-helper.php:801
+#: includes/admin/class-faq-woocommerce-admin.php:76
 msgid "All FAQS"
 msgstr ""
 
-#: includes/ffw-helper.php:802
-msgid "Search FAQS"
+#: includes/admin/class-faq-woocommerce-settings.php:206
+msgid "Answer Background Color"
 msgstr ""
 
-#: includes/ffw-helper.php:803
-msgid "Parent FAQS:"
-msgstr ""
-
-#: includes/ffw-helper.php:804
-msgid "No faqs found."
-msgstr ""
-
-#: includes/ffw-helper.php:805
-msgid "No faqs found in Trash."
-msgstr ""
-
-#: includes/ffw-helper.php:806
-msgctxt "Overrides the “Featured Image” phrase for this post type. Added in 4.3"
-msgid "FAQ Cover Image"
-msgstr ""
-
-#: includes/ffw-helper.php:807
-msgctxt "Overrides the “Set featured image” phrase for this post type. Added in 4.3"
-msgid "Set cover image"
-msgstr ""
-
-#: includes/ffw-helper.php:808
-msgctxt "Overrides the “Remove featured image” phrase for this post type. Added in 4.3"
-msgid "Remove cover image"
-msgstr ""
-
-#: includes/ffw-helper.php:809
-msgctxt "Overrides the “Use as featured image” phrase for this post type. Added in 4.3"
-msgid "Use as cover image"
-msgstr ""
-
-#: includes/ffw-helper.php:810
-msgctxt "The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4"
-msgid "FAQ archives"
-msgstr ""
-
-#: includes/ffw-helper.php:811
-msgctxt "Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4"
-msgid "Insert into ffw"
-msgstr ""
-
-#: includes/ffw-helper.php:812
-msgctxt "Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4"
-msgid "Uploaded to this faq"
-msgstr ""
-
-#: includes/ffw-helper.php:813
-msgctxt "Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4"
-msgid "Filter faqs list"
-msgstr ""
-
-#: includes/ffw-helper.php:814
-msgctxt "Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4"
-msgid "FAQS list navigation"
-msgstr ""
-
-#: includes/ffw-helper.php:815
-msgctxt "Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4"
-msgid "FAQS list"
-msgstr ""
-
-#: includes/ffw-helper.php:842
-msgid "FAQ Categories"
-msgstr ""
-
-#: includes/ffw-helper.php:843
-msgid "FAQ Category"
-msgstr ""
-
-#: includes/ffw-helper.php:844
-msgid "Search FAQ Categories"
-msgstr ""
-
-#: includes/ffw-helper.php:845
-msgid "All FAQ Categories"
-msgstr ""
-
-#: includes/ffw-helper.php:846
-msgid "Parent FAQ Category"
-msgstr ""
-
-#: includes/ffw-helper.php:847
-msgid "Parent FAQ Category:"
-msgstr ""
-
-#: includes/ffw-helper.php:848
-msgid "Edit FAQ Category"
-msgstr ""
-
-#: includes/ffw-helper.php:849
-msgid "Update FAQ Category"
-msgstr ""
-
-#: includes/ffw-helper.php:850
-msgid "Add New Category"
-msgstr ""
-
-#: includes/ffw-helper.php:851
-msgid "New FAQ Category Name"
-msgstr ""
-
-#: includes/ffw-helper.php:852
-msgid "Categories"
-msgstr ""
-
-#: includes/ffw-helper.php:874
-#: includes/ffw-helper.php:875
-msgctxt "FAQ"
-msgid "Customer Questions"
-msgstr ""
-
-#: includes/ffw-helper.php:876
-#: includes/ffw-helper.php:877
-msgctxt "Happy FAQs"
-msgid "Customer Questions"
-msgstr ""
-
-#: includes/ffw-helper.php:878
-msgid "Edit Question"
-msgstr ""
-
-#: includes/ffw-helper.php:879
-msgid "View Question"
-msgstr ""
-
-#: includes/ffw-helper.php:880
-msgid "All Questions"
-msgstr ""
-
-#: includes/ffw-helper.php:881
-msgid "Search Questions"
-msgstr ""
-
-#: includes/ffw-helper.php:882
-msgid "Parent Questions:"
-msgstr ""
-
-#: includes/ffw-helper.php:883
-msgid "No questions found."
-msgstr ""
-
-#: includes/ffw-helper.php:884
-msgid "No questions found in Trash."
-msgstr ""
-
-#: includes/ffw-helper.php:917
-msgid "Questions"
-msgstr ""
-
-#: includes/ffw-helper.php:921
-msgid "Submitted On"
-msgstr ""
-
-#: includes/ffw-helper.php:934
-msgid "Name"
-msgstr ""
-
-#: includes/ffw-helper.php:935
-msgid "Email"
-msgstr ""
-
-#: includes/ffw-helper.php:936
-#: includes/ffw-helper.php:983
-msgid "Location"
-msgstr ""
-
-#: includes/ffw-helper.php:937
-#: includes/ffw-helper.php:985
-msgid "Action"
-msgstr ""
-
-#: includes/ffw-helper.php:951
-#: includes/ffw-helper.php:956
-#: includes/ffw-helper.php:961
-msgid "Empty"
-msgstr ""
-
-#: includes/ffw-helper.php:981
-msgid "Customer Name"
-msgstr ""
-
-#: includes/ffw-helper.php:982
-msgid "Customer Email"
-msgstr ""
-
-#: includes/ffw-helper.php:1061
-msgid "Enter Question"
-msgstr ""
-
-#. translators: %s template
-#: includes/ffw-helper.php:1382
-msgid "%s does not exist."
-msgstr ""
-
-#: includes/template-parts/sidebar.php:7
-msgid "Show your love"
-msgstr ""
-
-#: includes/template-parts/sidebar.php:9
-msgid "We love to have you in the Happy WooCommerce FAQs family. We are making it more awesome everyday."
-msgstr ""
-
-#: includes/template-parts/sidebar.php:10
-msgid "Rate Us"
-msgstr ""
-
-#: includes/template-parts/sidebar.php:20
-msgid "Get started spending some time with the documentation to get familiar with Happy WooCommerce FAQs. Get more sell by explaining product questions with Happy WooCommerce FAQs."
-msgstr ""
-
-#: includes/template-parts/sidebar.php:21
-msgid "Read Docs"
-msgstr ""
-
-#: includes/template-parts/sidebar.php:29
-msgid "Need Help"
-msgstr ""
-
-#: includes/template-parts/sidebar.php:31
-msgid "Stuck with something? Get help from the HappyDevs support team. In case of emergency, Submit Query at the HappyDevs website."
-msgstr ""
-
-#: includes/template-parts/sidebar.php:32
-msgid "Get Support"
-msgstr ""
-
-#: views/ai-faqs/body.php:9
-#: views/dashboard/body.php:68
-msgid "AI FAQs Generator"
-msgstr ""
-
-#: views/ai-faqs/body.php:10
-msgid "Create product faqs with AI and import them."
-msgstr ""
-
-#: views/ai-faqs/body.php:13
-msgid "Select Products *"
-msgstr ""
-
-#: views/ai-faqs/body.php:27
-msgid "Keywords *"
-msgstr ""
-
-#: views/ai-faqs/body.php:32
-msgid "Language"
-msgstr ""
-
-#: views/ai-faqs/body.php:59
-msgid "Generate FAQs"
-msgstr ""
-
-#: views/ai-faqs/body.php:67
-msgid "10 results showing..."
-msgstr ""
-
-#: views/ai-faqs/body.php:73
-msgid "Select All"
-msgstr ""
-
-#: views/ai-faqs/body.php:85
-msgid "Insert FAQs"
-msgstr ""
-
-#: views/ai-faqs/body.php:87
-msgid "Cancel"
-msgstr ""
-
-#: views/dashboard/body.php:11
-msgid "Happy customers"
-msgstr ""
-
-#: views/dashboard/body.php:12
-msgid "Let’s have a look what people are saying about us"
-msgstr ""
-
-#: views/dashboard/body.php:45
-msgid "Happy WooCommerce FAQs Free vs Pro"
-msgstr ""
-
-#: views/dashboard/body.php:46
-msgid "Get the most out of Happy WooCommerce FAQs by upgrading to Pro and unlocking all of the powerful features."
-msgstr ""
-
-#: views/dashboard/body.php:50
-msgid "Features"
-msgstr ""
-
-#: views/dashboard/body.php:51
-msgid "Free"
-msgstr ""
-
-#: views/dashboard/body.php:52
-msgid "Pro"
-msgstr ""
-
-#: views/dashboard/body.php:56
-#: views/dashboard/body.php:400
-msgid "Unlimited FAQs"
-msgstr ""
-
-#: views/dashboard/body.php:57
-msgid "Easily add unlimited product faqs. No limit at all."
-msgstr ""
-
-#: views/dashboard/body.php:69
-msgid "Generate FAQs with Open AI support."
-msgstr ""
-
-#: views/dashboard/body.php:80
-#: views/dashboard/body.php:404
-msgid "Schema Support"
-msgstr ""
-
-#: views/dashboard/body.php:81
-msgid "Automatically Google schema will be added to the displayed FAQs page."
-msgstr ""
-
-#: views/dashboard/body.php:92
-#: views/dashboard/body.php:409
-msgid "Sorting FAQs"
-msgstr ""
-
-#: views/dashboard/body.php:93
-msgid "Drag and sort faqs with your desired order."
-msgstr ""
-
-#: views/dashboard/body.php:104
-#: views/dashboard/body.php:405
-msgid "Shortcode Support"
-msgstr ""
-
-#: views/dashboard/body.php:105
-msgid "Almost all types of shortcode support to display faqs anywhere."
-msgstr ""
-
-#: views/dashboard/body.php:117
-msgid "Enable to expand or collapse all the faqs."
-msgstr ""
-
-#: views/dashboard/body.php:128
-#: views/dashboard/body.php:408
-msgid "Media/Image Support"
-msgstr ""
-
-#: views/dashboard/body.php:129
-msgid "All types of media can be added inside the answers."
-msgstr ""
-
-#: views/dashboard/body.php:140
-#: views/dashboard/body.php:406
-msgid "Comment Support"
-msgstr ""
-
-#: views/dashboard/body.php:141
-msgid "Get customer private/public comments about the faqs."
-msgstr ""
-
-#: views/dashboard/body.php:152
-msgid "Fully Customization"
-msgstr ""
-
-#: views/dashboard/body.php:153
-msgid "Let's customize almost everywhere as like you want."
-msgstr ""
-
-#: views/dashboard/body.php:164
-#: views/dashboard/body.php:401
-msgid "FAQs by Product Categories"
-msgstr ""
-
-#: views/dashboard/body.php:165
-msgid "Assign product categories to FAQs. It will minimize your time to connect FAQs with products."
-msgstr ""
-
-#: views/dashboard/body.php:176
-#: views/dashboard/body.php:402
-msgid "FAQs by Product Tags"
-msgstr ""
-
-#: views/dashboard/body.php:177
-msgid "Assign product tags to FAQs. It will minimize your time to connect FAQs with products."
-msgstr ""
-
-#: views/dashboard/body.php:188
-#: views/dashboard/body.php:359
-msgid "Customer Asking Questions"
-msgstr ""
-
-#: views/dashboard/body.php:189
-msgid "Feature to make customer capable to ask a question on product, shipping, payment, coupon, order etc."
-msgstr ""
-
-#: views/dashboard/body.php:200
-#: views/dashboard/body.php:360
-msgid "Variation Product FAQs"
-msgstr ""
-
-#: views/dashboard/body.php:201
-msgid "Easily create FAQs for variation products and easily engage with your customers by answering their variation queries about the child products."
-msgstr ""
-
-#: views/dashboard/body.php:212
-msgid "More Beautiful FAQ Templates"
-msgstr ""
-
-#: views/dashboard/body.php:213
-msgid "With more advanced FAQ templates you can serve a high quality view and sell more."
-msgstr ""
-
-#: views/dashboard/body.php:224
-#: views/dashboard/body.php:362
-msgid "Display in Product Pages"
-msgstr ""
-
-#: views/dashboard/body.php:225
-msgid "Let's display faqs anywhere in the product page. You may like to show the faqs after `add to cart button` or `social share button`, `top of the page`, `bottom of the page` etc."
-msgstr ""
-
-#: views/dashboard/body.php:236
-msgid "Display in Product Archive Pages (Category & Tag)"
-msgstr ""
-
-#: views/dashboard/body.php:237
-msgid "You may have some FAQs to show in product category or tags pages. Premium version cover it nicely."
-msgstr ""
-
-#: views/dashboard/body.php:248
-#: views/dashboard/body.php:364
-msgid "Display in Shop Page (Shop FAQs)"
-msgstr ""
-
-#: views/dashboard/body.php:249
-msgid "You may have Order, Payment, Shipping related FAQs to show in shop page. Premium version cover it nicely."
-msgstr ""
-
-#: views/dashboard/body.php:260
-#: views/dashboard/body.php:365
-msgid "Display in Cart Page (Cart FAQs)"
-msgstr ""
-
-#: views/dashboard/body.php:261
-msgid "You may have Discount, Order, Payment FAQs to show in shop page. Premium version cover it nicely."
-msgstr ""
-
-#: views/dashboard/body.php:272
-#: views/dashboard/body.php:366
-msgid "Display in Checkout Page (Checkout FAQs)"
-msgstr ""
-
-#: views/dashboard/body.php:273
-msgid "You may have Shipping, Order, Payment FAQs to show in checkout page. Premium version cover it nicely."
-msgstr ""
-
-#: views/dashboard/body.php:284
-#: views/dashboard/body.php:367
-msgid "Dynamic Product Attributes"
-msgstr ""
-
-#: views/dashboard/body.php:285
-msgid "Add product attribute to the answers and it will show the value. Suppose, adding `{product_price}` it will show $30.00"
-msgstr ""
-
-#: views/dashboard/body.php:297
-msgid "Create one FAQ as global to show it in all the products"
-msgstr ""
-
-#: views/dashboard/body.php:308
-#: views/dashboard/body.php:369
-msgid "RTL Support"
-msgstr ""
-
-#: views/dashboard/body.php:309
-msgid "Enable it to display FAQs right to left order, if your language is rtl format"
-msgstr ""
-
-#: views/dashboard/body.php:320
-#: views/dashboard/body.php:370
-msgid "Search FAQs"
-msgstr ""
-
-#: views/dashboard/body.php:321
-msgid "A search box will appear on the FAQs section to search FAQs easily"
-msgstr ""
-
-#: views/dashboard/body.php:332
-#: views/dashboard/body.php:371
-msgid "Multi Column Support"
-msgstr ""
-
-#: views/dashboard/body.php:333
-msgid "Enable to show FAQs in multi column"
-msgstr ""
-
-#: views/dashboard/body.php:350
-#: views/dashboard/body.php:352
-msgid "Rate us"
-msgstr ""
-
-#: views/dashboard/body.php:351
-msgid "Let’s know your thoughts about our products and share your feedback."
-msgstr ""
-
-#: views/dashboard/body.php:356
-msgid "Why Pro?"
-msgstr ""
-
-#: views/dashboard/body.php:361
-msgid "Beautiful FAQs Templates"
-msgstr ""
-
-#: views/dashboard/body.php:363
-msgid "Display in Archive Pages"
-msgstr ""
-
-#: views/dashboard/body.php:380
-msgid "Other Plugins by HappyDevs"
-msgstr ""
-
-#: views/dashboard/body.php:384
-msgid "Patternly"
-msgstr ""
-
-#: views/dashboard/body.php:385
-msgid "Patternly is Gutenberg templates library for quickly creating professional websites"
-msgstr ""
-
-#: views/dashboard/body.php:391
-msgid "Pagely"
-msgstr ""
-
-#: views/dashboard/body.php:392
-msgid "Pagely shows your current template file information"
-msgstr ""
-
-#: views/dashboard/body.php:403
-msgid "AI Generated FAQs"
-msgstr ""
-
-#: views/dashboard/body.php:410
-msgid "Fully Customizable"
-msgstr ""
-
-#: views/dashboard/footer.php:11
-msgid "Elevate user experience with Happy WooCommerce FAQs: WordPress Product FAQ plugin. Build brand, enrich sells and make your customer happy."
-msgstr ""
-
-#: views/dashboard/footer.php:13
-#: views/dashboard/header.php:24
-msgid "Docs"
-msgstr ""
-
-#: views/dashboard/footer.php:14
-#: views/dashboard/header.php:26
-msgid "Support"
-msgstr ""
-
-#: views/dashboard/footer.php:15
-msgid "Website"
-msgstr ""
-
-#: views/dashboard/header.php:25
-msgid "Videos"
-msgstr ""
-
-#: views/dashboard/header.php:31
-msgid "Upgrade to Pro"
-msgstr ""
-
-#: views/dashboard/header.php:91
-msgid "FAQS"
-msgstr ""
-
-#: views/dashboard/header.php:93
-msgid "Customer Questions"
-msgstr ""
-
-#: views/faq-woocommerce-modal-form.php:9
-msgid "FAQ Form"
-msgstr ""
-
-#: views/faq-woocommerce-modal-form.php:11
-msgid "Question:"
+#: includes/admin/class-faq-woocommerce-settings.php:214
+msgid "Answer Border Color"
 msgstr ""
 
 #: views/faq-woocommerce-modal-form.php:14
 msgid "Answer:"
 msgstr ""
 
-#: views/templates.php:39
+#: includes/admin/class-faq-woocommerce-settings.php:305
+msgid "Author"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:117
+msgid "Before FAQ"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:341
+msgid "Before faq content will appear just after last faq accordion end."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:271
+msgid "Before faq content will appear just before first faq accordion start."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:429
+msgid "Change the faq answer background color."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:438
+msgid "Change the faq answer border color."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:393
+msgid ""
+"Change the faq question background color, this setting is for only pop "
+"layout."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:384
+msgid "Change the faq question background color."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:402
+msgid "Change the faq question border color."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:412
+msgid ""
+"Change the faq question font size, move the range control for "
+"increase/decrease font size."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:375
+msgid "Change the faq question text color."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:254
+msgid ""
+"Change the faq tab label, it will affect in the product page description faq "
+"tab."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:290
+msgid "Choose your desire layout design, currently it has four layouts."
+msgstr ""
+
+#: includes/class-faq-woocommerce.php:61
+msgid "Cloning is forbidden."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:306
+msgid "Contributor"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:357
+msgid "Control faq wrapper width by percentage."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:150
+msgid "Custom CSS"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:366
+msgid "Custom css is the most priority css, you can customize anything."
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:71
+msgid "Delete All"
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:259
+msgid "Delete Successfull!"
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:198
+msgid "Deleted All FAQ Successfull!"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:74
+msgid "Edit FAQ"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:304
+msgid "Editor"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:85
+msgid "Enable/Disable Schema"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:68
+msgctxt "FAQ"
+msgid "FAQ"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:67
+msgctxt "FAQ"
+msgid "WooCommerce FAQs"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin-notices.php:41
+#: includes/admin/class-faq-woocommerce-settings.php:458
+msgid "FAQ For WooCommerce"
+msgstr ""
+
+#. Name of the plugin
+#: includes/class-faq-woocommerce.php:195
+msgid "FAQ for Woocommerce"
+msgstr ""
+
+#: views/faq-woocommerce-modal-form.php:9
+msgid "FAQ Form"
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:57
+msgid "FAQ List"
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:386
+msgid "FAQ updated Successfully!"
+msgstr ""
+
+#: includes/ffw-helper.php:310
+msgid "FAQs"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:544
+msgid "General"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:322
+msgid "Hide"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:109
+msgid "Hide FAQ Count"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:325
+msgid "Hide FAQs counter column from product list table."
+msgstr ""
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://profiles.wordpress.org/wpfeelteam/"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin-notices.php:79
+msgid "I already did!"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin-notices.php:140
+#: includes/admin/faq-woocommerce-admin-functions.php:98
+#: includes/admin/faq-woocommerce-admin-functions.php:183
+#: includes/admin/faq-woocommerce-admin-functions.php:236
+#: includes/admin/faq-woocommerce-admin-functions.php:292
+#: includes/admin/faq-woocommerce-admin-functions.php:351
+msgid "Invalid Request."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:93
+msgid "Layout"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:73
+msgid "New FAQ"
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:113
+msgid "No Answer added."
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:163
+msgid "No faq added."
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:406
+msgid "No faq datas."
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:216
+#: includes/admin/faq-woocommerce-admin-functions.php:272
+#: includes/admin/faq-woocommerce-admin-functions.php:331
+msgid "No faq deleted."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:80
+msgid "No faqs found in Trash."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:79
+msgid "No faqs found."
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:356
+msgid "No product id."
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:108
+msgid "No Question added."
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:103
+#: includes/admin/faq-woocommerce-admin-functions.php:188
+#: includes/admin/faq-woocommerce-admin-functions.php:241
+#: includes/admin/faq-woocommerce-admin-functions.php:297
+msgid "Not in Edit page."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:81
+msgctxt ""
+"Overrides the “Featured Image” phrase for this post type. Added in 4.3"
+msgid "FAQ Cover Image"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:86
+msgctxt ""
+"Overrides the “Insert into post”/”Insert into page” phrase (used when "
+"inserting media into a post). Added in 4.4"
+msgid "Insert into ffw"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:83
+msgctxt ""
+"Overrides the “Remove featured image” phrase for this post type. Added in 4.3"
+msgid "Remove cover image"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:82
+msgctxt ""
+"Overrides the “Set featured image” phrase for this post type. Added in 4.3"
+msgid "Set cover image"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:87
+msgctxt ""
+"Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used "
+"when viewing media attached to a post). Added in 4.4"
+msgid "Uploaded to this faq"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:84
+msgctxt ""
+"Overrides the “Use as featured image” phrase for this post type. Added in 4.3"
+msgid "Use as cover image"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:78
+msgid "Parent FAQS:"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:474
 msgid "Preview"
 msgstr ""
 
-#: views/templates.php:49
-msgid "Active"
+#: includes/admin/class-faq-woocommerce-settings.php:411
+#: includes/admin/class-faq-woocommerce-settings.php:447
+msgid "px"
 msgstr ""
 
-#: views/templates.php:71
-msgid "Template"
+#: includes/admin/class-faq-woocommerce-settings.php:166
+msgid "Question Background Color"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:174
+msgid "Question Background Secondary Color"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:182
+msgid "Question Border Color"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:190
+msgid "Question Font Size"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:158
+msgid "Question Text Color"
+msgstr ""
+
+#: views/faq-woocommerce-modal-form.php:11
+msgid "Question:"
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:70
+msgid "Quick Add"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin-notices.php:78
+msgid "Remind me later"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin-notices.php:80
+msgid "Review Here"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:245
+msgid "Schema can be disabled from the product page by selecting disable."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:88
+msgctxt ""
+"Screen reader text for the filter links heading on the post type listing "
+"screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4"
+msgid "Filter faqs list"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:90
+msgctxt ""
+"Screen reader text for the items list heading on the post type listing "
+"screen. Default “Posts list”/”Pages list”. Added in 4.4"
+msgid "FAQS list"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:89
+msgctxt ""
+"Screen reader text for the pagination heading on the post type listing "
+"screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4"
+msgid "FAQS list navigation"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:77
+msgid "Search FAQS"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:101
+msgid "Set Access Role"
+msgstr ""
+
+#: includes/class-faq-woocommerce.php:153
+msgid "Setting"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:321
+msgid "Show"
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:139
+#: includes/admin/faq-woocommerce-admin-functions.php:200
+#: includes/admin/faq-woocommerce-admin-functions.php:269
+#: includes/admin/faq-woocommerce-admin-functions.php:315
+#: includes/admin/faq-woocommerce-admin-functions.php:388
+msgid "Something Wrong!"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:549
+msgid "Style"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:77
+msgid "Tab Label"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:125
+msgid "Thank you for using FAQ For Woocommerce."
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:85
+msgctxt ""
+"The post type archive label used in nav menus. Default “Post Archives”. "
+"Added in 4.4"
+msgid "FAQ archives"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:348
+msgid ""
+"This is where you can set faq options.The following options affect the faqs "
+"are displayed on the frontend."
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"This plugin shows faq question and answers for per product in product "
+"information tab."
+msgstr ""
+
+#: includes/class-faq-woocommerce.php:70
+msgid "Unserializing instances of this class is forbidden."
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:137
+msgid "Update Successful!"
+msgstr ""
+
+#: includes/admin/faq-woocommerce-admin-functions.php:313
+msgid "Updated All FAQ Successfully!"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:75
+msgid "View FAQ"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:309
+msgid "Which role of user should have access to FAQ posts?"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-settings.php:142
+msgid "Width (%)"
+msgstr ""
+
+#: includes/admin/class-faq-woocommerce-admin.php:69
+#: includes/admin/class-faq-woocommerce-admin.php:70
+msgctxt "Woo FAQ"
+msgid "Woo FAQ"
+msgstr ""
+
+#: includes/class-faq-woocommerce.php:194
+#: includes/class-faq-woocommerce.php:196
+msgid "WooCommerce"
+msgstr ""
+
+#. Author of the plugin
+msgid "WPFeel"
 msgstr ""

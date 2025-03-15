@@ -24,6 +24,10 @@
   background: transparent !important;
   color: #8d57ce !important;
 }
+#ffw-main-wrapper .ffw-classic-layout .ffw-accordion .ffw-accordion-item .ffw-button .ffw-question {
+  width: calc(100% - 30px);
+  display: block;
+}
 #ffw-main-wrapper .ffw-classic-layout .ffw-accordion .ffw-accordion-item .ffw-button:hover, #ffw-main-wrapper .ffw-classic-layout .ffw-accordion .ffw-accordion-item .ffw-button:focus {
   cursor: pointer;
   color: #8d57ce !important;

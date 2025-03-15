@@ -8,8 +8,8 @@
  * @since  1.1.3
  *
  */
-if( ! function_exists( 'ffw_get_product_faqs' ) ) {
-    function ffw_get_product_faqs( $product_id ) {
+if( ! function_exists( 'ffw_get_product_faq_ids' ) ) {
+    function ffw_get_product_faq_ids( $product_id ) {
         if ( isset($product_id) && ! empty($product_id) ) {
 
             // option values.
@@ -181,7 +181,7 @@ if( ! function_exists( 'ffw_get_product_faqs_by_cat_ids_in_shortcode' ) ) {
 
             $faq_lists = ! empty($faq_lists) && is_array($faq_lists) ? $faq_lists : [];
 
-            return apply_filters('ffw_get_product_faqs', $faq_lists);
+            return apply_filters('ffw_get_product_faq_ids', $faq_lists);
         }
     }
 }
@@ -194,7 +194,7 @@ if( ! function_exists( 'ffw_get_product_faqs_by_cat_ids_in_shortcode' ) ) {
  */
 if( ! function_exists('ffw_get_option_panel_body') ) {
     function ffw_get_option_panel_body($post_id) {
-        $product_faqs = ffw_get_product_faqs($post_id);
+        $product_faqs = ffw_get_product_faq_ids($post_id);
         ?>
         <div class="ffw-sortable ffw-sortable-options-body ffw-metaboxes-wrapper" id="ffw-sortable">
             <?php
@@ -281,7 +281,7 @@ if ( ! function_exists('ffw_show_template_shortcode') ) {
         $arguments['cat_ids']   = $cat_ids;
         $arguments['order_by']  = $atts['order_by'];
         $arguments['order']     = $atts['order'];
-        $arguments['template']     = $atts['template'];
+        $arguments['template']  = $atts['template'];
 
 		return ffw_get_template($product_id, $arguments, true);
 	}
@@ -301,6 +301,7 @@ if ( ! function_exists('ffw_get_template') ) {
 	function ffw_get_template( $id, $args, $is_shortcode = false ) {
 		$content = '';
         $archive_type  = '';
+        
 
         //get layout.
         $options = get_option( 'ffw_general_settings' );
@@ -319,7 +320,7 @@ if ( ! function_exists('ffw_get_template') ) {
             $display_schema_type = 'shortcode';
         } else {
 
-            $faqs = ffw_get_product_faqs($id);
+            $faqs = ffw_get_product_faq_ids($id);
             $display_schema_type = 'product_page';
 
             if( ffw_is_pro_activated() ) {
@@ -336,6 +337,8 @@ if ( ! function_exists('ffw_get_template') ) {
         $args['layout'] = $layout;
         $args['shortcode_wrap_class'] = $shortcode_wrap_class;
         $args['display_schema_type'] = $display_schema_type;
+
+        error_log(print_r($faqs, true));
 
         if ($is_shortcode) {
             return ffw_get_template_by_faqs($faqs, $args);
@@ -431,7 +434,7 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         }
 
         $content = '';
-        $archive_type  = '';
+        $archive_type  = apply_filters('ffw_archive_type', '');
 
         $id = isset($args['id']) ? $args['id'] : '';
         $layout = isset($args['layout']) ? $args['layout'] : '';
@@ -440,7 +443,7 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
 
         if( empty($layout) ) {
             //get layout.
-            $options = get_option( 'ffw_general_settings' );
+            $options = FAQ_Woocommerce_Public::instance()->options;
             $layout = isset( $options['ffw_layout'] ) ? (int) $options['ffw_layout'] : 1;
         }
 
@@ -452,7 +455,7 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         new FAQ_Woocommerce_Schema($faqs, $display_schema_type);
 
         // Get registered option
-        $options    = get_option( 'ffw_general_settings' );
+        $options    = FAQ_Woocommerce_Public::instance()->options;
         $width      = (isset($options['ffw_width']) && !empty($options['ffw_width'])) ? $options['ffw_width'] : '100';
 
         //init layout name
@@ -484,7 +487,6 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         ob_start();
 
         $content .= '<div style="width: '.$width.'%;max-width: 100%;" class="'. esc_attr($wrapper_classes) .'" id="ffw-main-wrapper" data-item_id="'. esc_attr($id) .'" data-layout="'. esc_attr($layout) .'" data-archive_type="'. esc_attr($archive_type) .'" >';
-
         $content .= '<input type="hidden" id="ffw-hidden-faqs" value="' . base64_encode(wp_json_encode($faqs)) . '" />';
 
         do_action('ffw_faq_header');
@@ -521,7 +523,7 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
 
         $content .= ob_get_clean();
 
-        return $content . '</>';
+        return $content . '</div>';
     }
 }
 
@@ -1257,7 +1259,7 @@ add_filter( 'wp_robots', 'ffw_page_indexing' );
  * @since 1.4.1
  */
 function ffw_get_settings_page_menu_title() {
-    return apply_filters('ffw_filter_settings_page_menu_title', esc_html__('Happy WooCommerce FAQs', 'faq-for-woocommerce'));
+    return apply_filters('ffw_filter_settings_page_menu_title', esc_html__('Happy FAQs', 'faq-for-woocommerce'));
 }
 
 /**
@@ -1282,6 +1284,23 @@ function ffw_free_admin_head() {
             width: 40px;
         }
     </style>
+    <script>
+        (function($) {
+            // In your Javascript (external .js resource or <script> tag)
+            $(document).ready(function() {
+                // change settings switch values
+                $('.ffw-switch-wrapper .ffw-switch input[type="checkbox"]').on('change', function(e) {
+                    let checked = $(this).is(':checked');
+                    if( checked ) {
+                        $(this).val('on');
+                    }else {
+                        $(this).val('no');
+                    }
+                });
+            });
+        })(jQuery)
+
+    </script>
     <?php
 }
 
@@ -1394,4 +1413,124 @@ function ffw_include_template( $template_name, $args = array(), $template_path =
 	include $template_path . $template_name;
 
 	do_action( 'ffw_after_template_part', $template_name, $template_path, $args );
+}
+
+// Add custom columns to 'ffw' post type.
+add_filter('manage_ffw_posts_columns', 'ffw_filter_list_columns');
+function ffw_filter_list_columns($columns) {
+    $new_columns = [];
+    foreach ($columns as $key => $title) {
+        if ($key === 'comments') {
+            $new_columns['products'] = __('Products', 'faq-for-woocommerce');
+            $new_columns['product_categories'] = __('Product Categories', 'faq-for-woocommerce');
+            $new_columns['product_tags'] = __('Product Tags', 'faq-for-woocommerce');
+            $new_columns['display_pages'] = __('Display Pages', 'faq-for-woocommerce');
+            $new_columns['faqs_type'] = __('FAQs Type', 'faq-for-woocommerce');
+        }
+        $new_columns[$key] = $title;
+    }
+    return $new_columns;
+}
+
+// Populate custom columns.
+add_action('manage_ffw_posts_custom_column', 'ffw_display_list_column_data', 10, 2);
+function ffw_display_list_column_data($column, $post_id) {
+    switch ($column) {
+        case 'products':
+            // get product ids with faqs.
+            $args = array(
+                'post_type'  => array('product', 'product_variation'),
+                'meta_query' => array(
+                    'relation' => 'OR',
+                    array(
+                        'key'     => 'ffw_product_faq_post_ids',
+                        'value' => serialize(strval($post_id)),
+                        'compare' => 'LIKE'
+                    ),
+                    array(
+                        'key' => 'ffw_product_faq_post_ids',
+                        'value'   => serialize(intval($post_id)),
+                        'compare' => 'LIKE'
+                    ),
+                ),
+                'fields' => 'ids',
+                'posts_per_page' => -1,
+            );
+            $product_ids = get_posts( $args );
+
+            echo !empty($product_ids) ? implode(', ', $product_ids) : '-';
+            break;
+
+        case 'product_categories':
+            $category_ids = get_terms([
+                'taxonomy' => 'product_cat',
+                'hide_empty' => false,
+                'meta_query' => [
+                    [
+                        'key' => 'ffw_cat_faq_post_ids',
+                        'value' => $post_id,
+                        'compare' => 'LIKE'
+                    ]
+                ],
+                'fields' => 'ids'
+            ]);
+            if (!empty($category_ids)) {
+                $categories = array_map(function ($cat_id) {
+                    return get_term($cat_id)->name;
+                }, $category_ids);
+                echo implode(', ', $categories);
+            } else {
+                echo '-';
+            }
+            break;
+
+        case 'product_tags':
+            $tag_ids = get_terms([
+                'taxonomy' => 'product_tag',
+                'hide_empty' => false,
+                'meta_query' => [
+                    [
+                        'key' => 'ffw_tag_faq_post_ids',
+                        'value' => $post_id,
+                        'compare' => 'LIKE'
+                    ]
+                ],
+                'fields' => 'ids'
+            ]);
+            if (!empty($tag_ids)) {
+                $tags = array_map(function ($tag_id) {
+                    return get_term($tag_id)->name;
+                }, $tag_ids);
+                echo implode(', ', $tags);
+            } else {
+                echo '-';
+            }
+            break;
+
+        case 'display_pages':
+            $display_pages = [];
+            $page_types = [
+                'product_and_archive_page' => __('Product & Archive', 'faq-for-woocommerce'), 
+                'shop_page' => __('Shop', 'faq-for-woocommerce'), 
+                'cart_page' => __('Cart', 'faq-for-woocommerce'), 
+                'checkout_page' => __('Checkout', 'faq-for-woocommerce')
+            ];
+
+            foreach ($page_types as $page_type => $page_name) {
+                $pages_faq_ids = get_option("ffw_{$page_type}_faqs");
+                if (is_array($pages_faq_ids) && in_array($post_id, $pages_faq_ids)) {
+                    $display_pages[] = $page_name;
+                }
+            }
+
+            echo $display_pages ? implode(', ', $display_pages) : '-';
+            break;
+
+        case 'faqs_type':
+            $is_global = get_post_meta($post_id, 'ffw_is_global_faq', true);
+            $classname = $is_global ? 'faqs_type-global' : 'faqs_type-general';
+            $text = $is_global ? esc_html__('Global', 'faq-for-woocommerce') : esc_html__('General', 'faq-for-woocommerce');
+            echo '<span class="'. esc_attr($classname) .'">'. esc_html($text) .'</span>';
+            break;
+    }
 }
