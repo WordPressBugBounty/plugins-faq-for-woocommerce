@@ -332,13 +332,14 @@ if ( ! function_exists('ffw_get_template') ) {
             }
         }
 
+        // filtered faqs.
+        $faqs = apply_filters('ffw_filter_shortcode_faqs', $faqs, $args);
+
         $args = [];
         $args['id'] = $id;
         $args['layout'] = $layout;
         $args['shortcode_wrap_class'] = $shortcode_wrap_class;
         $args['display_schema_type'] = $display_schema_type;
-
-        error_log(print_r($faqs, true));
 
         if ($is_shortcode) {
             return ffw_get_template_by_faqs($faqs, $args);
