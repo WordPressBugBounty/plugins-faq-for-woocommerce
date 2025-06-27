@@ -1535,3 +1535,14 @@ function ffw_display_list_column_data($column, $post_id) {
             break;
     }
 }
+
+add_filter( 'pll_get_post_types', 'ffw_polylang_support', 10, 2 );
+function ffw_polylang_support($post_types, $is_translatable) {
+    if ( $is_translatable ) {
+        $post_types['ffw'] = 'ffw';
+        $post_types['ffw_customer_qna'] = 'ffw_customer_qna';
+    }
+
+    return $post_types;
+}
+

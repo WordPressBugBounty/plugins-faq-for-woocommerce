@@ -4,7 +4,7 @@ Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.8
 Requires PHP: 5.6
-Stable tag: 1.8.10
+Stable tag: 1.8.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,7 @@ Here’s a glimpse of the top features of this ultimate FAQ plugin for [__WooCom
 * FAQ tab reorder setting
 * Show/hide FAQ answers on page load
 * Option of Expand/Collapse All FAQs
+* Polylang translations support
 * 💎 Customer Asking Questions (PRO)
 * 💎 Variation Product FAQs (PRO)
 * 💎 More Beautiful FAQs Templates (PRO)
@@ -380,6 +381,9 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.8.11 =
+* Added: Polylang translations support added.
 
 = 1.8.10 =
 * Added: Filter to change faqs of shortcode.
