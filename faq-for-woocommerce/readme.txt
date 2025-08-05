@@ -1,18 +1,18 @@
-=== Happy WooCommerce FAQs & AI FAQ Generator ===
+=== Happy WooCommerce FAQs - Ultimate Product FAQ Plugin ===
 Contributors: happydevs, optemiz, nayanchamp7, azha18
 Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.8
 Requires PHP: 5.6
-Stable tag: 1.8.11
+Stable tag: 1.8.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WooCommerce Product FAQs and accordion plugin create FAQs with Google FAQ schema, AI Generator, responsive, comment and customization support.
+WooCommerce Product FAQ Plugin and accordion plugin create FAQs with Google FAQ schema, AI Generator, Comment and customization support.
 
 == Description ==
 
-= Happy WooCommerce FAQs: The best solution for seamless WooCommerce FAQs =
+= Happy WooCommerce FAQs: The best solution for seamless WooCommerce FAQs and Ultimate Product FAQ Plugin =
 
 **Happy WooCommerce FAQs** is a feature-packed, flexible, and robust **product FAQ** plugin for WooCommerce. It might be your best shot if you want to increase sales by answering your customer’s most commonly asked questionnaires smartly.
 
@@ -331,7 +331,7 @@ In free version, you can display in Product pages. You need premium version to d
 
 = Is this plugin responsible? =
 
-Yes, this awesome Faq WooCommerce Questions and Answers plugin is responsive with any media devices.
+Yes, this Ultimate Faq WooCommerce Questions and Answers plugin is responsive with any media devices.
 
 = Can we write html content? =
 
@@ -381,6 +381,9 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.8.12 =
+* Fixed: Responsive issue fixed.
 
 = 1.8.11 =
 * Added: Polylang translations support added.
