@@ -72,7 +72,7 @@ class FFW_Admin_Notices {
         }
         ?>
         <div class="ffw-coupon-notice notice notice-success is-dismissible" style="background: #0A0A0A;border-left-color: #fff;padding: 10px 50px;">
-            <p style="color: #fff;font-size: 18px;margin:0;"><?php _e('<strong style="color: #fff;text-decoration: line-through;">XPlainer Product FAQs</strong> is rebranded to <strong style="color: #fdfc1e;">`Happy WooCommerce FAQs`</strong>. <a href="https://happydevs.net/happy-woocommerce-faqs-pro" style="color: #bbf7d0;">Get <strong>20% discount</strong></a> on rebranding, Coupon: <strong style="color: #fdfc1e;">"IMHAPPY"</strong>.', 'faq-for-woocommerce'); ?></p>
+            <p style="color: #fff;font-size: 18px;margin:0;"><?php _e('<strong style="color: #fff;text-decoration: line-through;">XPlainer Product FAQs</strong> is rebranded to <strong style="color: #fad54d;">`Happy WooCommerce FAQs`</strong>. <a href="https://happydevs.net/happy-woocommerce-faqs-pro" style="color: #bbf7d0;">Get <strong>20% discount</strong></a> on rebranding, Coupon: <strong style="color: #fad54d;">"IMHAPPY"</strong>.', 'faq-for-woocommerce'); ?></p>
         </div>
         <?php
     }

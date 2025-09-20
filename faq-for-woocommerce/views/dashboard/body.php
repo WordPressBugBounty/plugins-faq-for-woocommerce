@@ -28,7 +28,7 @@
 
             </div>
             <div class="ffw-iframe-section-wrapper">
-                <iframe  src="https://www.youtube.com/embed/oGLDl0GKh-k?si=FcK_dvEseUat8vd2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/CnsPBdgIbaU?si=09LXrbnolHNOqMHm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="ffw-money-back-section-wrapper">
                 <div class="money-back-section">
@@ -377,7 +377,7 @@
             </div>
 
             <div class="ffw-other-plugin-section-wrapper">
-                <h3 class="ffw-other-plugin-heading"><?php esc_html_e('Other Plugins by HappyDevs', 'faq-for-woocommerce'); ?></h3>
+                <h3 class="ffw-other-plugin-heading"><?php esc_html_e('Essential Plugins', 'faq-for-woocommerce'); ?></h3>
                 <div class="ffw-other-plugin-item">
                     <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/patternly.png'); ?>" alt="">
                     <div class="ffw-other-plugin-contents">
@@ -386,10 +386,17 @@
                     </div>
                 </div>
                 <div class="ffw-other-plugin-item">
-                    <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/temptool.png'); ?>" alt="">
+                    <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/pagely.png'); ?>" alt="">
                     <div class="ffw-other-plugin-contents">
                         <h4 class="ffw-other-plugin-content-heading"><a href="https://wordpress.org/plugins/current-template-name"><?php esc_html_e('Pagely', 'faq-for-woocommerce'); ?></a></h4>
                         <p class="ffw-other-plugin-content-para"><?php esc_html_e('Pagely shows your current template file information', 'faq-for-woocommerce'); ?></p>
+                    </div>
+                </div>
+                <div class="ffw-other-plugin-item">
+                    <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/autocomplete-orders.png'); ?>" alt="">
+                    <div class="ffw-other-plugin-contents">
+                        <h4 class="ffw-other-plugin-content-heading"><a href="https://wordpress.org/plugins/advanced-autocomplete-orders-for-woocommerce/"><?php esc_html_e('Advanced Autocomplete Order for WooCommerce', 'faq-for-woocommerce'); ?></a></h4>
+                        <p class="ffw-other-plugin-content-para"><?php esc_html_e('Automatically update orders to ‘Completed’ right after purchase', 'faq-for-woocommerce'); ?></p>
                     </div>
                 </div>
             </div>

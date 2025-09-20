@@ -3,7 +3,7 @@
  * Plugin Name: Happy WooCommerce FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
  * Description: This plugin shows faqs question and answers for woocommerce products with comment, FAQ schema and AI support.
- * Version: 1.8.12
+ * Version: 1.8.14
  * Author: HappyDevs
  * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
@@ -30,7 +30,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '1.8.12' );
+	define( 'FFW_VERSION', '1.8.14' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {
@@ -78,7 +78,7 @@ if ( ! defined( 'FFW_REVIEW_REQUEST_URL' ) ) {
 }
 
 if ( ! defined( 'FFW_VIDEOS_URL' ) ) {
-    define( 'FFW_VIDEOS_URL', 'https://www.youtube.com/watch?v=Dhav-GJY14k&list=PLrEy7YvtgxPhl75Cjd8JeGMeiv_knlPgA' );
+    define( 'FFW_VIDEOS_URL', 'https://www.youtube.com/watch?v=CnsPBdgIbaU&list=PLqgTGQxEn_rZbnleeeuK18QJ984t6o3ZX' );
 }
 
 if ( ! defined( 'FFW_SUPPORT_URL' ) ) {
@@ -116,7 +116,6 @@ include_once FFW_FILE_DIR . '/includes/class-faq-woocommerce.php';
  * @return void
  */
 function appsero_init_tracker_faq_for_woocommerce() {
-
     $client = new Appsero\Client( 'c989292b-3c3e-454a-a216-cc0df37fb6d9', 'Happy WooCommerce FAQs', __FILE__ );
 
     // Active insights
@@ -132,7 +131,7 @@ function appsero_init_tracker_faq_for_woocommerce() {
     $opt_tracker->execute();
 
 }
-appsero_init_tracker_faq_for_woocommerce();
+add_action('init', 'appsero_init_tracker_faq_for_woocommerce');
 
 /**
  * Returns the main instance of FAQ_Woocommerce.

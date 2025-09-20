@@ -1,10 +1,10 @@
 === Happy WooCommerce FAQs - Ultimate Product FAQ Plugin ===
-Contributors: happydevs, optemiz, nayanchamp7, azha18
+Contributors: happydevs, nayanchamp7, azha18
 Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.8
 Requires PHP: 5.6
-Stable tag: 1.8.12
+Stable tag: 1.8.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -381,6 +381,14 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.8.14 =
+* Fixed: Plugin add new page warning has been fixed.
+
+= 1.8.13 =
+* Fixed: Product name missing in FAQs admin list, issue has been fixed.
+* Fixed: Appsero Tracker warning fixed.
+* Enhancement: Essentials resources enhanced.
 
 = 1.8.12 =
 * Fixed: Responsive issue fixed.

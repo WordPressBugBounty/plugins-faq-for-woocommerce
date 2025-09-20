@@ -107,7 +107,6 @@ class FFW_Admin_Menu {
         $content = "";
 			
         ob_start();
-
         ?>
         <div class="ffw-admin-wrapper">
             <?php
@@ -132,7 +131,6 @@ class FFW_Admin_Menu {
         $content = "";
 			
         ob_start();
-
         ?>
         <div class="ffw-admin-wrapper">
             <?php

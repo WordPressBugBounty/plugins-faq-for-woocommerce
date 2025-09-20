@@ -383,7 +383,7 @@ table.wp-list-table .column-product_tag {
   font-size: 16px;
 }
 .ffw-notice .ffw-review-notice-logo {
-  background: url("../images/ffw-logo.png") no-repeat;
+  background: url("../images/Logo.png") no-repeat;
   background-size: cover;
   width: 80px;
   height: 80px;
@@ -391,12 +391,15 @@ table.wp-list-table .column-product_tag {
   margin-right: 10px;
 }
 .ffw-notice.notice-info {
-  border-left-color: #5f429a;
-  font-size: 16px;
+  border-left-color: #fad54d;
+  font-size: 16px !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .ffw-notice .button[data-response=given] {
-  background: #5f429a;
-  border-color: #5f429a;
+  background: #fad54d;
+  border-color: #fad54d;
+  color: #18181a;
 }
 
 body {
@@ -730,8 +733,23 @@ body {
 }
 .ffw-admin-wrapper .ffw-dashboard-body-section-wrapper .ffw-contianer .ffw-left-side .ffw-iframe-section-wrapper iframe {
   width: 100%;
-  height: 550px;
+  height: 420px;
   border-radius: 8px;
+}
+@media screen and (max-width: 1200px) {
+  .ffw-admin-wrapper .ffw-dashboard-body-section-wrapper .ffw-contianer .ffw-left-side .ffw-iframe-section-wrapper iframe {
+    height: 380px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .ffw-admin-wrapper .ffw-dashboard-body-section-wrapper .ffw-contianer .ffw-left-side .ffw-iframe-section-wrapper iframe {
+    height: 460px;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .ffw-admin-wrapper .ffw-dashboard-body-section-wrapper .ffw-contianer .ffw-left-side .ffw-iframe-section-wrapper iframe {
+    height: 580px;
+  }
 }
 .ffw-admin-wrapper .ffw-dashboard-body-section-wrapper .ffw-contianer .ffw-left-side .ffw-money-back-section-wrapper {
   background-color: var(--neutral-white);

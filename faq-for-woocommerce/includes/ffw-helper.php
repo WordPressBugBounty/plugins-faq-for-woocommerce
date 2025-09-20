@@ -794,7 +794,6 @@ if( ! function_exists('ffw_post_init') ) {
         //get the saved editor value `1` for gutenberg, `2` for classics
 		$ffw_editor = isset( $options['ffw_editor'] ) ? $options['ffw_editor'] : "1";
 
-
         $labels = array(
             'name'                  => _x( 'Happy FAQs', 'FAQ', 'faq-for-woocommerce' ),
             'singular_name'         => _x( 'FAQ', 'FAQ', 'faq-for-woocommerce' ),
@@ -833,7 +832,7 @@ if( ! function_exists('ffw_post_init') ) {
             'capability_type'    => 'post',
             'has_archive'        => true,
             'hierarchical'       => false,
-            'menu_position'      => null,
+            'menu_position'      => 10,
             'show_in_rest'       => $ffw_editor == 1 ? true : false,
             'supports'           => array( 'title', 'editor', 'comments' ),
             'taxonomies'         => array( ),
@@ -841,7 +840,6 @@ if( ! function_exists('ffw_post_init') ) {
         );
 
         register_post_type( 'ffw', $args );
-
 
         // Define the faq for woocommerce category taxonomy
         $args = array(
@@ -1459,7 +1457,20 @@ function ffw_display_list_column_data($column, $post_id) {
             );
             $product_ids = get_posts( $args );
 
-            echo !empty($product_ids) ? implode(', ', $product_ids) : '-';
+            if (!empty($product_ids)) {
+                $links = array();
+                foreach ($product_ids as $pid) {
+                    $product = wc_get_product($pid);
+                    if ($product) {
+                        $title = $product->get_name();
+                        $url = get_permalink($pid);
+                        $links[] = "<a href='" . esc_url($url) . "'>$title (#$pid)</a>";
+                    }
+                }
+                echo implode(', ', $links);
+            } else {
+                echo '-';
+            }
             break;
 
         case 'product_categories':

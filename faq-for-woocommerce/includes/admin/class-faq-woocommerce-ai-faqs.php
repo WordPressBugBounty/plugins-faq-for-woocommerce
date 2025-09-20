@@ -285,9 +285,6 @@ class FAQ_Woocommerce_AI_FAQs {
             wp_send_json_error($message);
         }
 
-        error_log('-- selected_faqs --');
-        error_log(print_r($selected_faqs, true));
-
         $faq_id = '';
         if(!empty($faqs) && is_array($faqs)) {
             foreach($faqs as $index => $faq) {
@@ -296,8 +293,6 @@ class FAQ_Woocommerce_AI_FAQs {
                 if(!in_array($index, $selected_faqs)) {
                     continue;
                 }
-
-                error_log("-- faq data: {$index} --");
 
                 $new_faq_post = [];
                 $new_faq_post['post_title']     = $faq['question'];
@@ -349,8 +344,6 @@ class FAQ_Woocommerce_AI_FAQs {
             $product        = wc_get_product($product);
             $product_name   = $product->get_name();
 
-            // error_log(print_r($product, true));
-
             $product        = (string) $product;
 
             $keywords   = $args['keywords'];
@@ -375,8 +368,6 @@ class FAQ_Woocommerce_AI_FAQs {
             Remember to generate faqs of the product in {$keywords} keywords context and in `{$language}` language.
             Just give me the faqs data nothing else alse {$final_tip}";
         }
-
-        error_log($prompt);
 
         return apply_filters('ffw_prompt_content', $prompt, $args);
     }
@@ -421,9 +412,6 @@ class FAQ_Woocommerce_AI_FAQs {
             );
     
             $response = wp_remote_post($api_endpoint, $request_options);
-
-            // error_log('Response: ');
-            // error_log(print_r($response, true));
     
             if (is_wp_error($response)) {
                 return 'Error: ' . $response->get_error_message();

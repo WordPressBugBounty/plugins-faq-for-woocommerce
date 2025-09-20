@@ -44,6 +44,9 @@ class FAQ_Woocommerce_Admin {
 
         //AI FAQs file.
         include_once dirname( __FILE__ ) . '/class-faq-woocommerce-ai-faqs.php';
+
+        //Suggest Plugin file.
+        include_once dirname( __FILE__ ) . '/class-ffw-suggest-plugins.php';
     }
 
     /**
@@ -71,7 +74,7 @@ class FAQ_Woocommerce_Admin {
         ?>
         <style>
             .menu-icon-ffw .wp-menu-image:before {
-                color: #fdfc1e !important;
+                color: #fad54d !important;
             }
         </style>
         <?php
