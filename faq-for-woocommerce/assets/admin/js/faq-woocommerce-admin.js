@@ -213,6 +213,9 @@ jQuery(document).ready(function ($) {
             $(document).on('click', '.ffw-template-popup-close-button', this.hideTemplatePopup);
             $(document).on('click', '.ffw-template-active-button', this.activateTemplate);
 
+            // Shortcodes page events.
+            $(document).on('click', '.ffw-shortcode-copy-icon-box', this.copyToClickShortcode);
+
             //AI FAQs events.
             $(document).on('click', '.ffw-ai-result-select-all-btn', this.ai_faqs_select_all);
             $(document).on('click', '.ffw-ai-result-item-group input[type=checkbox]', this.ai_faqs_on_select);
@@ -615,6 +618,28 @@ jQuery(document).ready(function ($) {
                     console.log('success.......');
                 }
             );
+        },
+        copyToClickShortcode: function(e) {
+            e.preventDefault();
+
+            var $tooltip = $(this).find('.ffw-tooltip');
+            var shortcode = $(this).closest('.ffw-shortcode-box').find('.ffw-shortcode').text();
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(shortcode).then(() => {
+                    $tooltip.text('Copied: ' + shortcode);
+                    setTimeout(() => $tooltip.text('Click to copy'), 2000);
+                });
+            } else {
+                var $temp = $("<textarea>");
+                $("body").append($temp);
+                $temp.val(shortcode).select();
+                document.execCommand("copy");
+                $temp.remove();
+                
+                $tooltip.text('Copied');
+                setTimeout(() => $tooltip.text('Click to copy'), 2000);
+            }
         },
         ai_faqs_select_all: function(e) {
             console.log('ai_faqs_select_all');

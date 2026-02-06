@@ -1,0 +1,36 @@
+{
+	"name" : "optemiz/xplainer",
+	"description" : "Product FAQs for WooCommerce",
+	"minimum-stability" : "stable",
+	"license" : "GPLv3",
+	"keywords" : [
+		"wordpress",
+		"plugin"
+	],
+	"homepage" : "https://happydevs.net",
+	"authors" : [
+		{
+			"name" : "Nazrul Islam Nayan",
+			"email" : "nazrulislamnayan7@gmail.com"
+		}
+	],
+	"require" : {
+		"php": ">7.4",
+		"appsero/client": "^2.0",
+		"optemiz/plugin-tracker": "^1.0"
+	},
+	"config" : {
+		"optimize-autoloader" : true,
+		"sort-packages" : true,
+		"allow-plugins" : {
+			"composer/installers": true,
+			"php-http/discovery": true
+		}
+	},
+	"scripts" : {
+		"format" : "phpcbf --standard=phpcs.xml --report-summary --report-source",
+		"lint" : "phpcs --standard=phpcs.xml",
+		"standards:check" : "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
+		"standards:fix" : "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf"
+	}
+}

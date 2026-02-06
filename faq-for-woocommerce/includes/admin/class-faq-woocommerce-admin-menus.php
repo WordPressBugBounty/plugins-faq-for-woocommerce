@@ -52,6 +52,7 @@ class FFW_Admin_Menu {
 
         $this->ffw_add_settings_menu();
 
+        add_submenu_page( 'edit.php?post_type=ffw', esc_html__('Shortcodes', 'faq-for-woocommerce'), esc_html__('Shortcodes', 'faq-for-woocommerce'), 'manage_options', 'ffw-shortcodes', array( $this, 'ffw_shortcodes_page' ), 9999 );
         add_submenu_page( 'edit.php?post_type=ffw', esc_html__('AI FAQs', 'faq-for-woocommerce'), esc_html__('AI FAQs', 'faq-for-woocommerce'), 'manage_options', 'ai-faqs', array( $this, 'ffw_ai_page' ), 9999 );
         add_submenu_page( 'edit.php?post_type=ffw', esc_html__('Templates', 'faq-for-woocommerce'), esc_html__('Templates', 'faq-for-woocommerce'), 'manage_options', 'ffw-templates', array( $this, 'ffw_templates_page' ), 9999 );
 
@@ -95,6 +96,29 @@ class FFW_Admin_Menu {
         $setting_instance = FAQ_Woocommerce_Settings::instance();
 
 		add_submenu_page( 'edit.php?post_type=ffw', $settings_page_menu_title, esc_html__('Settings', 'faq-for-woocommerce'), 'manage_options', 'woocommerce-faq', array( $setting_instance, 'ffw_options_page' ), 9999 );
+    }
+
+    /**
+     * Shortcode page content
+     * 
+     * @since 1.8.14
+     * @return void
+     */
+    public function ffw_shortcodes_page() {
+        $content = "";
+			
+        ob_start();
+        ?>
+        <div class="ffw-admin-wrapper">
+            <?php
+                include FFW_FILE_DIR . '/views/shortcodes.php';
+            ?>
+        </div>
+        <?php
+
+        $content .= ob_get_clean();
+
+        echo $content;
     }
 
     /**
