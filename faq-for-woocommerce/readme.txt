@@ -4,7 +4,7 @@ Tags: faq, faqs, woocommerce faqs, product faq, question and answer
 Requires at least: 3.6
 Tested Up To: 6.9
 Requires PHP: 7.4
-Stable tag: 1.8.16
+Stable tag: 1.8.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -382,6 +382,10 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 Yes, This plugin works with any WordPress theme.
 
 == Changelog ==
+
+= 1.8.17 =
+* Added: WooCommerce 10.6 version compatability.
+* Fixed: Shortcode in archive page not working.
 
 = 1.8.16 =
 * Added: WPML translations support.

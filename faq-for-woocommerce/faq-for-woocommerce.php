@@ -3,7 +3,7 @@
  * Plugin Name: Happy WooCommerce FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
  * Description: This plugin shows faqs question and answers for woocommerce products with comment, FAQ schema and AI support.
- * Version: 1.8.16
+ * Version: 1.8.17
  * Author: HappyDevs
  * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
@@ -17,7 +17,7 @@
  *
  * WC Requirement & Test
  * WC requires at least: 3.2
- * WC tested up to: 9.0
+ * WC tested up to: 10.6
  *
  * @package FAQ_Woocommerce
  */
@@ -30,7 +30,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '1.8.16' );
+	define( 'FFW_VERSION', '1.8.17' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {
