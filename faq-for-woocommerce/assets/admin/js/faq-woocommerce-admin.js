@@ -623,7 +623,13 @@ jQuery(document).ready(function ($) {
             e.preventDefault();
 
             var $tooltip = $(this).find('.ffw-tooltip');
-            var shortcode = $(this).closest('.ffw-shortcode-box').find('.ffw-shortcode').text();
+            var shortcode = $(this).attr('data-ffw-shortcode')
+                || $(this).closest('.ffw-inline-shortcode').find('.ffw-shortcode').text()
+                || $(this).closest('.ffw-shortcode-box').find('.ffw-shortcode').text();
+
+            if (!shortcode) {
+                return;
+            }
 
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(shortcode).then(() => {

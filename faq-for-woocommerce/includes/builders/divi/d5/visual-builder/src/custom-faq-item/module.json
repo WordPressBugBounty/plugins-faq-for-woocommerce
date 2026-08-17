@@ -1,0 +1,99 @@
+{
+  "name": "happy-faq/divi-custom-faq-item",
+  "d4Shortcode": "ffw_custom_faq_item",
+  "title": "FAQ Item",
+  "titles": "FAQ Items",
+  "category": "child-module",
+  "moduleClassName": "ffw_custom_faq_item",
+  "moduleOrderClassName": "ffw_custom_faq_item",
+  "attributes": {
+    "module": {
+      "type": "object",
+      "selector": "{{selector}}",
+      "default": {
+        "meta": {
+          "adminLabel": {
+            "desktop": {
+              "value": "FAQ Item"
+            }
+          }
+        }
+      },
+      "settings": {
+        "meta": {
+          "adminLabel": {}
+        }
+      }
+    },
+    "question": {
+      "type": "object",
+      "selector": "{{selector}} .ffw-divi-custom-faq-item__question",
+      "tagName": "div",
+      "inlineEditor": "plainText",
+      "childrenSanitizer": "et_core_esc_previously",
+      "attributes": {
+        "class": "ffw-divi-custom-faq-item__question"
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupName": "mainContent",
+            "priority": 10,
+            "render": true,
+            "attrName": "question.innerContent",
+            "label": "Question",
+            "description": "This FAQ stays on this page. It is not added to the FAQ library.",
+            "features": {
+              "dynamicContent": false,
+              "sticky": false,
+              "hover": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/text",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "selector": "{{selector}} .ffw-divi-custom-faq-item__answer",
+      "tagName": "div",
+      "inlineEditor": "richText",
+      "childrenSanitizer": "et_core_esc_previously",
+      "attributes": {
+        "class": "ffw-divi-custom-faq-item__answer"
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupName": "mainContent",
+            "priority": 20,
+            "render": true,
+            "attrName": "answer.innerContent",
+            "label": "Answer",
+            "features": {
+              "dynamicContent": false,
+              "sticky": false,
+              "hover": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/richtext",
+              "type": "field"
+            }
+          }
+        }
+      }
+    }
+  },
+  "settings": {
+    "content": "auto",
+    "design": "auto",
+    "advanced": "auto"
+  }
+}

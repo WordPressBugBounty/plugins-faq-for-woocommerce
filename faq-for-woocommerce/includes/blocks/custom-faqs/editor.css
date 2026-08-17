@@ -1,0 +1,80 @@
+.ffw-custom-faqs-block {
+	border: 1px solid #e4e4e7;
+	background: #fff;
+}
+
+.ffw-custom-faqs-editor {
+	padding: 16px;
+}
+
+.ffw-custom-faqs-editor-intro {
+	margin: 0 0 14px;
+	color: #52525b;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.ffw-custom-faq-item {
+	margin: 0 0 12px;
+	padding: 12px;
+	border: 1px solid #e4e4e7;
+	background: #fafafa;
+}
+
+.ffw-custom-faq-item-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.ffw-custom-faq-item-label {
+	font-size: 12px;
+	font-weight: 600;
+	color: #3f3f46;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.ffw-custom-faq-item-actions {
+	display: flex;
+	gap: 4px;
+}
+
+.ffw-custom-faq-item .components-base-control {
+	margin-bottom: 10px;
+}
+
+.ffw-custom-faq-answer {
+	min-height: 72px;
+	padding: 8px 10px;
+	border: 1px solid #d4d4d8;
+	background: #fff;
+}
+
+.ffw-custom-faq-answer:focus {
+	border-color: #18181b;
+	outline: 2px solid #fad54d;
+	outline-offset: 1px;
+}
+
+.ffw-custom-faqs-add {
+	margin-top: 4px;
+}
+
+.ffw-custom-faqs-color-control {
+	margin-bottom: 16px;
+}
+
+.ffw-custom-faqs-color-control .components-circular-option-picker,
+.ffw-custom-faqs-color-control .components-color-palette {
+	margin-top: 8px;
+}
+
+.ffw-custom-faqs-style-help {
+	margin: 0 0 16px;
+	color: #52525b;
+	font-size: 12px;
+	line-height: 1.5;
+}

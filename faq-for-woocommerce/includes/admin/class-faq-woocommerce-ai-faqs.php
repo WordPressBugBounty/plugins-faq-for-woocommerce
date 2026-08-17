@@ -222,8 +222,13 @@ class FAQ_Woocommerce_AI_FAQs {
         $faq_result_html = ob_get_clean();
 
         $product_id = $product;
-        $product = wc_get_product($product);
-        $product_title = $product->get_name();
+        $product_title = '';
+        if ( function_exists( 'wc_get_product' ) ) {
+            $wc_product = wc_get_product($product);
+            if ( $wc_product ) {
+                $product_title = $wc_product->get_name();
+            }
+        }
 
         if(!empty($response) && is_array($response) && !empty($faq_result_html)) {
             $message = esc_html__('FAQs are generated successfully!', 'faq-for-woocommerce');
@@ -341,8 +346,13 @@ class FAQ_Woocommerce_AI_FAQs {
 
         if(isset($args['product']) && isset($args['keywords']) && isset($args['language'])) {
             $product        = $args['product'];
-            $product        = wc_get_product($product);
-            $product_name   = $product->get_name();
+            $product_name   = '';
+            if ( function_exists( 'wc_get_product' ) ) {
+                $wc_product = wc_get_product($product);
+                if ( $wc_product ) {
+                    $product_name = $wc_product->get_name();
+                }
+            }
 
             $product        = (string) $product;
 

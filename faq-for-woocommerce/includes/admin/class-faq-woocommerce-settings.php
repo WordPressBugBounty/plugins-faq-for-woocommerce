@@ -68,6 +68,18 @@ class FAQ_Woocommerce_Settings {
                     'callback' => '',
                     'fields' => [
                         [
+                            'id' => 'ffw_faq_page',
+                            'label' => esc_html__( 'FAQs Page', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_faq_page',
+                        ],
+                        [
+                            'id' => 'ffw_enable_inline_search',
+                            'label' => esc_html__( 'Inline FAQ Search', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_enable_inline_search',
+                        ],
+                        [
                             'id' => 'ffw_tab_label',
                             'label' => esc_html__( 'Tab Label', 'faq-for-woocommerce' ),
                             'region' => 'free',
@@ -655,7 +667,7 @@ class FAQ_Woocommerce_Settings {
             <option value="2" <?php selected( $disable_schema, 2 ); ?>>Disable</option>
         </select>
         <?php
-        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Schema can be disabled from the product page by selecting disable.', 'faq-for-woocommerce'));
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable FAQPage schema on product pages and site-wide FAQ displays.', 'faq-for-woocommerce'));
     }
 
     /**
@@ -700,6 +712,51 @@ class FAQ_Woocommerce_Settings {
         </select>
         <?php
         echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Choose the display condition for FAQs in product page, How FAQs will be fetched.', 'faq-for-woocommerce'));
+    }
+
+    /**
+     * FAQs Page callback.
+     *
+     * @since 1.8.18
+     * @return void
+     */
+    function ffw_faq_page() {
+        $page_id = isset( $this->options['ffw_faq_page'] ) ? (int) $this->options['ffw_faq_page'] : 0;
+
+        wp_dropdown_pages(
+            array(
+                'name'             => 'ffw_general_settings[ffw_faq_page]',
+                'id'               => 'ffw_faq_page',
+                'show_option_none' => esc_html__( '— Select a page —', 'faq-for-woocommerce' ),
+                'option_none_value'=> '0',
+                'selected'         => $page_id,
+            )
+        );
+
+        echo sprintf(
+            '<p class="ffw-setting-description"><span>&#9432;</span>%s</p>',
+            esc_html__( 'FAQs are added automatically to this page using the selected template. You can also place [ffw_template] on any page.', 'faq-for-woocommerce' )
+        );
+    }
+
+    /**
+     * Inline FAQ search (filters the rendered list).
+     *
+     * @since 1.8.18
+     * @return void
+     */
+    function ffw_enable_inline_search() {
+        $val = isset( $this->options['ffw_enable_inline_search'] ) ? (string) $this->options['ffw_enable_inline_search'] : '2';
+        ?>
+        <select class="ffw-enable-inline-search" name="ffw_general_settings[ffw_enable_inline_search]">
+            <option value="1" <?php selected( $val, '1' ); ?>><?php esc_html_e( 'Enable', 'faq-for-woocommerce' ); ?></option>
+            <option value="2" <?php selected( $val, '2' ); ?>><?php esc_html_e( 'Disable', 'faq-for-woocommerce' ); ?></option>
+        </select>
+        <?php
+        echo sprintf(
+            '<p class="ffw-setting-description"><span>&#9432;</span>%s</p>',
+            esc_html__( 'Adds a search box that filters FAQs as you type. The Gutenberg block can override this. Pro AJAX search is separate.', 'faq-for-woocommerce' )
+        );
     }
 
     /**
@@ -2108,6 +2165,9 @@ class FAQ_Woocommerce_Settings {
 	 * @return array
 	 */
 	public static function get_product_categories() {
+        if ( ! taxonomy_exists( 'product_cat' ) ) {
+            return apply_filters( 'ffw_product_categories', array() );
+        }
 
 		$args = array(
 			'taxonomy'     => 'product_cat',
@@ -2136,6 +2196,9 @@ class FAQ_Woocommerce_Settings {
 	 * @return array
 	 */
 	public static function get_product_tags() {
+        if ( ! taxonomy_exists( 'product_tag' ) ) {
+            return apply_filters( 'ffw_product_tags', array() );
+        }
 
 		$args = array(
 			'taxonomy'     => 'product_tag',

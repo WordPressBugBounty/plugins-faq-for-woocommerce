@@ -64,23 +64,19 @@ if ( ! class_exists( 'FFW_Dashboard' ) ) {
 		 * @return void
 		 */
 		public function render_dashboard_content() {
-			$content = "";
-			
+			echo '<div class="ffw-admin-wrapper">';
+
 			ob_start();
+			include FFW_FILE_DIR . '/views/dashboard/header.php';
+			echo wp_kses_post( ob_get_clean() );
 
-			?>
-			<div class="ffw-admin-wrapper">
-				<?php
-					include FFW_FILE_DIR . '/views/dashboard/header.php';
-					include FFW_FILE_DIR . '/views/dashboard/body.php';
-					include FFW_FILE_DIR . '/views/dashboard/footer.php';
-				?>
-			</div>
-			<?php
+			do_action( 'ffw_after_dashboard_header' );
 
-			$content .= ob_get_clean();
+			ob_start();
+			include FFW_FILE_DIR . '/views/dashboard/body.php';
+			echo wp_kses_post( ob_get_clean() );
 
-			echo wp_kses_post($content);
+			echo '</div>';
 		}
 
 	}

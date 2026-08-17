@@ -15,8 +15,10 @@
             $counter = 0;
             foreach ( $faqs as $faq ) {
                 do_action('ffw_before_display_faq_item', array('faqs' => $faqs, 'counter' => $counter));
+                $ffw_open_item = ( isset($ffw_display_all_answers) && '1' === $ffw_display_all_answers )
+                    || ( ! empty( $ffw_expand_first ) && 0 === $counter );
                 ?>
-                <details <?php echo isset($ffw_display_all_answers) && '1' === $ffw_display_all_answers ? 'open' : '';  ?>>
+                <details <?php echo $ffw_open_item ? 'open' : ''; ?> <?php echo ffw_get_faq_item_html_attrs( (int) $faq['id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                     <summary>
                         <?php echo sprintf('<span>%s</span>', esc_html__($faq['question'], 'faq-for-woocommerce') ); ?>
                         <svg class="control-icon control-icon-expand" width="24" height="24" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-more" /></svg>

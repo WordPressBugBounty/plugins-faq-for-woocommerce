@@ -47,6 +47,20 @@ class FAQ_Woocommerce_Schema {
     public $options;
 
     /**
+     * Collected FAQ entries keyed by FAQ ID (or content hash).
+     *
+     * @var array
+     */
+    protected static $collected_faqs = array();
+
+    /**
+     * Whether the footer output hook is registered.
+     *
+     * @var bool
+     */
+    protected static $footer_hooked = false;
+
+    /**
      * Constructor.
      */
     public function __construct($faqs, $type) {
@@ -54,8 +68,7 @@ class FAQ_Woocommerce_Schema {
         $this->disply_type = $type;
         $this->schema_enable = $this->get_schema_setting();
         $this->options  = get_option( 'ffw_general_settings' );
-        $this->display_schema();
-        //add_action( 'wp_head', array( $this, 'display_schema' ) );
+        $this->collect_faqs();
     }
 
     /**
@@ -72,12 +85,63 @@ class FAQ_Woocommerce_Schema {
     }
 
     /**
+     * Collect FAQs and print a single FAQPage JSON-LD in the footer.
+     *
+     * @since 1.8.18
+     * @return void
+     */
+    protected function collect_faqs() {
+        if ( ! $this->schema_enable || empty( $this->faqs ) || ! is_array( $this->faqs ) ) {
+            return;
+        }
+
+        foreach ( $this->faqs as $faq ) {
+            if ( ! is_array( $faq ) ) {
+                continue;
+            }
+
+            $faq_id = isset( $faq['id'] ) ? (int) $faq['id'] : 0;
+            $key    = $faq_id > 0
+                ? (string) $faq_id
+                : md5( ( isset( $faq['question'] ) ? $faq['question'] : '' ) . ( isset( $faq['answer'] ) ? $faq['answer'] : '' ) );
+
+            if ( isset( self::$collected_faqs[ $key ] ) ) {
+                continue;
+            }
+
+            self::$collected_faqs[ $key ] = $faq;
+        }
+
+        if ( ! self::$footer_hooked ) {
+            self::$footer_hooked = true;
+            add_action( 'wp_footer', array( __CLASS__, 'output_schema' ), 20 );
+        }
+    }
+
+    /**
+     * Output one FAQPage JSON-LD block for all collected FAQs.
+     *
+     * @since 1.8.18
+     * @return void
+     */
+    public static function output_schema() {
+        if ( empty( self::$collected_faqs ) ) {
+            return;
+        }
+
+        $schema = new self( array(), 'footer' );
+        $schema->schema_enable = true;
+        $schema->options       = get_option( 'ffw_general_settings' );
+        $schema->process_faqs_schema( array_values( self::$collected_faqs ), 'footer' );
+    }
+
+    /**
      * Display FAQ
+     *
+     * @deprecated 1.8.18 Schema is collected and printed in wp_footer.
      */
     public function display_schema() {
-        if( $this->schema_enable && !empty($this->faqs) && !empty($this->disply_type) ) {
-            $this->process_faqs_schema($this->faqs, $this->disply_type);
-        }
+        $this->collect_faqs();
     }
 
     /**
@@ -93,6 +157,25 @@ class FAQ_Woocommerce_Schema {
         $single_schema_data = [];
         if( sizeof($faqs) > 0 ) {
             foreach ($faqs as $key => $faq_list) {
+                $single_schema_data = [];
+
+                if ( is_array( $faq_list ) && isset( $faq_list['question'] ) ) {
+                    $question = $faq_list['question'];
+                    $answer   = isset( $faq_list['answer'] ) ? $faq_list['answer'] : '';
+
+                    if ( 2 === (int) $schema_desc_type ) {
+                        $question = ffw_strip_all_tags( wp_specialchars_decode( $question ) );
+                        $answer   = ffw_strip_all_tags( wp_specialchars_decode( $answer ) );
+                    }
+
+                    $single_schema_data['@type'] = 'Question';
+                    $single_schema_data['name']  = $question;
+                    $single_schema_data['acceptedAnswer']['@type'] = 'Answer';
+                    $single_schema_data['acceptedAnswer']['text']  = $answer;
+                    array_push($faq_lists, $single_schema_data);
+                    continue;
+                }
+
                 foreach( $faq_list as $faq_key => $faq_value ) {
 
                     //strip tags and spacial characters
@@ -119,7 +202,7 @@ class FAQ_Woocommerce_Schema {
             <script type="application/ld+json">
                 <?php
                 $markup["@context"]     = "https://schema.org";
-                $markup["@type"]        = esc_html__("FAQPage", "faq-for-woocommerce");
+                $markup["@type"]        = "FAQPage";
                 $markup["mainEntity"]   = $faq_lists;
                 echo wp_json_encode($markup, JSON_UNESCAPED_SLASHES);
                 ?>

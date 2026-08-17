@@ -1,0 +1,70 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "happy-faq/display-faqs",
+  "title": "Happy Prebuilt FAQs",
+  "category": "happy-faq",
+  "icon": "editor-help",
+  "description": "Display FAQs from your Happy FAQs library on any page.",
+  "keywords": [ "faq", "accordion", "help", "questions", "prebuilt", "library" ],
+  "textdomain": "faq-for-woocommerce",
+  "supports": {
+    "align": [ "wide", "full" ],
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "source": {
+      "type": "string",
+      "default": "all"
+    },
+    "faqCat": {
+      "type": "string",
+      "default": ""
+    },
+    "faqIds": {
+      "type": "string",
+      "default": ""
+    },
+    "productId": {
+      "type": "number",
+      "default": 0
+    },
+    "layout": {
+      "type": "number",
+      "default": 0
+    },
+    "displayMode": {
+      "type": "string",
+      "default": "accordion"
+    },
+    "limit": {
+      "type": "number",
+      "default": 0
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "id"
+    },
+    "order": {
+      "type": "string",
+      "default": "ASC"
+    },
+    "showSearch": {
+      "type": "boolean",
+      "default": true
+    },
+    "enableSchema": {
+      "type": "boolean",
+      "default": true
+    },
+    "expandFirst": {
+      "type": "boolean",
+      "default": false
+    },
+    "groupId": {
+      "type": "number",
+      "default": 0
+    }
+  }
+}

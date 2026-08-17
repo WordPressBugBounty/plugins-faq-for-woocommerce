@@ -15,7 +15,10 @@ if ( ! function_exists( 'ffw_is_WC_supported' ) ) {
 /*
  * Tab
  */
-add_filter('woocommerce_product_data_tabs', 'ffw_product_settings_tabs' );
+if ( ffw_is_woocommerce_active() ) {
+	add_filter('woocommerce_product_data_tabs', 'ffw_product_settings_tabs' );
+	add_action( 'woocommerce_product_data_panels', 'ffw_product_panels' );
+}
 function ffw_product_settings_tabs( $tabs ) {
 	$tabs['faq_for_woocommerce'] = array(
 		'label'    => 'FAQs',
@@ -30,7 +33,6 @@ function ffw_product_settings_tabs( $tabs ) {
 /*
  * Tab content
  */
-add_action( 'woocommerce_product_data_panels', 'ffw_product_panels' );
 function ffw_product_panels() {
     ?>
     <div id="ffw_product_data" class="panel ffw_options_panel woocommerce_options_panel hidden">
@@ -613,6 +615,7 @@ function ffw_dashboard_header() {
 	$content .= ob_get_clean();
 
 	echo wp_kses_post($content);
+    do_action( 'ffw_after_dashboard_header' );
 }
 
 /**
@@ -647,6 +650,7 @@ function ffw_display_dashboard_header() {
     $content .= ob_get_clean();
 
     echo wp_kses_post($content);
+    do_action( 'ffw_after_dashboard_header' );
 }
 add_action( 'admin_notices', 'ffw_display_dashboard_header' );
 
@@ -725,3 +729,30 @@ function ffw_add_pro_customer_list_section() {
     }
 }
 add_action('admin_footer', 'ffw_add_pro_customer_list_section');
+
+/**
+ * Copy-to-clipboard control for FAQ shortcodes.
+ *
+ * @since 1.8.18
+ *
+ * @param string $shortcode Shortcode text.
+ * @return string
+ */
+function ffw_get_copy_shortcode_html( $shortcode ) {
+    $shortcode = (string) $shortcode;
+
+    ob_start();
+    ?>
+    <span class="ffw-inline-shortcode">
+        <code class="ffw-shortcode"><?php echo esc_html( $shortcode ); ?></code>
+        <a href="#" class="ffw-shortcode-copy-icon-box" data-ffw-shortcode="<?php echo esc_attr( $shortcode ); ?>" aria-label="<?php esc_attr_e( 'Copy shortcode', 'faq-for-woocommerce' ); ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 408 480" class="ffw-shortcode-copy-icon" aria-hidden="true">
+                <path fill="#31373D" d="M299 5v43H43v299H0V48q0-18 12.5-30.5T43 5h256zm64 86q17 0 29.5 12.5T405 133v299q0 18-12.5 30.5T363 475H128q-18 0-30.5-12.5T85 432V133q0-17 12.5-29.5T128 91h235zm0 341V133H128v299h235z"/>
+            </svg>
+            <span class="ffw-tooltip"><?php esc_html_e( 'Click To Copy', 'faq-for-woocommerce' ); ?></span>
+        </a>
+    </span>
+    <?php
+
+    return ob_get_clean();
+}

@@ -1,18 +1,17 @@
 <?php
 /**
- * Plugin Name: Happy WooCommerce FAQs
+ * Plugin Name: Happy FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
- * Description: This plugin shows faqs question and answers for woocommerce products with comment, FAQ schema and AI support.
- * Version: 1.8.17
+ * Description: Create FAQs for your site and WooCommerce products with comment, FAQ schema and AI support.
+ * Version: 2.0.1
  * Author: HappyDevs
  * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
  * Domain Path: /i18n/languages/
- * Requires Plugins: woocommerce
  *
  * WP Requirement & Test
  * Requires at least: 4.4
- * Tested up to: 6.9
+ * Tested up to: 7.0
  * Requires PHP: 7.4
  *
  * WC Requirement & Test
@@ -30,7 +29,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '1.8.17' );
+	define( 'FFW_VERSION', '2.0.1' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {
@@ -152,14 +151,36 @@ if (! function_exists('ffw') ) {
  */
 function ffw_init()
 {
-    if (! class_exists('WooCommerce', false) ) {
-        return false;
-    }
-
     ffw();
 }
 
 add_action('plugins_loaded', 'ffw_init');
+
+/**
+ * Activation: offer the sample FAQ walkthrough on empty sites only.
+ *
+ * @since 1.8.18
+ * @return void
+ */
+function ffw_activate_plugin() {
+    global $wpdb;
+
+    $status = get_option( 'ffw_onboarding_status', '' );
+    if ( in_array( $status, array( 'complete', 'dismissed', 'skipped' ), true ) ) {
+        return;
+    }
+
+    $count = (int) $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = %s AND post_status = %s",
+            'ffw',
+            'publish'
+        )
+    );
+
+    update_option( 'ffw_onboarding_status', $count > 0 ? 'skipped' : 'pending', false );
+}
+register_activation_hook( __FILE__, 'ffw_activate_plugin' );
 
 /**
  * Load textdomain.

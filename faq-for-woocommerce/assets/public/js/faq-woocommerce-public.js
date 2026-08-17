@@ -32,26 +32,21 @@ jQuery(document).ready(function ($) {
         faqExpandCollapseToggle: function(e) {
             e.preventDefault();
 
-            var wrapper_class = $(this).parent('.ffw-main-wrapper').find('.ffw-wrapper');
+            var $root = $(this).closest('.ffw-main-wrapper');
+            var $answers = $root.find('.ffw-classic-answer, .ffw-basic-answer, .ffw-accordion-body-content, .ffw-content');
+            var $details = $root.find('details');
+            var expand = $answers.filter(':visible').length === 0 && $details.filter('[open]').length === 0;
 
-            if( wrapper_class.hasClass('ffw-classic-layout') ||
-                wrapper_class.hasClass('ffw-whitish-layout') ||
-                wrapper_class.hasClass('ffw-pop-layout') ) {
-
-                if( $('.ffw-classic-answer').hasClass('ffw-hide') ) {
-                    $('.ffw-classic-answer').removeClass("ffw-hide").slideUp();
-                }else {
-                    $('.ffw-classic-answer').addClass("ffw-hide").slideDown();
-                }
-
-            } else if( wrapper_class.hasClass('ffw-trip-layout') ) {
-                var $tripTag = $('details');
-
-                if ($tripTag.attr('open')) {
-                    $tripTag.removeAttr('open');
-                } else {
-                    $tripTag.attr('open', true);
-                }
+            if (expand) {
+                $details.attr('open', true);
+                $answers.removeClass('ffw-hide').slideDown();
+                $root.find('.ffw-button').addClass('ffw-active');
+                $root.find('.ffw-accordion').addClass('ffw-accordion-active');
+            } else {
+                $details.removeAttr('open');
+                $answers.addClass('ffw-hide').slideUp();
+                $root.find('.ffw-button').removeClass('ffw-active');
+                $root.find('.ffw-accordion').removeClass('ffw-accordion-active');
             }
         },
         /**

@@ -15,7 +15,7 @@
                             $menu_title = ffw_get_settings_page_menu_title();
                             $plugin_version = apply_filters('ffw_show_settings_page_plugin_version', esc_html(FFW_VERSION));
                             echo sprintf('<h2 class="ffw-logo-text">%s<span class="ffw-version">V: %s</span></h2>', esc_html($menu_title), esc_html($plugin_version) );
-                            echo wp_kses_post( '<p>Easily create WooCommerce FAQs to increase your sell</p>' );
+                            echo wp_kses_post( '<p>Create site FAQs and product FAQs from one library</p>' );
                         ?>
                     </div>   
                 </div>
@@ -98,6 +98,7 @@
             <li class="ffw-menu <?php echo $is_ai_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ai-faqs")); ?>"><span><?php esc_html_e("AI FAQs", "faq-for-woocommerce"); ?></span></a></li>
             <li class="ffw-menu <?php echo $is_customer_question_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw_customer_qna")); ?>"><span><?php esc_html_e("Customer Questions", "faq-for-woocommerce"); ?></span></a></li>
             <li class="ffw-menu <?php echo $is_template_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ffw-templates")); ?>"><span><?php esc_html_e("Templates", "faq-for-woocommerce"); ?></span></a></li>
+            <?php do_action( 'ffw_admin_header_menu_items' ); ?>
             <li class="ffw-menu <?php echo $is_setting_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=woocommerce-faq")); ?>"><?php esc_html_e("Settings", "faq-for-woocommerce"); ?></a></li>
         </ul>
     </div>

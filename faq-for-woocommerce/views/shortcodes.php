@@ -2,27 +2,43 @@
     <div class="ffw-contianer">
         <div class="ffw-shortcode-tab-wrapper">
             <h3><?php esc_html_e("FAQs Shortcodes", "faq-for-woocommerce"); ?></h3>
-            <p><?php esc_html_e("With shortcodes, Show FAQs on product pages, category pages, or any custom page to enhance customer experience.", "faq-for-woocommerce"); ?></p>
+            <p><?php esc_html_e("Place FAQs on any page, or on WooCommerce products, with the same shortcode library. Insert Happy Prebuilt FAQs for library FAQs, or Happy Custom FAQs (Gutenberg, Elementor, or Divi) to write questions on the page.", "faq-for-woocommerce"); ?></p>
             
             <div class="ffw-shortcode-items">
                 <?php 
                 $shortcodes = [
                     [
+                        'code' => '[ffw_template]',
+                        'title' => esc_html__('Display all FAQs', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Shows every published FAQ using the layout from Settings. Paste this on any page, or select an FAQs page in Settings to add it automatically.', 'faq-for-woocommerce'),
+                    ],
+                    [
+                        'code' => '[ffw_template faq_cat="12"]',
+                        'title' => esc_html__('Display FAQs by FAQ category', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Show FAQs from one or more FAQ categories. Copy the category shortcode from the FAQ Categories screen. Example: 12 is a FAQ category ID.', 'faq-for-woocommerce'),
+                    ],
+                    [
+                        'code' => '[ffw_template faq_ids="12,15"]',
+                        'title' => esc_html__('Display selected FAQs', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Show specific FAQs by ID. Use a comma-separated list. Example: 12 and 15 are FAQ post IDs.', 'faq-for-woocommerce'),
+                    ],
+                    [
                         'code' => '[ffw_template dynamic_post=true]',
-                        'title' => esc_html__('Display FAQs in Product Page', 'faq-for-woocommerce'),
-                        'description' => esc_html__('You can display all FAQs in product page with the default template.', 'faq-for-woocommerce'),
+                        'title' => esc_html__('Display FAQs on the current product', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Shows FAQs assigned to the product being viewed. Use this on a product template. WooCommerce must be active.', 'faq-for-woocommerce'),
                     ],
                     [
                         'code' => '[ffw_template id=20]',
-                        'title' => esc_html__('Display FAQs in Others Page.', 'faq-for-woocommerce'),
-                        'description' => esc_html__('Display FAQs anywhere on your site. Simply use the shortcode and assign a product ID to show FAQs for that product. Works with any page or template. Example, here `id=20` is product id.', 'faq-for-woocommerce'),
+                        'title' => esc_html__('Display FAQs for a product ID', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Show FAQs assigned to a specific product anywhere on the site. Example: id=20 is the product ID.', 'faq-for-woocommerce'),
                     ],
                     [
-                        'code' => '[ffw_template cat_ids="32, 33"]',
-                        'title' => esc_html__('Display FAQs by FAQs Categories', 'faq-for-woocommerce'),
-                        'description' => esc_html__('You can display FAQs for specific FAQ categories. If the cat_ids exist, then the product id will be ignored. Here 32 & 33 are FAQ categories id. Please use the comma separator while inputting the data.', 'faq-for-woocommerce'),
+                        'code' => '[ffw_template cat_ids="32,33"]',
+                        'title' => esc_html__('Display FAQs by FAQ categories (legacy)', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Same as faq_cat. 32 and 33 are FAQ category IDs. Prefer faq_cat for new pages.', 'faq-for-woocommerce'),
                     ],
                 ];
+                $shortcodes = apply_filters( 'ffw_admin_shortcodes_list', $shortcodes );
                 
                 foreach ( $shortcodes as $shortcode ) : ?>
                     <div class="ffw-shortcode-box">
@@ -37,7 +53,7 @@
         
                                 <div class="ffw-shortcode-icons-box">
         
-                                    <a class="ffw-shortcode-copy-icon-box">
+                                    <a class="ffw-shortcode-copy-icon-box" data-ffw-shortcode="<?php echo esc_attr( $shortcode['code'] ); ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 408 480" class="ffw-shortcode-copy-icon">
                                             <path fill="#31373D"

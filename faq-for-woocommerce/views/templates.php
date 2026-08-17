@@ -9,6 +9,7 @@
         $free_templates = ['Classic', 'Whitish', 'Trip', 'Pop', 'Basic'];
         $templates = apply_filters("ffw_filter_template_names", $free_templates);
     ?>
+    <p class="ffw-template-intro"><?php esc_html_e('Choose a layout for your FAQ page and product FAQs. Preview uses a screenshot — you do not need a product.', 'faq-for-woocommerce'); ?></p>
     <div class="ffw-contianer">
         <?php
             if( isset($templates) && !empty($templates) ) {

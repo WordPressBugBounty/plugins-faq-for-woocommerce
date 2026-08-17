@@ -164,7 +164,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                             <?php
                             if( isset($product_ids) && ! empty($product_ids) ) {
                                 foreach ( $product_ids as $product_id ) {
-                                    $product = wc_get_product( $product_id );
+                                    $product = function_exists( 'wc_get_product' ) ? wc_get_product( $product_id ) : null;
                                     $faq_ids = get_post_meta($product_id, 'ffw_product_faq_post_ids', true);
 
                                     if ( $product ) {

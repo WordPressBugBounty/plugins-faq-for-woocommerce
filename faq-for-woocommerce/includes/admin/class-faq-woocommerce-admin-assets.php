@@ -67,12 +67,12 @@ if ( ! class_exists( 'FAQ_Woocommerce_Admin_Assets', false ) ) :
                     }
                 }
 
-                if('ffw' == $post_type || 'product' == $post_type ) {
+                if('ffw' == $post_type || 'ffw_group' == $post_type || 'product' == $post_type ) {
                     wp_enqueue_style( 'select2css' );
                     wp_enqueue_script( 'select2' );
                 }
 
-                if('ffw' == $post_type || 'ffw_customer_qna' == $post_type) {
+                if('ffw' == $post_type || 'ffw_group' == $post_type || 'ffw_customer_qna' == $post_type) {
                     wp_enqueue_style( 'ffw_admin_styles' );
 
                     ?>
@@ -86,7 +86,9 @@ if ( ! class_exists( 'FAQ_Woocommerce_Admin_Assets', false ) ) :
 
                     if(isset($_GET['post']) && isset($_GET['action']) && 'edit' === $_GET['action']) {
                         wp_enqueue_style( 'ffw_admin_styles' );
-                        wp_enqueue_style( 'woocommerce_admin_styles' );
+                        if ( ffw_is_woocommerce_active() ) {
+                            wp_enqueue_style( 'woocommerce_admin_styles' );
+                        }
                         wp_enqueue_style( 'ffw_admin_popup_styles' );
                     }
 
@@ -113,15 +115,20 @@ if ( ! class_exists( 'FAQ_Woocommerce_Admin_Assets', false ) ) :
             }
 
             // dependency
-            $dep = array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wp-color-picker');
+            $dep = array( 'jquery', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'wp-color-picker');
+            $woo_script_deps = array( 'jquery', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core' );
 
-            if ( class_exists( 'WooCommerce' ) ) {
+            if ( ffw_is_woocommerce_active() ) {
+                $dep[] = 'jquery-blockui';
+                $dep[] = 'jquery-tiptip';
                 $dep[] = 'wc-enhanced-select';
+                $woo_script_deps[] = 'jquery-blockui';
+                $woo_script_deps[] = 'jquery-tiptip';
             }
 
             // Register scripts.
-            wp_register_script( 'ffw_bootstrap_js', FFW_PLUGIN_URL . '/assets/admin/js/bootstrap.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), time(), true );
-            wp_register_script( 'ffw_sweetalert', FFW_PLUGIN_URL . '/assets/admin/js/ffw-sweetalert.all.min.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip' ), time(), true );
+            wp_register_script( 'ffw_bootstrap_js', FFW_PLUGIN_URL . '/assets/admin/js/bootstrap.min.js', $woo_script_deps, time(), true );
+            wp_register_script( 'ffw_sweetalert', FFW_PLUGIN_URL . '/assets/admin/js/ffw-sweetalert.all.min.js', $woo_script_deps, time(), true );
             wp_register_script( 'ffw_admin', FFW_PLUGIN_URL . '/assets/admin/js/faq-woocommerce-admin.min.js', $dep, time(), true );
 			wp_localize_script( 'ffw_admin', 'ffw_admin', [
 				'ajaxurl'               => admin_url( 'admin-ajax.php' ),
@@ -142,7 +149,7 @@ if ( ! class_exists( 'FAQ_Woocommerce_Admin_Assets', false ) ) :
             if ( isset($_GET['post']) && isset($_GET['action']) && 'edit' === $_GET['action'] ) {
                 wp_enqueue_script( 'ffw_sweetalert' );
                 wp_enqueue_script( 'ffw_admin' );
-            } elseif( isset($_GET['post_type']) && 'ffw' === $_GET['post_type'] ) {
+            } elseif( isset($_GET['post_type']) && in_array( $_GET['post_type'], array( 'ffw', 'ffw_group' ), true ) ) {
                 wp_enqueue_script( 'ffw_admin' );
             } elseif( isset($_GET['page']) && 'woocommerce-faq' === $_GET['page'] ) {
                 wp_enqueue_script( 'ffw_admin' );

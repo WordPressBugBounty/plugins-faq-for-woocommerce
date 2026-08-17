@@ -52,6 +52,32 @@ class FAQ_Woocommerce_Public {
         add_action( 'wp_enqueue_scripts', array( $this, 'ffw_public_styles' ), 999 );
         add_action( 'wp_enqueue_scripts', array( $this, 'ffw_public_scripts' ), true );
         add_action( 'init', array( $this, 'includes' ) );
+        add_filter( 'the_content', array( $this, 'inject_faq_page_content' ) );
+    }
+
+    /**
+     * Append FAQs to the page selected in Settings → FAQs Page.
+     *
+     * @since 1.8.18
+     *
+     * @param string $content Page content.
+     * @return string
+     */
+    public function inject_faq_page_content( $content ) {
+        if ( is_admin() || ! is_singular( 'page' ) || ! in_the_loop() || ! is_main_query() ) {
+            return $content;
+        }
+
+        $faq_page_id = ffw_get_faq_page_id();
+        if ( ! $faq_page_id || get_the_ID() !== $faq_page_id ) {
+            return $content;
+        }
+
+        if ( has_shortcode( $content, 'ffw_template' ) ) {
+            return $content;
+        }
+
+        return $content . do_shortcode( '[ffw_template]' );
     }
 
     /**
@@ -81,6 +107,7 @@ class FAQ_Woocommerce_Public {
 
         // public style
         wp_register_style( 'ffw_public_styles', FFW_PLUGIN_URL . '/assets/public/css/style.min.css', array(), FFW_PLUGIN_VERSION );
+        wp_register_style( 'ffw-display-faqs-style', FFW_PLUGIN_URL . '/includes/blocks/display-faqs/style.css', array(), FFW_VERSION );
 
         // do_action("ffw_register_template_js", $layout);
 
@@ -105,12 +132,15 @@ class FAQ_Woocommerce_Public {
         wp_register_script( 'ffw_classic_js', FFW_PLUGIN_URL . '/assets/public/js/ffw-classic.min.js', array( 'jquery' ), FFW_PLUGIN_VERSION, true );
         wp_register_script( 'ffw_pop_js', FFW_PLUGIN_URL . '/assets/public/js/ffw-pop.min.js', array( 'jquery' ), FFW_PLUGIN_VERSION, true );
         wp_register_script( 'ffw_basic_js', FFW_PLUGIN_URL . '/assets/public/js/ffw-basic.js', array( 'jquery' ), FFW_PLUGIN_VERSION, true );
+        wp_register_script( 'ffw-inline-search', FFW_PLUGIN_URL . '/assets/public/js/ffw-inline-search.js', array( 'jquery' ), FFW_VERSION, true );
 
 		// enqueue template JS files.
         wp_enqueue_script( 'ffw_public_js' );
+        wp_enqueue_script( 'ffw-inline-search' );
         wp_localize_script( 'ffw_public_js', 'ffw_public_js', [
             'ajaxurl'               => admin_url( 'admin-ajax.php' ),
             'nonce'                 => wp_create_nonce( 'ffw_public_js' ),
+            'search_empty'          => esc_html__( 'No FAQs match your search.', 'faq-for-woocommerce' ),
         ] );
 
 		if ( 4 === $layout ) {

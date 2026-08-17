@@ -7,10 +7,12 @@
 
                 foreach ( $faqs as $faq ) {
                     do_action('ffw_before_display_faq_item', array('faqs' => $faqs, 'counter' => $counter));
+                    $ffw_open_item = ( isset($ffw_display_all_answers) && '1' === $ffw_display_all_answers )
+                        || ( ! empty( $ffw_expand_first ) && 0 === $counter );
                     ?>
-                    <div class="ffw-collapse ffw-accordion-item">
+                    <div class="ffw-collapse ffw-accordion-item" <?php echo ffw_get_faq_item_html_attrs( (int) $faq['id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                         <?php echo sprintf('<span class="ffw-button">%s</span>', esc_html__($faq['question'], 'faq-for-woocommerce') ); ?>
-                        <div class="ffw-content ffw-classic-answer" <?php echo isset($ffw_display_all_answers) && '1' === $ffw_display_all_answers ? 'style="display:block"' : '';  ?>>
+                        <div class="ffw-content ffw-classic-answer" <?php echo $ffw_open_item ? 'style="display:block"' : '';  ?>>
                             <?php
                             $post_id = get_the_ID();
                             $faq_id = (int) $faq['id'];

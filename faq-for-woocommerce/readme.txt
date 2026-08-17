@@ -1,370 +1,249 @@
-=== Happy WooCommerce FAQs - Ultimate Product FAQ Plugin ===
+=== Happy FAQs - WordPress FAQ and Product FAQ ===
 Contributors: happydevs, nayanchamp7, azha18
-Tags: faq, faqs, woocommerce faqs, product faq, question and answer
+Tags: faq, woocommerce faq, product faq, accordion, schema
 Requires at least: 3.6
-Tested Up To: 6.9
+Tested Up To: 7.0
 Requires PHP: 7.4
-Stable tag: 1.8.17
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WooCommerce Product FAQ Plugin and accordion plugin create FAQs with Google FAQ schema, AI Generator, Comment and customization support.
+WordPress FAQ and WooCommerce product FAQ plugin with accordion layouts, Google FAQ schema, AI generator, Gutenberg, Elementor, Divi, and shortcodes.
 
 == Description ==
 
-= Happy WooCommerce FAQs: The best solution for seamless WooCommerce FAQs and Ultimate Product FAQ Plugin =
+**Happy FAQs** is a WordPress FAQ plugin and a WooCommerce product FAQ plugin. Create unlimited FAQs in one library, then show them as an accordion on help pages, posts, and product pages.
 
-**Happy WooCommerce FAQs** is a feature-packed, flexible, and robust **product FAQ** plugin for WooCommerce. It might be your best shot if you want to increase sales by answering your customer’s most commonly asked questionnaires smartly.
+Write the answer once. Reuse it on a FAQ page, in Gutenberg, Elementor, or Divi, and on WooCommerce products. WooCommerce is optional — use it as a site FAQ plugin, then add product FAQs when you have a store.
+
+**Google FAQ schema** (FAQPage), an AI FAQ generator, comments, and custom accordion layouts are included.
 
 [Demo](https://demo.happydevs.net/happyfaqs/product/beanie-with-logo/) | [Documentation](https://happydevs.net/docs/faq-for-woocommerce/overview) | [Video Tutorials](https://www.youtube.com/watch?v=CnsPBdgIbaU&list=PLqgTGQxEn_rZbnleeeuK18QJ984t6o3ZX&ab_channel=HappyDevs) | [Get Support](https://happydevs.net/support)
 
 [youtube https://www.youtube.com/watch?v=CnsPBdgIbaU]
 
 > **Upgrade to Happy FAQs PRO**<br />
-> Upgrade to [Happy FAQs PRO now](https://happydevs.net/happy-woocommerce-faqs-pro) to get the priority e-mail support and gain an access to all the PRO features!
+> Upgrade to [Happy FAQs PRO](https://happydevs.net/happy-woocommerce-faqs-pro) now for priority email support and all PRO features.
 
-> This advanced WooCommerce Question Answer plugin can skyrocket your sales and increase your business’s online visibility. Indeed, a tool that should not be missed for any product site.
+> Pro adds FAQ Groups, AJAX FAQ search, extra accordion layouts, import/export, customer questions, variation product FAQs, and shop, cart, and checkout FAQs.
 
-## ⭐ TOP FEATURES ##
+= Who it is for =
 
-Here’s a glimpse of the top features of this ultimate FAQ plugin for [__WooCommerce__](https://wordpress.org/plugins/woocommerce):
+* **WordPress sites** that need a FAQ accordion, help center, or FAQ page with Google schema
+* **WooCommerce stores** that need product FAQs, category FAQs, and question-and-answer content on products
+* **Builders** using Gutenberg, Elementor, or Divi
 
-* Unlimited FAQs
-* FAQs by Product Categories
-* FAQs by Product Tags
-* AI FAQs Generator (since 1.7.0)
-* Individual product FAQ
-* Gutenberg Editor support
-* Classic Editor support
-* FAQ Post support
-* Product FAQ comment
-* Schema support
-* Sorting FAQs
-* Shortcode support
-* Custom style support
-* Fully responsive
-* FAQ block support
-* Media/Image support in FAQ answer
-* Adding content before and after the FAQ list
-* HTML content – write answers in HTML
-* Multiple Layout – standard templates for front view
-* WP Editor for HTML markup, supports WYSIWYG editor
-* WooCommerce compatible style for product information tab
-* FAQ layout preview
-* FAQ tab reorder setting
-* Show/hide FAQ answers on page load
-* Option of Expand/Collapse All FAQs
-* WPML translations support
-* Polylang translations support
-* 💎 Customer Asking Questions (PRO)
-* 💎 Variation Product FAQs (PRO)
-* 💎 More Beautiful FAQs Templates (PRO)
-* 💎 Display in Product Pages [display on Product page] (PRO)
-* 💎 Display in Archive Pages [display on Product Categories & Tags page] (PRO)
-* 💎 Display in Shop Page (Shop Page FAQs) (PRO)
-* 💎 Display in Cart Page (Cart Page FAQs) (PRO)
-* 💎 Display in Checkout Page (Checkout Page FAQs) (PRO)
-* 💎 DYNAMIC PRODUCT ATTRIBUTE (PRO)
-* 💎 Global FAQS (PRO)
-* 💎 RTL Support (PRO)
-* 💎 SEARCH FAQs (PRO)
-* 💎 Multi Column Support (PRO)
-* 💎 Many More Features (PRO)
+= How it works =
 
-Let’s explain these features one by one.
+Create a FAQ once. On that FAQ screen, the **Happy FAQs Panel** metabox is where you choose where it appears.
 
-## ♾️ UNLIMITED FAQS ##
+1. Go to **Happy FAQs → Add New**. The title is the question. The editor is the answer (HTML, images, and video are allowed).
+2. Optionally assign a **FAQ category** (for example Shipping or Returns). You can later show that whole category on a help page.
+3. Open the **Happy FAQs Panel** metabox and assign:
+   * **Products** — search and attach specific WooCommerce products.
+   * **Product categories** — every product in those categories inherits this FAQ.
+   * **Product tags** — every product with those tags inherits this FAQ.
+   * **Display in pages** — product pages (free). Shop, cart, and checkout are (PRO).
+   * **Global FAQs (PRO)** — show this FAQ on every product.
+   * **Product attributes (PRO)** — insert live values such as `{product_price}` in the answer.
+4. To show FAQs on a normal WordPress page, use a shortcode, **Happy Prebuilt FAQs** or **Happy Custom FAQs** (Gutenberg block, Elementor widget, or Divi 4/5 module), or **Settings → FAQ page**.
 
-The `Happy WooCommerce FAQs` plugin allows you to add unlimited FAQs to your eCommerce store. It doesn’t matter how many products you have in your online store, this WooCommerce FAQ plugin got you covered. You can even add global FAQs for your products.
+You can also attach FAQs from the product edit screen. One FAQ can appear in more than one place.
 
-## 🎨 INDIVIDUAL PRODUCT FAQ ##
+= Top features =
 
-Every product is special. So, it’s very common for customers to have specific questions about specific products. As an owner, it’s your sole duty to convert those product visitors into probable buyers by answering their custom questions with this FAQ accordion plugin.
+* Unlimited WordPress FAQs and WooCommerce product FAQs
+* FAQ accordion layouts (5 free, 4 more in Pro)
+* Google FAQ schema (FAQPage) on pages and products
+* FAQ categories, shortcodes, and an FAQ page setting
+* Happy Prebuilt FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (library FAQs)
+* Happy Custom FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (write Q&A on the page)
+* AI FAQ generator
+* Inline FAQ search
+* Comments, media in answers, expand/collapse all
+* Assign FAQs to products, product categories, and product tags
+* WPML and Polylang
+* FAQ Groups, AJAX search, import/export (PRO)
+* Customer questions, variation FAQs, shop/cart/checkout FAQs (PRO)
 
-## 🤖 SCHEMA SUPPORT ##
+= Free features =
 
-[Watch Video](https://www.youtube.com/watch?v=K1X6mAVDbog)
+**General FAQs**
 
-Increasing search engine visibility is one of the best ways to grow your business. The better ranking you have, the more traffic you will get from the search engines. If you want to rank your product page, then you must use the FAQ schema.
+* Unlimited FAQs in one reusable library
+* Place FAQs on any WordPress page or post
+* FAQ categories (Shipping, Returns, and so on)
+* FAQ page setting: pick a page and Happy FAQs can inject the accordion
+* Shortcodes for all FAQs, a FAQ category, selected FAQ IDs, or the current product
 
-## 🗣️ FAQ COMMENT ##
+**Display and extras**
 
-To enable comment support, please go through “**Happy FAQs > Settings > Comment**” and select enable. The comments and comment forms are fully customizable. Besides, you can also update the comment font, color, design, button styling, etc.
+* Happy Prebuilt FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (library FAQs, same markup as the shortcode)
+* Happy Custom FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (write Q&A on the page)
+* Google FAQPage schema on help pages and product pages
+* Inline search that filters the FAQs already on the page
+* AI FAQ generator (OpenAI)
+* Images, video, and other media in answers
+* Expand / collapse all
+* Comments on FAQs
+* Five accordion layouts, colors, width, and display options
+* Classic Editor and block editor support
+* WPML and Polylang support
 
-Customers or visitors can submit their comments to every product FAQ. After that, Admin can either approve or delete comments. The approved comments will be displayed on the front. This commenting feature helps you get customer feedback on your WooCommerce products and the product FAQs.
+**Product FAQs**
 
-[__Upgrade to PRO__](https://happydevs.net/happy-woocommerce-faqs-pro) | [__Documentation__](https://happydevs.net/docs/faq-for-woocommerce/overview/) | [__Support__](https://wordpress.org/support/plugin/faq-for-woocommerce/)
+* Assign FAQs to products from the product screen or the FAQ screen
+* Inherit FAQs from WooCommerce product categories and tags
+* Drag to sort FAQs on each product
+* Product tab, show/hide answers on load, and tab order
 
-## 🔀 SORTING FAQS ##
+= Shortcodes =
 
-The Happy WooCommerce FAQs plugin works in a more advanced way than the other FAQ accordion plugins. This FAQ sorting feature might be a great example to support this statement.
+[Shortcode docs](https://happydevs.net/docs/faq-for-woocommerce/shortcodes/)
 
-Happy WooCommerce FAQs allows the users to sort the FAQs under different parameters like ‘**order**’ and ‘**order_by**’. You can also implement this sorting feature by using shortcodes. Check the following feature to learn about using the shortcode feature.
+Show **all FAQs**:
 
-## 🚀 SHORTCODE SUPPORT ##
+`[ffw_template]`
 
-A smart representation of WooCommerce product FAQs impacts sales directly. That’s why you must display the product FAQs wherever needed. That’s why this WordPress FAQ plugin comes with the shortcode feature.
+Show a **FAQ category**. `faq_cat` is the FAQ category ID (Happy FAQs → Categories):
 
-[Read More](https://happydevs.net/docs/faq-for-woocommerce/shortcodes/)
+`[ffw_template faq_cat="32"]`
 
+Show **selected FAQs**. `faq_ids` are FAQ post IDs (Happy FAQs → All FAQs):
 
-ℹ️ You can display **all FAQs** for a random product having FAQs with the default template:
+`[ffw_template faq_ids="10,11,12"]`
 
-`
-[ffw_template]
-`
+Show FAQs for a **WooCommerce product**:
 
-ℹ️ To **display all FAQs for a specific product**, use the following shortcode:
+`[ffw_template id="20"]`
 
-`
-[ffw_template id=20]
-`
+`id` is the WooCommerce **product ID**, not the FAQ ID. Find it under **Products → All Products**: hover the product, or open it and read `post=20` in the browser URL. Replace `20` with your product’s ID.
 
-💡 Here, 20 is the product id. Replace it with your desired product id.
+Show FAQs for the **current product** (use this on a single product page or product template):
 
-ℹ️ To **display FAQs for specific FAQ categories**, use the following shortcode:
+`[ffw_template dynamic_post="true"]`
 
-`
-[ffw_template cat_ids="32, 33"]
-`
+Pick an accordion layout with `template`:
 
-💡 If the cat_ids exist, then the product id will be ignored. Here 32 & 33 are FAQ categories id. Please use the comma separator while inputting the data.
+* 1 Classic, 2 Whitish, 3 Trip, 4 Pop, 5 Basic
+* Pro layouts (PRO): 6 Glow, 7 Smart, 8 Wow, 9 Zoom
 
-If you want to sort the product FAQs using shortcodes, you can do it by using ‘order’ and ‘order_by’ parameters.
+Example: `[ffw_template template="1" id="20"]`
 
-The supported values for ‘order’ (Default Value: ‘ASC’)
-– ‘DESC’, ‘ASC’
+Sort with `order` (`ASC` or `DESC`) and `order_by` (`id`, `date`, `title`, `name`, `modified`, `comment_count`, `author`).
 
-The supported values for ‘order_by’ (Default Value: ‘ID’)
-– ‘ID’, ‘date’, ‘title’, ‘name’, ‘date’, ‘modified’, ‘comment_count’, ‘author’.
+Pro adds `group_id` for FAQ Groups (PRO), and `[ffw_search]` for AJAX library search (PRO).
 
-ℹ️ Use the shortcode below to display FAQs for a current product ID (for the single product page):
+= Pro features =
 
-`
-[ffw_template dynamic_post=true]
-`
+[Upgrade to Happy FAQs Pro](https://happydevs.net/happy-woocommerce-faqs-pro)
 
-💡 This shortcode is appropriate for single product pages.
+**Library**
 
-ℹ️ Use the following shortcode to display all FAQs for a specific product with a specific template by this easy accordion FAQ plugin.
+* FAQ Groups (PRO): named collections with drag-and-drop order and a copyable shortcode
+* AJAX library search (PRO): autocomplete across all published FAQs (`[ffw_search]`, block, or Elementor widget)
+* Hash deep-links (PRO): open a FAQ with a link such as `#ffw-faq-123`
+* Extra accordion layouts (PRO): Glow, Smart, Wow, Zoom
+* Import / export (PRO): FAQs, categories, groups, and product assignments as JSON
+* RTL and multi-column layout (PRO)
 
-`
-[ffw_template template=1 id=20]
-`
+**Store extras** (need WooCommerce)
 
-💡 Use the following template ids to show FAQs
+* Customer asking questions (PRO): shoppers can submit a question, with email notifications
+* Variation product FAQs (PRO)
+* Extra product page locations (PRO): after Add to cart, top or bottom of the product page, and similar
+* Product archive, shop, cart, and checkout FAQs (PRO)
+* Dynamic product attributes (PRO): placeholders such as `{product_price}`
+* Global product FAQs (PRO): appear on every product
+* AJAX search on the product FAQ list (PRO)
 
-* For Classic Template – 1
-* For Whitish Template – 2
-* For Trip Template – 3
-* For Pop Template – 4
-* For Basic Template – 5
-* For Glow Template (Pro) – 6
-* For Smart Template (Pro) – 7
-* For Wow Template (Pro) – 8
-* For Zoom Template (Pro) – 9
+= Get started =
 
-## 🎦 MEDIA/IMAGE SUPPORT IN FAQ ANSWER ##
+1. Install and activate Happy WooCommerce FAQs.
+2. Add a few FAQs, or click **Add sample FAQs** on the dashboard.
+3. Paste `[ffw_template]` on a page, insert **Happy Prebuilt FAQs** or **Happy Custom FAQs** (Gutenberg, Elementor, or Divi), or choose an FAQs page in **Happy FAQs → Settings**.
+4. For a store, open a FAQ, use the **Happy FAQs Panel** metabox, and assign products, product categories, or tags.
 
-A picture is worth a thousand words. While answering the questions, you might need to use some images or videos to explain the answer better. To help you in this situation, `Happy WooCommerce FAQs` allows the insertion of digital media in the answers.
-
-It not only helps to answer the questions better but also answers them more appropriately. You can insert every media file that is supported by WordPress.
-
-## 🎢 MULTIPLE LAYOUTS – STANDARD TEMPLATES FOR FRONT VIEW ##
-
-This Product FAQ for WooCommerce has five built-in templates to choose from. These are -
-
-  * Classic Template
-  * Whitish Template
-  * Trip Template
-  * Pop Template
-  * Basic Template (since 1.4.5)
-  * Glow Template (Pro)
-  * Smart Template (Pro)
-  * Wow Template (Pro)
-  * Zoom Template (Pro)
-
-## 🎬 SHOW/HIDE FAQ ANSWERS ON PAGE LOAD ##
-
-By default, the product FAQs are listed just like a simple FAQ accordion style. If you want to read the answer to a specific question, you have to click on that question, and it will show the answer.
-
-But, Happy WooCommerce FAQs is designed to offer something extra than others. So, you can set whether you want to show or hide the answers while the product page loads initially.
-
-## 👨‍💻 OPTION TO EXPAND/COLLAPSE ALL FAQS ##
-
-Besides controlling the FAQs visibility from the dashboard panel, the Happy WooCommerce FAQs manager plugin lets the customer control it from the front-end interface.
-
-## ⚡ Maximize the efficiency of your WooCommerce FAQ creation process ##
-
-You will get a lot of effort minimizing features from the free version of this WooCommerce faq accordion plugin. But you will definitely enjoy the pro version since it saves your time and resources more efficiently.
-
-With `Happy WooCommerce FAQs Pro`, your sales will increase dramatically because it will enhance the standard of your WooCommerce products by making them more informative.
-
-### Pro Features of `Happy WooCommerce FAQs`:
-
-## 👕 FAQs by Product Categories ##
-
-Assign product categories to FAQs. It will minimize your time to connect FAQs with products.
-
-## 👕 FAQs by Product Tags ##
-
-Assign product tags to FAQs. It will minimize your time to connect FAQs with products.
-
-## ❓ Customer Asking Questions (PRO FEATURE) ##
-
-[Watch Video](https://www.youtube.com/watch?v=OEhB1k8QSAk) | [Read More](https://happydevs.net/docs/faq-for-woocommerce/customer-questions/how-to-manage-customer-questions/)
-
-Feature to make customer capable to ask a question on product, shipping, payment, coupon, order etc.
-
-## 👟 Variation Product FAQs (PRO FEATURE) ##
-
-Easily create FAQs for variation products and easily engage with your customers by answering their variation queries about the child products.
-
-## 📑 More Beautiful Templates (PRO FEATURE) ##
-
-With premium FAQ templates, you can display standard product FAQs and boost your sales.
-
-## 👕 Display Location in Product Pages (PRO FEATURE) ##
-
-Display faqs anywhere on the product pages, it will give you the flexibility to adjust faqs with your design theme interface.
-
-## 🚪 Display in Archive Pages (PRO FEATURE) ##
-
-Display faqs on the product archive pages (product category and tag). Archive WooCommerce FAQs can be displayed for ecommerce customers.
-
-## 🟦 Display in Shop Page (PRO FEATURE) ##
-
-[Watch Video](https://www.youtube.com/watch?v=H5zjhIxAnKE) | [Read More](https://happydevs.net/docs/faq-for-woocommerce/display-faqs-in-shop-page/)
-
-Display shop related faqs anywhere on the shop page, you may have shipping, payment, order, discount related FAQs to display in Shop page.
-
-## 🛒 Display in Cart Page (PRO FEATURE) ##
-
-[Watch Video](https://www.youtube.com/watch?v=H5zjhIxAnKE) | [Read More](https://happydevs.net/docs/faq-for-woocommerce/display-faqs-in-cart-page/)
-
-Display cart related faqs anywhere on the cart page, you may have shipping, payment, order, discount related FAQs to display in Cart page.
-
-## 🛍️ Display in Checkout Page (PRO FEATURE) ##
-
-[Watch Video](https://www.youtube.com/watch?v=H5zjhIxAnKE) | [Read More](https://happydevs.net/docs/faq-for-woocommerce/display-faqs-in-checkout-page/)
-
-Display checkout related faqs anywhere on the checkout page, you may have shipping, payment, order, discount related FAQs to display in Checkout page.
-
-## ⚛️ DYNAMIC PRODUCT ATTRIBUTE (PRO FEATURE) ##
-
-[Watch Video](https://www.youtube.com/watch?v=Yli56iffP74) | [Read More](https://happydevs.net/docs/faq-for-woocommerce/dynamic-product-attributes-pro/)
-
-Effortlessly create dynamic FAQs for your WooCommerce store with Happy WooCommerce FAQs PRO. Use placeholders like {product_price} in your FAQ answers, and the assigned products will dynamically display their specific values.
-
-This powerful feature saves time by generating product-specific responses without creating individual FAQs. Enhance your WooCommerce product FAQs with dynamic attributes for a seamless user experience.
-
-## 🌐 Global FAQs (PRO FEATURE) ##
-
-[Watch Video](https://www.youtube.com/watch?v=cHjqwUfp3zA) | [Read More](https://happydevs.net/docs/faq-for-woocommerce/global-faqs-pro)
-
-Creating identical FAQs for all your **WooCommerce** products can be tedious. With **Happy WooCommerce FAQs**, you can streamline the process using the **Global FAQs** feature.
-
-Set the same FAQ for your entire store effortlessly—just create it once and mark it as a Global FAQ. It will automatically appear in every product's FAQ section, saving time and enhancing consistency across your online store.
-
-## ⬅️ RTL SUPPORT (PRO FEATURE) ##
-
-[Watch Video](https://www.youtube.com/watch?v=vAKGJL51jYg) | [Read More](https://happydevs.net/docs/faq-for-woocommerce/rtl-support-pro/)
-
-Happy WooCommerce FAQs already supports several languages, but it transcends all boundaries with RTL support. RTL languages such as Arabic, Aramaic, Azeri, Hebrew, Kurdish, Persian, etc, are supported in Happy WooCommerce FAQs PRO.
-
-## 🔍 SEARCH FAQs (PRO FEATURE) ##
-
-[Watch Video](https://www.youtube.com/watch?v=_5kTNyDsP2s) | [Read More](https://happydevs.net/docs/faq-for-woocommerce/search-box-pro/)
-
-Happy WooCommerce FAQs is indeed one of the best WordPress accordion plugins for WooCommerce. You’ll be able to find the exact FAQ within seconds using this FAQ accordion tool.It offers a flexible search option for your WooCommerce product FAQs. The comprehensive search functionality in the FAQ area will allow you to search out the FAQ you are looking for.
-
-## ☲ MULTI-COLUMN SUPPORT (PRO FEATURE) ##
-
-Typically a FAQ section comes with a simple outlook that contains questions, answers, and a faq dropdown option. Using Happy WooCommerce FAQs PRO, you can generate FAQs with unique viewing experiences for the users. It allows you to personalize the FAQ area with Multi-column support.
-
-Users can now see more FAQs and access them without even scrolling the screen. You can simply enable or disable multi-column FAQs using this amazing tool. For user convenience, this feature displays more FAQs inside a relatively compact viewing area.
-
-[__Upgrade to PRO__](https://happydevs.net/happy-woocommerce-faqs-pro) | [__Documentation__](https://happydevs.net/docs/faq-for-woocommerce/overview/) | [__Support__](https://wordpress.org/support/plugin/faq-for-woocommerce/)
-
-
-💚 Satisfied with our Happy WooCommerce FAQs plugin?
-👉 [__Join our LinkedIn Page__](https://www.linkedin.com/company/happydevsteam)
-⭐ [__Rate us on WordPress__](https://wordpress.org/support/plugin/faq-for-woocommerce/reviews/?filter=5) [Your Review, Our Inspiration]
+[Documentation](https://happydevs.net/docs/faq-for-woocommerce/overview/) | [Support](https://wordpress.org/support/plugin/faq-for-woocommerce/) | [Rate the plugin](https://wordpress.org/support/plugin/faq-for-woocommerce/reviews/?filter=5)
 
 == Installation ==
 
-Before installing the plugin please make sure that
+Requirements:
 
-- Your php version is 5.4 or greater
-- Wordpress version is 3.6 or greater
-- WooCommerce version is 2.4 or greater
+* WordPress 3.6 or later
+* PHP 7.4 or later
+* WooCommerce is optional. Install WooCommerce only if you need product FAQs.
 
-This section describes how to install the plugin and get it working.
+= From the dashboard =
 
-= Search Way: =
-1. Go to the WordPress Dashboard "Add New Plugin" section.
-2. Search For "Product FAQ".
-3. Install, then Activate it.
+1. Go to **Plugins → Add New**.
+2. Search for **Happy WooCommerce FAQs**, **Product FAQ**, or **WooCommerce FAQ**.
+3. Install and activate.
 
-= Manual Way: =
-1. Upload `faq-for-woocommerce` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Go through menu like `Happy FAQs > Settings`.
-4. In product tab section you will find a menu called `FAQs`, click it, click `Add new` and a popup will come.
-5. Add question and add answer.
-6. Done!
+= Manual =
+
+1. Upload the `faq-for-woocommerce` folder to `/wp-content/plugins/`.
+2. Activate the plugin.
+3. Open **Happy FAQs** in the admin menu.
+4. Add a FAQ, then show it with a shortcode, Gutenberg block, Elementor widget, Divi module, or Settings → FAQ page.
 
 == Frequently Asked Questions ==
-Our plugin is user friendly, but here you can see some frequently asked
-questions that can help you.
+
+= Is this a WooCommerce FAQ plugin or a WordPress FAQ plugin? =
+
+Both. Happy WooCommerce FAQs is a WordPress FAQ accordion plugin. Product FAQs work when WooCommerce is active. You can use it without WooCommerce for site FAQs.
+
+= Do I need WooCommerce? =
+
+No. Use it as a site FAQ plugin. WooCommerce is only needed for product FAQs and store extras.
 
 = Does it work with any theme? =
 
-Yes, it will work with any standard WordPress theme.
+Yes. It works with standard WordPress themes.
 
-= Can product categories be assigned with FAQs? =
+= How do I add a product FAQ? =
 
-Yes, You can assign product categories with the FAQs. However, the feature is not for the free version. Although, you can assign products to the FAQs in free version to create unlimited FAQs.
+Go to **Happy FAQs → Add New**, write the question and answer, then in the **Happy FAQs Panel** metabox search and select products. You can also assign product categories or tags so many products inherit the same FAQ. Or open a product and attach FAQs there.
 
-= Can I display FAQs in Product Category and Tags pages? =
+= How do I show FAQs on a normal page, not a product? =
 
-In free version, you can display in Product pages. You need premium version to display faqs in Product archive pages.
+Paste `[ffw_template]` in the page, insert **Happy Prebuilt FAQs** (library) or **Happy Custom FAQs** (write Q&A on the page) as a Gutenberg block, Elementor widget, or Divi 4/5 module, or pick a page in **Happy FAQs → Settings → FAQ page**.
 
-= Is this plugin responsible? =
+= How do I find the product ID for the shortcode? =
 
-Yes, this Ultimate Faq WooCommerce Questions and Answers plugin is responsive with any media devices.
+Go to **Products → All Products**. Hover the product, or edit it and look at the URL: `post=20` means the product ID is `20`. Use `[ffw_template id="20"]`.
 
-= Can we write html content? =
+= Can I assign product categories and tags to FAQs? =
 
-Yes, you can write html markup for answers with wp editor.
+Yes, in the free version. Every product in that category or tag can inherit those FAQs.
 
-= Can I sort faq list? =
+= Can I show FAQs on shop, cart, checkout, or archive pages? =
 
-Yes,You can sort faq list easily. We have added the support since version 1.3.0
+Product pages are included in free. Shop, cart, checkout, and product archive locations are Pro.
 
-= Is it support Schema? =
+= Does it output Google FAQ schema? =
 
-Yes,We have Google Rich Schema support since version 1.2.2
+Yes. FAQPage schema is included for help pages and product pages. Duplicate questions are removed so Google can show FAQ rich results.
 
-= Can we use media? =
+= Can I use Gutenberg, Elementor, or Divi? =
 
-Yes, you can use media in the content.We have media support since version 1.1.5
+Yes. Free includes **Happy Prebuilt FAQs** and **Happy Custom FAQs** as a Gutenberg block, Elementor widget, and Divi 4/5 module. Prebuilt shows FAQs from your library. Custom lets you write questions and answers on the page.
 
-= Can we use custom style? =
+= Can I write HTML or add media in answers? =
 
-Yes, you can customize with your own styles.We have style support since version 1.2.0
+Yes. Answers use the WordPress editor, so you can add HTML, images, and video.
 
-= Does it support comments? =
+= Can I sort FAQs? =
 
-Yes, Visitors or Customers can comment on per product faqs. Admin can customize the full comments and product questions answers comment forms. We have comment support since version 1.3.18
+Yes. Drag FAQs on a product, or use `order` and `order_by` on the shortcode.
 
-= How many template can we use? =
+= How many accordion layouts are there? =
 
-Currently we provide five standard templates, more beautiful FAQ templates exists in our premium version.
+Five in free (Classic, Whitish, Trip, Pop, Basic). Four more in Pro (Glow, Smart, Wow, Zoom).
 
-= Can I use shortcode to show faqs? =
+= What is the difference between inline search and AJAX library search? =
 
-Absolutely yes! You can use [ffw_template] to show faqs, for details please see shortcode description above.
+Inline search (free) filters the FAQs already on the page. AJAX library search (Pro) searches all published FAQs and can be placed anywhere with `[ffw_search]`.
 
 == Screenshots ==
 1. FAQs in Product Page
@@ -379,9 +258,14 @@ Absolutely yes! You can use [ffw_template] to show faqs, for details please see 
 10. RTL Support
 11. Beautiful FAQs Templates
 
-Yes, This plugin works with any WordPress theme.
-
 == Changelog ==
+
+= 2.0.1 =
+* Added: Site-wide FAQs. WooCommerce is now optional.
+* Added: Shortcode modes for all FAQs, FAQ categories, and selected FAQ IDs.
+* Added: FAQ page setting, FAQPage schema on general pages, and onboarding samples.
+* Added: Happy Prebuilt FAQs Gutenberg block, Elementor widget, and Divi 4/5 module. Same markup as the shortcode.
+* Added: Happy Custom FAQs Gutenberg block, Elementor widget, and Divi 4/5 module. Write questions and answers on the page.
 
 = 1.8.17 =
 * Added: WooCommerce 10.6 version compatability.

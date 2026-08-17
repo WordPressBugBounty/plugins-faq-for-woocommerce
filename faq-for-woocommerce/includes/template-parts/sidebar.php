@@ -17,7 +17,7 @@
                 <img class="opt-right-side-bar-title-img" src="<?php echo esc_url(FFW_PLUGIN_URL); ?>/assets/admin/images/documentation.png" alt="">
                 <h4 class="opt-right-side-bar-title-heading"><?php esc_html_e('Documentation', 'faq-for-woocommerce'); ?></h4>
             </div>
-            <p class="opt-right-side-bar-para"><?php esc_html_e('Get started spending some time with the documentation to get familiar with Happy WooCommerce FAQs. Get more sell by explaining product questions with Happy WooCommerce FAQs.', 'faq-for-woocommerce'); ?></p>
+            <p class="opt-right-side-bar-para"><?php esc_html_e('Start with site-wide FAQs, then assign the same FAQs to products when WooCommerce is active.', 'faq-for-woocommerce'); ?></p>
             <a class="opt-right-side-bar-btn"  href="<?php echo esc_url(FFW_DOC_URL); ?>"><span class="opt-right-side-bar-span"><?php esc_html_e('Read Docs', 'faq-for-woocommerce'); ?></span></a>
         </div> 
     </div>

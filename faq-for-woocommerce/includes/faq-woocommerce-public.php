@@ -136,6 +136,9 @@ if( ! function_exists( "ffw_footer_content" ) ) {
 
 add_filter( 'woocommerce_product_tabs', 'ffw_new_product_tab' );
 function ffw_new_product_tab( $tabs ) {
+    if ( ! ffw_is_woocommerce_active() ) {
+        return $tabs;
+    }
     //get display location value
     $options = FAQ_Woocommerce_Public::instance()->options;
     $ffw_display_location = isset( $options['ffw_display_location'] ) ? $options['ffw_display_location'] : "product_tab";
@@ -179,12 +182,17 @@ function ffw_new_product_tab( $tabs ) {
  * @return void
  */
 function ffw_display_faqs_in_product_pages() {
+    if ( ! ffw_is_woocommerce_active() ) {
+        return;
+    }
+
 	global $product;
-	$id = $product->get_id();
+    $id = ( is_object( $product ) && method_exists( $product, 'get_id' ) ) ? $product->get_id() : get_the_ID();
 
-	$content = ffw_get_template($id, false);
-
-    echo $content;
+	ffw_get_template( $id, array(
+        'source'     => 'product',
+        'product_id' => $id,
+    ) );
 }
 
 /**
@@ -196,9 +204,9 @@ if(!function_exists('ffw_display_faqs_in_archive_pages')) {
     function ffw_display_faqs_in_archive_pages() {
 
         $is_archive = false;
-        if( is_product_category() ) {
+        if( function_exists( 'is_product_category' ) && is_product_category() ) {
             $is_archive = true;
-        }elseif( is_product_tag() ) {
+        }elseif( function_exists( 'is_product_tag' ) && is_product_tag() ) {
             $is_archive = true;
         }
 

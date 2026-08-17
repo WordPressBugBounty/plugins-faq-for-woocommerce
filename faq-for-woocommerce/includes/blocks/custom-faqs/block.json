@@ -1,0 +1,92 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "happy-faq/custom-faqs",
+  "title": "Happy Custom FAQs",
+  "category": "happy-faq",
+  "icon": "editor-ul",
+  "description": "Write questions and answers on this page. They are not saved to the FAQ library.",
+  "keywords": [ "faq", "accordion", "custom", "questions", "help" ],
+  "textdomain": "faq-for-woocommerce",
+  "supports": {
+    "align": [ "wide", "full" ],
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "id": "starter-1",
+          "question": "",
+          "answer": ""
+        }
+      ]
+    },
+    "layout": {
+      "type": "number",
+      "default": 0
+    },
+    "displayMode": {
+      "type": "string",
+      "default": "accordion"
+    },
+    "showSearch": {
+      "type": "boolean",
+      "default": true
+    },
+    "enableSchema": {
+      "type": "boolean",
+      "default": true
+    },
+    "expandFirst": {
+      "type": "boolean",
+      "default": false
+    },
+    "questionColor": {
+      "type": "string",
+      "default": ""
+    },
+    "questionBgColor": {
+      "type": "string",
+      "default": ""
+    },
+    "questionHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "questionFontSize": {
+      "type": "number",
+      "default": 0
+    },
+    "answerColor": {
+      "type": "string",
+      "default": ""
+    },
+    "answerBgColor": {
+      "type": "string",
+      "default": ""
+    },
+    "answerFontSize": {
+      "type": "number",
+      "default": 0
+    },
+    "borderColor": {
+      "type": "string",
+      "default": ""
+    },
+    "borderRadius": {
+      "type": "number",
+      "default": 0
+    },
+    "itemSpacing": {
+      "type": "number",
+      "default": 0
+    },
+    "customCss": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}

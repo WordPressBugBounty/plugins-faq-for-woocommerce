@@ -27,7 +27,7 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
          *
          * @var string
          */
-        public $version = '1.0.0';
+        public $version = '2.0.0';
 
         /**
          * The single instance of the class.
@@ -58,7 +58,7 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
          * @since 1.0.0
          */
         public function __clone() {
-            wc_doing_it_wrong(__FUNCTION__, esc_html__('Cloning is forbidden.', 'faq-for-woocommerce'), '1.0.0');
+            _doing_it_wrong(__FUNCTION__, esc_html__('Cloning is forbidden.', 'faq-for-woocommerce'), '1.0.0');
         }
 
         /**
@@ -67,7 +67,7 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
          * @since 2.1
          */
         public function __wakeup() {
-            wc_doing_it_wrong(__FUNCTION__, esc_html__('Unserializing instances of this class is forbidden.', 'faq-for-woocommerce'), '1.0.0');
+            _doing_it_wrong(__FUNCTION__, esc_html__('Unserializing instances of this class is forbidden.', 'faq-for-woocommerce'), '1.0.0');
         }
 
         /**
@@ -126,6 +126,7 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
 
 			include_once FFW_ABSPATH . '/includes/ffw-helper.php';
 			include_once FFW_ABSPATH . '/includes/class-faq-comments.php';
+			include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-schema.php';
 
             if ( $this->is_request('admin') ) {
                 include_once FFW_ABSPATH . '/includes/admin/class-faq-woocommerce-admin.php';
@@ -133,6 +134,8 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
 
             include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-public.php';
             include_once FFW_ABSPATH . '/includes/faq-woocommerce-public.php';
+            include_once FFW_ABSPATH . '/includes/blocks/class-faq-woocommerce-blocks.php';
+            include_once FFW_ABSPATH . '/includes/builders/class-faq-woocommerce-builders.php';
 
         }
 
@@ -188,15 +191,23 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
             $minVersion = '<code>' . FFW_MIN_WC_VERSION . '</code>';
 
             if ( ! ffw_check_woocommerce() ) {
-                /** @noinspection HtmlUnknownTarget */
-                $message = sprintf(
-                    /* translators: 1: this plugin name, 2: required plugin name, 3: required plugin name and installation url */
-                    esc_html__( '%1$s requires %2$s to be installed and active. You can installed/activate %3$s here.', 'faq-for-woocommerce' ),
-                    $plugin_name,
-                    $wc_name,
-                    $plugin_url
+                $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+                $on_faq_screen = $screen && (
+                    ( isset( $screen->post_type ) && in_array( $screen->post_type, array( 'ffw', 'ffw_customer_qna' ), true ) )
+                    || ( isset( $screen->id ) && false !== strpos( (string) $screen->id, 'woocommerce-faq' ) )
                 );
-                printf( '<div class="error"><p><strong>%1$s</strong></p></div>', $message ); // phpcs:ignore
+
+                if ( $on_faq_screen ) {
+                    /** @noinspection HtmlUnknownTarget */
+                    $message = sprintf(
+                        /* translators: 1: this plugin name, 2: WooCommerce name, 3: WooCommerce install link */
+                        esc_html__( '%1$s works without %2$s for site-wide FAQs. Install %3$s to show FAQs on products.', 'faq-for-woocommerce' ),
+                        $plugin_name,
+                        $wc_name,
+                        $plugin_url
+                    );
+                    printf( '<div class="notice notice-info"><p>%1$s</p></div>', $message ); // phpcs:ignore
+                }
             }
             if ( ffw_check_woocommerce() && ! ffw_is_WC_supported() ) {
                 /** @noinspection HtmlUnknownTarget */
