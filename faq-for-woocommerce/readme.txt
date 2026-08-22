@@ -4,7 +4,7 @@ Tags: faq, woocommerce faq, product faq, accordion, schema
 Requires at least: 3.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -259,6 +259,9 @@ Inline search (free) filters the FAQs already on the page. AJAX library search (
 11. Beautiful FAQs Templates
 
 == Changelog ==
+
+= 2.0.2 =
+* Added: WordPress version 7.0.0 compatability.
 
 = 2.0.1 =
 * Added: Site-wide FAQs. WooCommerce is now optional.
