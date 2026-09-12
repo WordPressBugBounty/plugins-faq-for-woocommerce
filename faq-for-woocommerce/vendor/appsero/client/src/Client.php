@@ -262,7 +262,7 @@ class Client {
     }
 
     /**
-     * Translate function esc_html__()
+     * Translate function __()
      */
     // phpcs:ignore
     public function __trans( $text ) {

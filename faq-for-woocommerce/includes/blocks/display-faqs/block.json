@@ -8,6 +8,8 @@
   "description": "Display FAQs from your Happy FAQs library on any page.",
   "keywords": [ "faq", "accordion", "help", "questions", "prebuilt", "library" ],
   "textdomain": "faq-for-woocommerce",
+  "editorScript": "ffw-display-faqs-editor",
+  "style": "ffw-display-faqs-style",
   "supports": {
     "align": [ "wide", "full" ],
     "html": false,

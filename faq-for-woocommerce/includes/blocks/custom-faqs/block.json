@@ -8,6 +8,9 @@
   "description": "Write questions and answers on this page. They are not saved to the FAQ library.",
   "keywords": [ "faq", "accordion", "custom", "questions", "help" ],
   "textdomain": "faq-for-woocommerce",
+  "editorScript": "ffw-custom-faqs-editor",
+  "editorStyle": "ffw-custom-faqs-editor",
+  "style": "ffw-display-faqs-style",
   "supports": {
     "align": [ "wide", "full" ],
     "html": false,

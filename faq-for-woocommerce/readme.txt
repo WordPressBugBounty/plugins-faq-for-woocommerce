@@ -4,7 +4,7 @@ Tags: faq, woocommerce faq, product faq, accordion, schema
 Requires at least: 3.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.2
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,8 +22,8 @@ Write the answer once. Reuse it on a FAQ page, in Gutenberg, Elementor, or Divi,
 
 [youtube https://www.youtube.com/watch?v=CnsPBdgIbaU]
 
-> **Upgrade to Happy FAQs PRO**<br />
-> Upgrade to [Happy FAQs PRO](https://happydevs.net/happy-woocommerce-faqs-pro) now for priority email support and all PRO features.
+> **Upgrade to Happy FAQs Pro**<br />
+> Upgrade to [Happy FAQs Pro](https://happydevs.net/happy-woocommerce-faqs-pro) now for priority email support and all PRO features.
 
 > Pro adds FAQ Groups, AJAX FAQ search, extra accordion layouts, import/export, customer questions, variation product FAQs, and shop, cart, and checkout FAQs.
 
@@ -259,6 +259,14 @@ Inline search (free) filters the FAQs already on the page. AJAX library search (
 11. Beautiful FAQs Templates
 
 == Changelog ==
+
+= 2.0.4 =
+* Fixed: Happy Prebuilt FAQs Gutenberg block styles in the editor.
+* Updated: Gutenberg block metadata so WordPress.org can list the plugin's blocks.
+
+= 2.0.3 =
+* Fixed: Product archive FAQs displayed when Enable FAQs in Archive was off.
+* Updated: Removed the Shortcode column from the All FAQs list.
 
 = 2.0.2 =
 * Added: WordPress version 7.0.0 compatability.

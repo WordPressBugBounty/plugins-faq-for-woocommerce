@@ -215,11 +215,7 @@ if(!function_exists('ffw_display_faqs_in_archive_pages')) {
             return;
         }
 
-        //get option.
-        $options = FAQ_Woocommerce_Public::instance()->options;
-
-        //skip, when archive pages is not enabled.
-        if(!isset($options['enable_archive_pages_faqs'])) {
+        if ( ! ffw_are_archive_faqs_enabled() ) {
             return;
         }
 
@@ -230,9 +226,12 @@ if(!function_exists('ffw_display_faqs_in_archive_pages')) {
             return;
         }
 
-        $content = ffw_get_template($term->term_id, false);
-
-        echo $content;
+        ffw_get_template(
+            $term->term_id,
+            array(
+                'source' => 'archive',
+            )
+        );
     }
 }
 

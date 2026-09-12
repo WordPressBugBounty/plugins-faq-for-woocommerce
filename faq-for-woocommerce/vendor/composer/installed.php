@@ -1,13 +1,13 @@
 <?php return array(
     'root' => array(
         'name' => 'optemiz/xplainer',
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
-        'reference' => '0be4c76ec27ff7460c787d81906e7e4e6ccfcb3b',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'appsero/client' => array(
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'optemiz/xplainer' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => '0be4c76ec27ff7460c787d81906e7e4e6ccfcb3b',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

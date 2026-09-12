@@ -26,7 +26,7 @@ class FAQ_Woocommerce_Blocks {
         add_filter( 'block_categories_all', array( $this, 'register_category' ), 10, 2 );
         add_filter( 'block_categories', array( $this, 'register_category' ), 10, 2 );
         add_action( 'init', array( $this, 'register_blocks' ), 20 );
-        add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_assets' ) );
+        add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
     }
 
     /**
@@ -84,7 +84,8 @@ class FAQ_Woocommerce_Blocks {
 
         wp_localize_script( 'ffw-display-faqs-editor', 'ffwBlockEditor', $this->get_editor_data() );
 
-        register_block_type(
+        $this->register_block_from_metadata(
+            FFW_FILE_DIR . '/includes/blocks/display-faqs',
             'happy-faq/display-faqs',
             array(
                 'api_version'     => 2,
@@ -124,7 +125,8 @@ class FAQ_Woocommerce_Blocks {
             )
         );
 
-        register_block_type(
+        $this->register_block_from_metadata(
+            FFW_FILE_DIR . '/includes/blocks/custom-faqs',
             'happy-faq/custom-faqs',
             array(
                 'api_version'     => 2,
@@ -135,6 +137,26 @@ class FAQ_Woocommerce_Blocks {
                 'attributes'      => $this->get_custom_faqs_attributes(),
             )
         );
+    }
+
+    /**
+     * Register a block from its block.json directory.
+     *
+     * Falls back to the block name string on WordPress versions that cannot
+     * read block metadata from a folder path.
+     *
+     * @param string $block_dir  Absolute path to the block directory.
+     * @param string $block_name Block name (namespace/slug).
+     * @param array  $args       Block type arguments.
+     * @return void
+     */
+    protected function register_block_from_metadata( $block_dir, $block_name, $args ) {
+        if ( function_exists( 'register_block_type_from_metadata' ) ) {
+            register_block_type_from_metadata( $block_dir, $args );
+            return;
+        }
+
+        register_block_type( $block_name, $args );
     }
 
     /**
@@ -327,9 +349,17 @@ class FAQ_Woocommerce_Blocks {
     /**
      * Layout CSS/JS so the editor preview matches the front.
      *
+     * Hooked to enqueue_block_assets (not enqueue_block_editor_assets) so the
+     * styles are copied into the iframed block canvas. Frontend rendering still
+     * enqueues its own assets from the render callback.
+     *
      * @return void
      */
     public function enqueue_editor_assets() {
+        if ( ! is_admin() ) {
+            return;
+        }
+
         ffw_enqueue_display_faq_assets( 0 );
         wp_enqueue_style( 'ffw_classic_styles' );
         wp_enqueue_style( 'ffw_whitish_styles' );

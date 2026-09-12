@@ -752,7 +752,44 @@ if ( ! function_exists('ffw_get_template') ) {
             'order'        => isset( $args['order'] ) ? $args['order'] : 'ASC',
         );
 
-        $faqs = ffw_get_faqs_for_display( $display_args );
+        $is_explicit_builder_source = ! empty( $display_args['cat_ids'] )
+            || ! empty( $display_args['faq_cat'] )
+            || ! empty( $display_args['faq_ids'] )
+            || ! empty( $display_args['group_id'] )
+            || in_array( $display_args['source'], array( 'all', 'faq_cat', 'faq_ids', 'group' ), true );
+
+        $is_product_archive = ffw_is_woocommerce_active()
+            && (
+                ( function_exists( 'is_product_category' ) && is_product_category() )
+                || ( function_exists( 'is_product_tag' ) && is_product_tag() )
+            );
+
+        $queried_term_id = 0;
+        if ( $is_product_archive ) {
+            $queried = get_queried_object();
+            if ( $queried && isset( $queried->term_id ) ) {
+                $queried_term_id = (int) $queried->term_id;
+            }
+        }
+
+        $is_auto_archive_render = ! $is_explicit_builder_source && (
+            'archive' === $display_args['source']
+            || (
+                $is_product_archive
+                && $queried_term_id
+                && ( (int) $id === $queried_term_id || (int) $display_args['product_id'] === $queried_term_id )
+            )
+        );
+
+        if ( $is_auto_archive_render ) {
+            $faqs = array();
+            if ( ffw_are_archive_faqs_enabled() && function_exists( 'ffw_get_archive_faqs' ) ) {
+                $archive_type = ( function_exists( 'is_product_tag' ) && is_product_tag() ) ? 'product_tag' : 'product_category';
+                $faqs         = ffw_get_archive_faqs( $queried_term_id ? $queried_term_id : (int) $id, $archive_type );
+            }
+        } else {
+            $faqs = ffw_get_faqs_for_display( $display_args );
+        }
 
         $display_schema_type = 'product_page';
         if ( $is_shortcode
@@ -762,17 +799,8 @@ if ( ! function_exists('ffw_get_template') ) {
             || ! empty( $display_args['group_id'] )
             || ! empty( $display_args['cat_ids'] ) ) {
             $display_schema_type = 'shortcode';
-        }
-
-        if ( empty( $display_args['cat_ids'] ) && empty( $display_args['faq_cat'] ) && empty( $display_args['faq_ids'] ) && empty( $display_args['group_id'] )
-            && ! in_array( $display_args['source'], array( 'all', 'faq_cat', 'faq_ids', 'group' ), true )
-            && ffw_is_pro_activated() && ffw_is_woocommerce_active()
-            && function_exists( 'ffw_get_archive_faqs' ) ) {
-            if ( ( function_exists( 'is_product_category' ) && is_product_category() )
-                || ( function_exists( 'is_product_tag' ) && is_product_tag() ) ) {
-                $archive_type = is_product_tag() ? 'product_tag' : 'product_category';
-                $faqs         = ffw_get_archive_faqs( $id, $archive_type );
-            }
+        } elseif ( $is_auto_archive_render ) {
+            $display_schema_type = 'custom_page';
         }
 
         // filtered faqs.
@@ -2758,11 +2786,48 @@ function ffw_get_settings_page_menu_title() {
  * @since 1.4.1
  */
 function ffw_is_premium_active() {
-    if ( ! function_exists( 'is_plugin_active' ) ) {
-        include_once ABSPATH . 'wp-admin/includes/plugin.php';
+    return ffw_is_pro_activated();
+}
+
+/**
+ * Whether a settings checkbox is actually enabled.
+ *
+ * Unchecked switches can be saved as "no" (see admin JS), so isset() is not enough.
+ *
+ * @since 2.0.3
+ * @param array  $options Settings array.
+ * @param string $key     Option key.
+ * @return bool
+ */
+function ffw_is_setting_enabled( $options, $key ) {
+    if ( ! is_array( $options ) || ! isset( $options[ $key ] ) ) {
+        return false;
     }
 
-    return is_plugin_active('faq-for-woocommerce-premium/faq-for-woocommerce-premium.php');
+    $value = $options[ $key ];
+    if ( is_bool( $value ) ) {
+        return $value;
+    }
+
+    $value = strtolower( trim( (string) $value ) );
+
+    return in_array( $value, array( 'on', '1', 'yes', 'true' ), true );
+}
+
+/**
+ * Whether Pro archive FAQs should render on product category/tag pages.
+ *
+ * @since 2.0.3
+ * @return bool
+ */
+function ffw_are_archive_faqs_enabled() {
+    if ( ! function_exists( 'ffw_get_archive_faqs' ) && ! ffw_is_pro_activated() ) {
+        return false;
+    }
+
+    $options = get_option( 'ffw_general_settings', array() );
+
+    return ffw_is_setting_enabled( $options, 'enable_archive_pages_faqs' );
 }
 
 /**
@@ -2819,17 +2884,26 @@ if (! function_exists('ffw_log_it') ) {
  * Is pro activated
  */
 function ffw_is_pro_activated() {
-    $activated = false;
+    if ( defined( 'FFW_PRO_VERSION' ) || class_exists( '\HappyDevs\FFW_PRO\FFW_PRO' ) ) {
+        return true;
+    }
 
     if ( ! function_exists( 'is_plugin_active' ) ) {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
     }
 
-    if ( is_plugin_active('faq-for-woocommerce-premium/faq-for-woocommerce-premium.php') ) {
-        $activated = true;
+    $basenames = array(
+        'faq-for-woocommerce-premium/faq-for-woocommerce-premium.php',
+        'faq-for-woocommerce-premium/faq-for-woocommerce-premium.php',
+    );
+
+    foreach ( $basenames as $basename ) {
+        if ( is_plugin_active( $basename ) ) {
+            return true;
+        }
     }
 
-    return $activated;
+    return false;
 }
 
 /**

@@ -25,8 +25,6 @@ class FAQ_Woocommerce_Onboarding {
         add_action( 'admin_notices', array( $this, 'render_shortcode_bar' ), 20 );
         add_filter( 'manage_edit-ffw-category_columns', array( $this, 'category_columns' ) );
         add_filter( 'manage_ffw-category_custom_column', array( $this, 'category_column_content' ), 10, 3 );
-        add_filter( 'manage_ffw_posts_columns', array( $this, 'faq_list_columns' ) );
-        add_action( 'manage_ffw_posts_custom_column', array( $this, 'faq_list_column_content' ), 10, 2 );
         add_action( 'wp_ajax_ffw_run_onboarding', array( $this, 'ajax_run_onboarding' ) );
         add_action( 'wp_ajax_ffw_dismiss_onboarding', array( $this, 'ajax_dismiss_onboarding' ) );
         add_action( 'admin_print_footer_scripts', array( $this, 'footer_scripts' ) );
@@ -179,44 +177,6 @@ class FAQ_Woocommerce_Onboarding {
         $shortcode = sprintf( '[ffw_template faq_cat="%d"]', absint( $term_id ) );
 
         return ffw_get_copy_shortcode_html( $shortcode );
-    }
-
-    /**
-     * Add a Shortcode column to All FAQs.
-     *
-     * @param array $columns Columns.
-     * @return array
-     */
-    public function faq_list_columns( $columns ) {
-        $new = array();
-
-        foreach ( $columns as $key => $label ) {
-            $new[ $key ] = $label;
-            if ( 'title' === $key ) {
-                $new['ffw_shortcode'] = esc_html__( 'Shortcode', 'faq-for-woocommerce' );
-            }
-        }
-
-        if ( ! isset( $new['ffw_shortcode'] ) ) {
-            $new['ffw_shortcode'] = esc_html__( 'Shortcode', 'faq-for-woocommerce' );
-        }
-
-        return $new;
-    }
-
-    /**
-     * All FAQs shortcode cell.
-     *
-     * @param string $column  Column name.
-     * @param int    $post_id Post ID.
-     * @return void
-     */
-    public function faq_list_column_content( $column, $post_id ) {
-        if ( 'ffw_shortcode' !== $column ) {
-            return;
-        }
-
-        echo ffw_get_copy_shortcode_html( sprintf( '[ffw_template faq_ids="%d"]', absint( $post_id ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     /**

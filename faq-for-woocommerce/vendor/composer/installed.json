@@ -111,6 +111,6 @@
             "install-path": "../optemiz/plugin-tracker"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }
