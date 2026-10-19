@@ -4,7 +4,7 @@ Tags: faq, woocommerce faq, product faq, accordion, schema
 Requires at least: 3.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,7 +160,7 @@ Pro adds `group_id` for FAQ Groups (PRO), and `[ffw_search]` for AJAX library se
 = Get started =
 
 1. Install and activate Happy WooCommerce FAQs.
-2. Add a few FAQs, or click **Add sample FAQs** on the dashboard.
+2. Follow the setup wizard that opens on first activation, or add a few FAQs yourself.
 3. Paste `[ffw_template]` on a page, insert **Happy Prebuilt FAQs** or **Happy Custom FAQs** (Gutenberg, Elementor, or Divi), or choose an FAQs page in **Happy FAQs → Settings**.
 4. For a store, open a FAQ, use the **Happy FAQs Panel** metabox, and assign products, product categories, or tags.
 
@@ -259,6 +259,13 @@ Inline search (free) filters the FAQs already on the page. AJAX library search (
 11. Beautiful FAQs Templates
 
 == Changelog ==
+
+= 2.0.5 =
+* Added: Setup wizard on first activation. Choose General or Product FAQs, start from common questions and replies, copy your shortcode, and finish in a few clicks. Every step can be skipped.
+* Fixed: Removing a FAQ from a product, category, tag, or page could remove a different FAQ from it.
+* Fixed: Saving a FAQ after removing all of its product tags caused an error.
+* Fixed: AI FAQ generator now shows API errors and rejects empty fields.
+* Security: Product, category, tag, and page inputs are sanitized when a FAQ is saved.
 
 = 2.0.4 =
 * Fixed: Happy Prebuilt FAQs Gutenberg block styles in the editor.

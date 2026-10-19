@@ -3,7 +3,7 @@
  * Plugin Name: Happy FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
  * Description: Create FAQs for your site and WooCommerce products with comment, FAQ schema and AI support.
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: HappyDevs
  * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
@@ -29,7 +29,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '2.0.4' );
+	define( 'FFW_VERSION', '2.0.5' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {
@@ -165,11 +165,6 @@ add_action('plugins_loaded', 'ffw_init');
 function ffw_activate_plugin() {
     global $wpdb;
 
-    $status = get_option( 'ffw_onboarding_status', '' );
-    if ( in_array( $status, array( 'complete', 'dismissed', 'skipped' ), true ) ) {
-        return;
-    }
-
     $count = (int) $wpdb->get_var(
         $wpdb->prepare(
             "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = %s AND post_status = %s",
@@ -177,6 +172,24 @@ function ffw_activate_plugin() {
             'publish'
         )
     );
+
+    // Setup wizard: open it once, on the first activation of a site without FAQs.
+    // Keys match FAQ_Woocommerce_Setup_Wizard, which is not loaded during activation.
+    $wizard = get_option( 'ffw_setup_wizard', array() );
+    $wizard = is_array( $wizard ) ? $wizard : array();
+    if ( empty( $wizard['status'] ) ) {
+        $wizard['status'] = $count > 0 ? 'not_needed' : 'pending';
+        update_option( 'ffw_setup_wizard', $wizard, false );
+
+        if ( 'pending' === $wizard['status'] ) {
+            set_transient( 'ffw_setup_wizard_redirect', 1, 5 * MINUTE_IN_SECONDS );
+        }
+    }
+
+    $status = get_option( 'ffw_onboarding_status', '' );
+    if ( in_array( $status, array( 'complete', 'dismissed', 'skipped' ), true ) ) {
+        return;
+    }
 
     update_option( 'ffw_onboarding_status', $count > 0 ? 'skipped' : 'pending', false );
 }

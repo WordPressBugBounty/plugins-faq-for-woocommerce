@@ -400,6 +400,38 @@ if (!class_exists('FFW_Metaboxes', false)) :
         }
 
         /**
+         * Sanitize a list of posted term or post IDs.
+         *
+         * @since 2.0.5
+         * @param mixed $ids Raw IDs.
+         * @return array
+         */
+        protected function sanitize_id_list( $ids ) {
+            if ( ! is_array( $ids ) ) {
+                return [];
+            }
+
+            return array_values( array_unique( array_filter( array_map( 'absint', $ids ) ) ) );
+        }
+
+        /**
+         * Keep only known "Display in pages" types; they become option names.
+         *
+         * @since 2.0.5
+         * @param mixed $page_types Raw page types.
+         * @return array
+         */
+        protected function sanitize_page_types( $page_types ) {
+            if ( ! is_array( $page_types ) ) {
+                return [];
+            }
+
+            $allowed = array( 'product_and_archive_page', 'shop_page', 'cart_page', 'checkout_page' );
+
+            return array_values( array_intersect( array_map( 'sanitize_key', $page_types ), $allowed ) );
+        }
+
+        /**
          * Save the meta when the post is saved.
          *
          * @param int $post_id The ID of the post being saved.
@@ -445,11 +477,12 @@ if (!class_exists('FFW_Metaboxes', false)) :
                 $removed_product_ids = [];
                 $removed_cat_ids = [];
                 $removed_tag_ids = [];
+                $tag_ids = [];
 
                 // save product ids.
                 if( isset($_POST['ffw_faq_products']) && !empty($_POST['ffw_faq_products']) ) {
                     // Sanitize the faqs products field value.
-                    $product_ids = $_POST['ffw_faq_products'];
+                    $product_ids = $this->sanitize_id_list( wp_unslash( $_POST['ffw_faq_products'] ) );
                 }
 
                 // Reference for saved previous products ids.
@@ -458,7 +491,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                     $saved_product_ids = sanitize_text_field($_POST['ffw_faq_save_products']);
 
                     if(!empty($saved_product_ids)) {
-                        $saved_product_ids      = explode(',', $saved_product_ids);
+                        $saved_product_ids      = $this->sanitize_id_list( explode(',', $saved_product_ids) );
                         $removed_product_ids    = array_diff($saved_product_ids, $product_ids);
                     }
                 }
@@ -478,7 +511,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                         if( !empty($faq_ids) ) {
                             $index = array_search($post_id, $faq_ids);
 
-                            if(isset($faq_ids[$index])) {
+                            if(false !== $index && isset($faq_ids[$index])) {
                                 unset($faq_ids[$index]);
 
                                 // Update the meta field.
@@ -513,7 +546,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                 // save categories ids.
                 if( isset($_POST['ffw_faq_categories']) && !empty($_POST['ffw_faq_categories']) ) {
                     // sanitize the faqs categories field value.
-                    $cat_ids = $_POST['ffw_faq_categories'];
+                    $cat_ids = $this->sanitize_id_list( wp_unslash( $_POST['ffw_faq_categories'] ) );
                 }
 
                 // Reference for saved previous category ids.
@@ -522,7 +555,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                     $saved_cat_ids = sanitize_text_field($_POST['ffw_faq_save_categories']);
 
                     if(!empty($saved_cat_ids)) {
-                        $saved_cat_ids = explode(',', $saved_cat_ids);
+                        $saved_cat_ids = $this->sanitize_id_list( explode(',', $saved_cat_ids) );
                         $removed_cat_ids = array_diff($saved_cat_ids, $cat_ids);
                     }
                 }
@@ -542,7 +575,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                         if( !empty($faq_ids) ) {
                             $index = array_search($post_id, $faq_ids);
 
-                            if(isset($faq_ids[$index])) {
+                            if(false !== $index && isset($faq_ids[$index])) {
                                 unset($faq_ids[$index]);
 
                                 // Update the meta field.
@@ -589,7 +622,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                 // save tags ids.
                 if( isset($_POST['ffw_faq_tags']) && !empty($_POST['ffw_faq_tags']) ) {
                     // sanitize the faqs tags field value.
-                    $tag_ids = $_POST['ffw_faq_tags'];
+                    $tag_ids = $this->sanitize_id_list( wp_unslash( $_POST['ffw_faq_tags'] ) );
                 }
 
                 // Reference for saved previous tag ids.
@@ -598,7 +631,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                     $saved_tag_ids = sanitize_text_field($_POST['ffw_faq_save_tags']);
 
                     if(!empty($saved_tag_ids)) {
-                        $saved_tag_ids = explode(',', $saved_tag_ids);
+                        $saved_tag_ids = $this->sanitize_id_list( explode(',', $saved_tag_ids) );
                         $removed_tag_ids = array_diff($saved_tag_ids, $tag_ids);
                     }
                 }
@@ -618,7 +651,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                         if( !empty($faq_ids) ) {
                             $index = array_search($post_id, $faq_ids);
 
-                            if(isset($faq_ids[$index])) {
+                            if(false !== $index && isset($faq_ids[$index])) {
                                 unset($faq_ids[$index]);
 
                                 // Update the meta field.
@@ -668,7 +701,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
             // save pages types.
             if( isset($_POST['ffw_display_in_pages']) && !empty($_POST['ffw_display_in_pages']) ) {
                 // sanitize the pages field value.
-                $page_types = $_POST['ffw_display_in_pages'];
+                $page_types = $this->sanitize_page_types( wp_unslash( $_POST['ffw_display_in_pages'] ) );
             }
 
             // Reference for saved previous tag ids.
@@ -677,7 +710,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                 $saved_page_types = sanitize_text_field($_POST['ffw_page_save_types']);
 
                 if(!empty($saved_page_types)) {
-                    $saved_page_types = explode(',', $saved_page_types);
+                    $saved_page_types = $this->sanitize_page_types( explode(',', $saved_page_types) );
                     $removed_page_types = array_diff($saved_page_types, $page_types);
                 }
             }
@@ -697,7 +730,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
                     if( !empty($faq_ids) ) {
                         $index = array_search($post_id, $faq_ids);
 
-                        if(isset($faq_ids[$index])) {
+                        if(false !== $index && isset($faq_ids[$index])) {
                             unset($faq_ids[$index]);
 
                             // Update pages faqs.

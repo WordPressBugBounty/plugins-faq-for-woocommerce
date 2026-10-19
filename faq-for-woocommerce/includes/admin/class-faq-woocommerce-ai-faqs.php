@@ -126,7 +126,7 @@ class FAQ_Woocommerce_AI_FAQs {
         }
 
         //check keywords.
-        if (isset($_POST['ffw_ai_keywords']) || ! empty($_POST['ffw_ai_keywords'])  ) {
+        if (! empty($_POST['ffw_ai_keywords']) ) {
             $keywords = sanitize_text_field(wp_unslash($_POST['ffw_ai_keywords']));
         } else {
             $message = esc_html__('Keywords are missing.', 'faq-for-woocommerce');
@@ -134,7 +134,7 @@ class FAQ_Woocommerce_AI_FAQs {
         }
         
         //check product.
-        if (isset($_POST['ffw_ai_select_products']) || ! empty($_POST['ffw_ai_select_products'])  ) {
+        if (! empty($_POST['ffw_ai_select_products']) ) {
             $product = sanitize_text_field(wp_unslash($_POST['ffw_ai_select_products']));
         } else {
             $message = esc_html__('Product is missing.', 'faq-for-woocommerce');
@@ -168,7 +168,15 @@ class FAQ_Woocommerce_AI_FAQs {
         //generate faqs.
         $response = $this->generate_faqs($prompt);
 
-        $faqs = $response['faqs'];
+        // generate_faqs() returns an error string when the API call fails.
+        if ( ! is_array( $response ) ) {
+            wp_send_json_error([
+                'response' => false,
+                'message' => is_string( $response ) && '' !== $response ? esc_html( $response ) : esc_html__('FAQs generation failed!', 'faq-for-woocommerce')
+            ]);
+        }
+
+        $faqs = isset( $response['faqs'] ) ? $response['faqs'] : [];
 
         ob_start();
 
@@ -267,7 +275,7 @@ class FAQ_Woocommerce_AI_FAQs {
         }
 
         //check product.
-        if (isset($_POST['ffw_insert_ai_product_id']) || ! empty($_POST['ffw_insert_ai_product_id'])  ) {
+        if (! empty($_POST['ffw_insert_ai_product_id']) ) {
             $product_id = sanitize_text_field(wp_unslash($_POST['ffw_insert_ai_product_id']));
         } else {
             $message = esc_html__('Product is missing.', 'faq-for-woocommerce');
@@ -275,7 +283,7 @@ class FAQ_Woocommerce_AI_FAQs {
         }
         
         //check faqs.
-        if (isset($_POST['ffw_ai_faq_items']) || ! empty($_POST['ffw_ai_faq_items'])  ) {
+        if (! empty($_POST['ffw_ai_faq_items']) ) {
             $faqs = wp_unslash($_POST['ffw_ai_faq_items']);
         } else {
             $message = esc_html__('FAQs are missing.', 'faq-for-woocommerce');
@@ -283,7 +291,7 @@ class FAQ_Woocommerce_AI_FAQs {
         }
         
         //check selected faqs.
-        if (isset($_POST['ffw_ai_faq_items_selected']) || ! empty($_POST['ffw_ai_faq_items_selected'])  ) {
+        if (! empty($_POST['ffw_ai_faq_items_selected']) ) {
             $selected_faqs = wp_unslash($_POST['ffw_ai_faq_items_selected']);
         } else {
             $message = esc_html__('No FAQs is selected.', 'faq-for-woocommerce');
