@@ -44,6 +44,10 @@
       "type": "number",
       "default": 0
     },
+    "perPage": {
+      "type": "number",
+      "default": 0
+    },
     "orderBy": {
       "type": "string",
       "default": "id"
@@ -55,6 +59,10 @@
     "showSearch": {
       "type": "boolean",
       "default": true
+    },
+    "showFilter": {
+      "type": "boolean",
+      "default": false
     },
     "enableSchema": {
       "type": "boolean",

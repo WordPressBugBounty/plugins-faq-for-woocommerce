@@ -142,6 +142,40 @@ if ( ! function_exists( 'ffw_get_faq_page_id' ) ) {
 }
 
 /**
+ * "Show more" paging for the list being rendered.
+ *
+ * ffw_get_template_by_faqs() starts it, each item asks whether it falls
+ * after the first page, and the render ends it.
+ *
+ * @param string $action   start, next or end.
+ * @param int    $per_page Items shown before "Show more" (start only).
+ * @since 2.1.0
+ * @return bool For "next": whether this item starts hidden.
+ */
+if ( ! function_exists( 'ffw_faq_paging' ) ) {
+    function ffw_faq_paging( $action, $per_page = 0 ) {
+        static $limit = 0;
+        static $count = 0;
+
+        if ( 'start' === $action ) {
+            $limit = absint( $per_page );
+            $count = 0;
+            return false;
+        }
+
+        if ( 'end' === $action ) {
+            $limit = 0;
+            $count = 0;
+            return false;
+        }
+
+        $count++;
+
+        return $limit > 0 && $count > $limit;
+    }
+}
+
+/**
  * HTML attributes for a displayed FAQ item (hash deep-link target).
  *
  * @param int $faq_id FAQ post ID.
@@ -155,19 +189,199 @@ if ( ! function_exists( 'ffw_get_faq_item_html_attrs' ) ) {
             return '';
         }
 
+        // Items after the first "Show more" page start hidden.
+        $more = ffw_faq_paging( 'next' ) ? ' data-ffw-more="1"' : '';
+
         if ( $faq_id < 0 ) {
             return sprintf(
-                'id="%s" data-ffw-custom-faq-id="%d"',
+                'id="%s" data-ffw-custom-faq-id="%d"%s',
                 esc_attr( 'ffw-custom-faq-' . abs( $faq_id ) ),
-                $faq_id
+                $faq_id,
+                $more
             );
         }
 
+        $cats  = get_the_terms( $faq_id, 'ffw-category' );
+        $slugs = ( $cats && ! is_wp_error( $cats ) ) ? wp_list_pluck( $cats, 'slug' ) : array();
+
         return sprintf(
-            'id="%s" data-ffw-faq-id="%d"',
+            'id="%s" data-ffw-faq-id="%d" data-ffw-cats="%s"%s',
             esc_attr( 'ffw-faq-' . $faq_id ),
-            $faq_id
+            $faq_id,
+            esc_attr( implode( ' ', $slugs ) ),
+            $more
         );
+    }
+}
+
+/**
+ * "Show more FAQs" button under a paged list.
+ *
+ * @param int $remaining Hidden items.
+ * @param int $step      Items revealed per click.
+ * @since 2.1.0
+ * @return string
+ */
+if ( ! function_exists( 'ffw_get_show_more_html' ) ) {
+    function ffw_get_show_more_html( $remaining, $step ) {
+        return sprintf(
+            '<div class="ffw-show-more-wrap"><button type="button" class="ffw-show-more" data-ffw-step="%1$d">%2$s <span class="ffw-show-more-count">%3$s</span></button></div>',
+            absint( $step ),
+            esc_html__( 'Show more FAQs', 'faq-for-woocommerce' ),
+            /* translators: %d: number of FAQs not shown yet */
+            esc_html( sprintf( __( '(%d more)', 'faq-for-woocommerce' ), absint( $remaining ) ) )
+        );
+    }
+}
+
+/**
+ * Whether FAQs render right-to-left.
+ *
+ * Setting "ffw_rtl_mode": auto (follow the site language), always or never.
+ * The old Pro "Enable RTL" checkbox (enable_rtl = on) counts as "always".
+ *
+ * @since 2.1.0
+ * @return bool
+ */
+if ( ! function_exists( 'ffw_is_rtl_enabled' ) ) {
+    function ffw_is_rtl_enabled() {
+        $options = get_option( 'ffw_general_settings', array() );
+        $options = is_array( $options ) ? $options : array();
+        $mode    = isset( $options['ffw_rtl_mode'] ) ? sanitize_key( $options['ffw_rtl_mode'] ) : '';
+
+        if ( '' === $mode ) {
+            $mode = ffw_is_setting_enabled( $options, 'enable_rtl' ) ? 'always' : 'auto';
+        }
+
+        if ( 'always' === $mode ) {
+            $enabled = true;
+        } elseif ( 'never' === $mode ) {
+            $enabled = false;
+        } else {
+            $enabled = is_rtl();
+        }
+
+        return (bool) apply_filters( 'ffw_enable_rtl', $enabled, $mode );
+    }
+}
+
+/**
+ * Category filter buttons for a rendered FAQ list.
+ *
+ * Shows "All" plus each FAQ category used by the listed FAQs. Returns an
+ * empty string when fewer than two categories are present.
+ *
+ * @param array $faqs FAQ rows.
+ * @since 2.1.0
+ * @return string
+ */
+if ( ! function_exists( 'ffw_get_faq_filter_html' ) ) {
+    function ffw_get_faq_filter_html( $faqs ) {
+        $terms  = array();
+        $counts = array();
+
+        foreach ( (array) $faqs as $faq ) {
+            $faq_id = isset( $faq['id'] ) ? (int) $faq['id'] : 0;
+            if ( $faq_id <= 0 ) {
+                continue;
+            }
+
+            $cats = get_the_terms( $faq_id, 'ffw-category' );
+            if ( ! $cats || is_wp_error( $cats ) ) {
+                continue;
+            }
+
+            foreach ( $cats as $cat ) {
+                $terms[ $cat->slug ]  = $cat->name;
+                $counts[ $cat->slug ] = isset( $counts[ $cat->slug ] ) ? $counts[ $cat->slug ] + 1 : 1;
+            }
+        }
+
+        if ( count( $terms ) < 2 ) {
+            return '';
+        }
+
+        asort( $terms, SORT_NATURAL | SORT_FLAG_CASE );
+        $terms = apply_filters( 'ffw_faq_filter_terms', $terms, $faqs );
+
+        ob_start();
+        ?>
+        <div class="ffw-faq-filter" role="group" aria-label="<?php esc_attr_e( 'Filter FAQs by category', 'faq-for-woocommerce' ); ?>">
+            <button type="button" class="ffw-faq-filter-btn is-active" data-ffw-filter="" aria-pressed="true">
+                <?php esc_html_e( 'All', 'faq-for-woocommerce' ); ?>
+                <span class="ffw-faq-filter-count"><?php echo esc_html( (string) count( $faqs ) ); ?></span>
+            </button>
+            <?php foreach ( $terms as $slug => $name ) : ?>
+                <button type="button" class="ffw-faq-filter-btn" data-ffw-filter="<?php echo esc_attr( $slug ); ?>" aria-pressed="false">
+                    <?php echo esc_html( $name ); ?>
+                    <span class="ffw-faq-filter-count"><?php echo esc_html( (string) $counts[ $slug ] ); ?></span>
+                </button>
+            <?php endforeach; ?>
+        </div>
+        <p class="screen-reader-text ffw-faq-filter-status" aria-live="polite"></p>
+        <?php
+        return ob_get_clean();
+    }
+}
+
+/**
+ * Unique ID for one rendered FAQ item, shared by its toggle and answer panel.
+ *
+ * The same FAQ can render more than once on a page (product tab and a
+ * shortcode), so a per-request counter keeps every ID unique.
+ *
+ * @param int $faq_id FAQ post ID (negative for Custom FAQs).
+ * @since 2.1.0
+ * @return string
+ */
+if ( ! function_exists( 'ffw_get_faq_a11y_id' ) ) {
+    function ffw_get_faq_a11y_id( $faq_id ) {
+        static $count = 0;
+        $count++;
+
+        $faq_id = (int) $faq_id;
+        $base   = $faq_id < 0 ? 'c' . abs( $faq_id ) : (string) $faq_id;
+
+        return $base . '-' . $count;
+    }
+}
+
+/**
+ * Accessibility attributes for an FAQ question toggle.
+ *
+ * @param string $uid       ID from ffw_get_faq_a11y_id().
+ * @param bool   $open      Whether the answer starts open.
+ * @param bool   $is_button Whether the toggle is already a <button>.
+ * @since 2.1.0
+ * @return string
+ */
+if ( ! function_exists( 'ffw_get_faq_toggle_attrs' ) ) {
+    function ffw_get_faq_toggle_attrs( $uid, $open = false, $is_button = false ) {
+        $attrs = sprintf(
+            'id="%1$s" aria-expanded="%2$s" aria-controls="%3$s"',
+            esc_attr( 'ffw-q-' . $uid ),
+            $open ? 'true' : 'false',
+            esc_attr( 'ffw-a-' . $uid )
+        );
+
+        if ( ! $is_button ) {
+            $attrs .= ' role="button" tabindex="0"';
+        }
+
+        return $attrs;
+    }
+}
+
+/**
+ * Accessibility attributes for an FAQ answer panel.
+ *
+ * @param string $uid ID from ffw_get_faq_a11y_id().
+ * @since 2.1.0
+ * @return string
+ */
+if ( ! function_exists( 'ffw_get_faq_panel_attrs' ) ) {
+    function ffw_get_faq_panel_attrs( $uid ) {
+        return sprintf( 'id="%s"', esc_attr( 'ffw-a-' . $uid ) );
     }
 }
 
@@ -663,6 +877,9 @@ if ( ! function_exists('ffw_show_template_shortcode') ) {
 			'faq_ids'      => '',
 			'source'       => '',
             'group_id'     => '',
+            'filter'       => '',
+            'limit'        => '',
+            'per_page'     => '',
             'order_by'     => 'id',
             'order'        => 'ASC',
 			'id'           => '',
@@ -706,6 +923,19 @@ if ( ! function_exists('ffw_show_template_shortcode') ) {
 
         if ( null !== $explicit_template ) {
             $arguments['template'] = $explicit_template;
+        }
+
+        // limit caps the list; per_page shows that many, then a "Show more" button.
+        if ( '' !== (string) $atts['limit'] ) {
+            $arguments['limit'] = absint( $atts['limit'] );
+        }
+        if ( '' !== (string) $atts['per_page'] ) {
+            $arguments['per_page'] = absint( $atts['per_page'] );
+        }
+
+        // filter="true" (or "tabs") shows category filter buttons.
+        if ( '' !== (string) $atts['filter'] ) {
+            $arguments['show_filter'] = ffw_is_truthy( $atts['filter'] ) || 'tabs' === strtolower( (string) $atts['filter'] );
         }
 
 		return ffw_get_template( (int) $atts['id'], $arguments, true );
@@ -813,7 +1043,7 @@ if ( ! function_exists('ffw_get_template') ) {
             'display_schema_type'  => $display_schema_type,
         );
 
-        foreach ( array( 'limit', 'show_search', 'enable_schema', 'display_mode', 'expand_first' ) as $extra_key ) {
+        foreach ( array( 'limit', 'per_page', 'show_search', 'show_filter', 'enable_schema', 'display_mode', 'expand_first' ) as $extra_key ) {
             if ( array_key_exists( $extra_key, $args ) ) {
                 $render_args[ $extra_key ] = $args[ $extra_key ];
             }
@@ -882,7 +1112,12 @@ if ( ! function_exists('ffw_get_layout') ) {
             $ffw_wrapper_classes = array_merge($ffw_wrapper_classes, ['ffw-pop-wrapper']);
         }
 
+        if ( ffw_is_rtl_enabled() ) {
+            $ffw_wrapper_classes[] = 'ffw-is-rtl';
+        }
+
         $ffw_wrapper_classes = apply_filters("ffw_filter_layout_wrapper_classes", $ffw_wrapper_classes, $layout);
+        $ffw_wrapper_classes = array_unique( $ffw_wrapper_classes );
         $ffw_wrapper_classes = implode(' ', $ffw_wrapper_classes);
 
 		ob_start();
@@ -929,6 +1164,11 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         $ffw_expand_first = ! empty( $args['expand_first'] );
         $enable_schema = ! array_key_exists( 'enable_schema', $args ) || ! empty( $args['enable_schema'] );
         $show_inline_search = ! empty( $args['show_search'] );
+        $show_filter        = ! empty( $args['show_filter'] );
+        $per_page           = isset( $args['per_page'] ) ? absint( $args['per_page'] ) : 0;
+        if ( $per_page >= count( $faqs ) ) {
+            $per_page = 0;
+        }
 
         if( empty($layout) ) {
             //get layout.
@@ -944,6 +1184,16 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         if ( $show_inline_search ) {
             $wrapper_classes[] = 'ffw-has-inline-search';
         }
+        if ( $show_filter ) {
+            $wrapper_classes[] = 'ffw-has-filter';
+        }
+        if ( $per_page ) {
+            $wrapper_classes[] = 'ffw-has-more';
+        }
+        $is_rtl = ffw_is_rtl_enabled();
+        if ( $is_rtl ) {
+            $wrapper_classes[] = 'ffw-rtl';
+        }
         $wrapper_classes = implode(' ', $wrapper_classes);
 
         //faq schema.
@@ -953,6 +1203,19 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
 
         ffw_prime_inline_faq_answers( $faqs );
 
+        // One query for every FAQ's categories (used by data-ffw-cats and the filter).
+        $library_ids = array_values(
+            array_filter(
+                array_map( 'intval', wp_list_pluck( $faqs, 'id' ) ),
+                function ( $faq_id ) {
+                    return $faq_id > 0;
+                }
+            )
+        );
+        if ( $library_ids ) {
+            update_object_term_cache( $library_ids, 'ffw' );
+        }
+
         // Get registered option
         $options    = FAQ_Woocommerce_Public::instance()->options;
         $width      = (isset($options['ffw_width']) && !empty($options['ffw_width'])) ? $options['ffw_width'] : '100';
@@ -961,33 +1224,24 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         //init layout name
         $layout_name = '';
 
-        // enqueue template CSS.
-        if ( 1 === $layout ) {
-            $layout_name = "ffw-classic-layout";
-            wp_enqueue_style( 'ffw_classic_styles' );
-        }elseif ( 2 === $layout ) {
-            $layout_name = "ffw-whitish-layout";
-            wp_enqueue_style( 'ffw_whitish_styles' );
-        }elseif ( 3 === $layout ) {
-            $layout_name = "ffw-trip-layout";
-            wp_enqueue_style( 'ffw_trip_styles' );
-        }elseif ( 4 === $layout ) {
-            $layout_name = "ffw-pop-layout";
-            wp_enqueue_style( 'ffw_pop_styles' );
-        }elseif ( 5 === $layout ) {
-            $layout_name = "ffw-basic-layout";
-            wp_enqueue_style( 'ffw_basic_styles' );
-        }
+        $layout_names = array(
+            1 => 'ffw-classic-layout',
+            2 => 'ffw-whitish-layout',
+            3 => 'ffw-trip-layout',
+            4 => 'ffw-pop-layout',
+            5 => 'ffw-basic-layout',
+        );
+        $layout_name  = isset( $layout_names[ (int) $layout ] ) ? $layout_names[ (int) $layout ] : '';
 
-        do_action('ffw_enqueue_templates_styles', $layout);
-
-        // general styles
-        wp_enqueue_style( 'ffw_public_styles' );
-        wp_enqueue_style( 'ffw-display-faqs-style' );
+        // Load CSS and JS for this layout only, and only on pages that show FAQs.
+        ffw_enqueue_display_faq_assets( (int) $layout );
 
         ob_start();
 
         $expand_attr = $ffw_expand_first ? ' data-ffw-expand="first"' : '';
+        if ( $is_rtl ) {
+            $expand_attr .= ' dir="rtl"';
+        }
         $content .= '<div style="width: '.$width.'%;max-width: 100%;" class="'. esc_attr($wrapper_classes) .'" id="ffw-main-wrapper" data-item_id="'. esc_attr($id) .'" data-layout="'. esc_attr($layout) .'" data-archive_type="'. esc_attr($archive_type) .'"' . $expand_attr . ' >';
         $content .= '<input type="hidden" id="ffw-hidden-faqs" value="' . base64_encode(wp_json_encode($faqs)) . '" />';
 
@@ -1003,6 +1257,10 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
             echo ffw_get_inline_search_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         }
 
+        if ( $show_filter ) {
+            echo ffw_get_faq_filter_html( $faqs ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        }
+
         if ( array_key_exists( 'show_search', $args ) ) {
             remove_filter( 'ffw_enable_search_input', '__return_false' );
         }
@@ -1015,8 +1273,15 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
             $ffw_wrapper_classes = array_merge($ffw_wrapper_classes, ['ffw-pop-wrapper']);
         }
 
+        if ( ffw_is_rtl_enabled() ) {
+            $ffw_wrapper_classes[] = 'ffw-is-rtl';
+        }
+
         $ffw_wrapper_classes = apply_filters("ffw_filter_layout_wrapper_classes", $ffw_wrapper_classes, $layout);
+        $ffw_wrapper_classes = array_unique( $ffw_wrapper_classes );
         $ffw_wrapper_classes = implode(' ', $ffw_wrapper_classes);
+
+        ffw_faq_paging( 'start', $per_page );
 
         //get faq templates
         if ( 'list' === $display_mode ) {
@@ -1032,6 +1297,12 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         }
 
         do_action('ffw_includes_templates_file', $layout, $faqs, $id);
+
+        ffw_faq_paging( 'end' );
+
+        if ( $per_page ) {
+            echo ffw_get_show_more_html( count( $faqs ) - $per_page, $per_page ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        }
 
         echo '<br>';
 
@@ -1061,9 +1332,11 @@ if ( ! function_exists( 'ffw_render_display_faqs' ) ) {
             'group_id'       => 0,
             'layout'         => 0,
             'limit'          => 0,
+            'per_page'       => 0,
             'order_by'       => 'id',
             'order'          => 'ASC',
             'show_search'    => false,
+            'show_filter'    => false,
             'enable_schema'  => true,
             'display_mode'   => 'accordion',
             'expand_first'   => false,
@@ -1086,7 +1359,9 @@ if ( ! function_exists( 'ffw_render_display_faqs' ) ) {
             'order_by'       => sanitize_key( $args['order_by'] ),
             'order'          => 'DESC' === strtoupper( $args['order'] ) ? 'DESC' : 'ASC',
             'limit'          => absint( $args['limit'] ),
+            'per_page'       => absint( $args['per_page'] ),
             'show_search'    => ! empty( $args['show_search'] ),
+            'show_filter'    => ! empty( $args['show_filter'] ),
             'enable_schema'  => ! empty( $args['enable_schema'] ),
             'display_mode'   => 'list' === $args['display_mode'] ? 'list' : 'accordion',
             'expand_first'   => ! empty( $args['expand_first'] ),
@@ -1329,6 +1604,8 @@ function ffw_normalize_builder_display_args( $raw = array() ) {
         'displayMode'  => 'display_mode',
         'orderBy'      => 'order_by',
         'showSearch'   => 'show_search',
+        'showFilter'   => 'show_filter',
+        'perPage'      => 'per_page',
         'enableSchema' => 'enable_schema',
         'expandFirst'  => 'expand_first',
         'faq_source'   => 'source',
@@ -1358,6 +1635,7 @@ function ffw_normalize_builder_display_args( $raw = array() ) {
     $enable_schema = array_key_exists( 'enable_schema', $raw )
         ? ffw_builder_is_on( $raw['enable_schema'] )
         : true;
+    $show_filter = array_key_exists( 'show_filter', $raw ) && ffw_builder_is_on( $raw['show_filter'] );
 
     $order = isset( $raw['order'] ) ? strtoupper( (string) $raw['order'] ) : 'ASC';
 
@@ -1369,9 +1647,11 @@ function ffw_normalize_builder_display_args( $raw = array() ) {
         'group_id'      => isset( $raw['group_id'] ) ? absint( $raw['group_id'] ) : 0,
         'layout'        => isset( $raw['layout'] ) ? absint( $raw['layout'] ) : 0,
         'limit'         => isset( $raw['limit'] ) ? absint( $raw['limit'] ) : 0,
+        'per_page'      => isset( $raw['per_page'] ) ? absint( $raw['per_page'] ) : 0,
         'order_by'      => isset( $raw['order_by'] ) ? sanitize_key( $raw['order_by'] ) : 'id',
         'order'         => 'DESC' === $order ? 'DESC' : 'ASC',
         'show_search'   => $show_search,
+        'show_filter'   => $show_filter,
         'enable_schema' => $enable_schema,
         'display_mode'  => isset( $raw['display_mode'] ) && 'list' === $raw['display_mode'] ? 'list' : 'accordion',
         'expand_first'  => ! empty( $raw['expand_first'] ) && ffw_builder_is_on( $raw['expand_first'] ),
@@ -1969,8 +2249,11 @@ function ffw_enqueue_display_faq_assets( $layout = 0 ) {
     } elseif ( 2 === $layout ) {
         wp_enqueue_style( 'ffw_whitish_styles' );
         wp_enqueue_script( 'ffw_classic_js' );
-    } else {
+    } elseif ( 1 === $layout ) {
         wp_enqueue_style( 'ffw_classic_styles' );
+        wp_enqueue_script( 'ffw_classic_js' );
+    } else {
+        // Pro layouts bring their own CSS through the actions below.
         wp_enqueue_script( 'ffw_classic_js' );
     }
 
@@ -2583,6 +2866,7 @@ if( ! function_exists('ffw_show_content') ) {
         if ( null !== $inline ) {
             $content = apply_filters( 'the_content', $inline );
             echo wp_kses_post( $content );
+            do_action( 'ffw_after_faq_answer', $faq_id, $id );
             return;
         }
 
@@ -2602,6 +2886,8 @@ if( ! function_exists('ffw_show_content') ) {
         echo wp_kses_post($content);
 
         wp_reset_postdata();
+
+        do_action( 'ffw_after_faq_answer', $faq_id, $id );
     }
 }
 

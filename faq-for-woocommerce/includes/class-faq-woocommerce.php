@@ -27,7 +27,7 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
          *
          * @var string
          */
-        public $version = '2.0.5';
+        public $version = '2.1.0';
 
         /**
          * The single instance of the class.
@@ -127,6 +127,7 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
 			include_once FFW_ABSPATH . '/includes/ffw-helper.php';
 			include_once FFW_ABSPATH . '/includes/class-faq-comments.php';
 			include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-schema.php';
+			include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-insights.php';
 
             if ( $this->is_request('admin') ) {
                 include_once FFW_ABSPATH . '/includes/admin/class-faq-woocommerce-admin.php';

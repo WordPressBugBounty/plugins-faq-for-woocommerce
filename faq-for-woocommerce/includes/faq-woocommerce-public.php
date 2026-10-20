@@ -2,6 +2,11 @@
 add_action('wp_footer', 'ffw_footer_content');
 if( ! function_exists( "ffw_footer_content" ) ) {
     function ffw_footer_content() {
+        // Only pages that rendered FAQs need these styles.
+        if ( ! wp_style_is( 'ffw_public_styles', 'enqueued' ) && ! wp_style_is( 'ffw_public_styles', 'done' ) ) {
+            return;
+        }
+
         //get options.
         $options = FAQ_Woocommerce_Public::instance()->options;
 
@@ -328,7 +333,7 @@ function ffw_expand_collapse_all_action_cb() {
 
     if( "1" === $ffw_expand_collapse_all && !empty($ffw_expand_collapse_label) ) {
         ?>
-        <button class="ffw-btn-expand-collapse-all"><?php echo esc_html($ffw_expand_collapse_label); ?></button>
+        <button type="button" class="ffw-btn-expand-collapse-all" aria-expanded="<?php echo isset( $options['ffw_display_all_faq_answers'] ) && '1' === $options['ffw_display_all_faq_answers'] ? 'true' : 'false'; ?>"><?php echo esc_html($ffw_expand_collapse_label); ?></button>
         <?php
     }
 

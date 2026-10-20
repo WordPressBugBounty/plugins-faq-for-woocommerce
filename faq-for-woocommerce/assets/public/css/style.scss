@@ -298,3 +298,35 @@
 	}
 
 }
+/* Accessibility: visible keyboard focus on every FAQ toggle. */
+.ffw-main-wrapper {
+	[aria-controls^="ffw-a-"],
+	summary,
+	.ffw-btn-expand-collapse-all {
+		// Layout styles and themes remove outlines; keep one for keyboard users only.
+		&:focus-visible {
+			outline: 2px solid currentColor !important;
+			outline-offset: 2px !important;
+		}
+	}
+
+	[role="button"][aria-controls^="ffw-a-"] {
+		cursor: pointer;
+	}
+}
+
+/* Right to left: every layout, plus search, filter, votes and buttons. */
+.ffw-main-wrapper.ffw-rtl {
+	direction: rtl;
+	text-align: right;
+
+	.ffw-is-rtl {
+		direction: rtl;
+		text-align: right;
+	}
+
+	.ffw-inline-search-empty,
+	.ffw-faq-header {
+		text-align: right;
+	}
+}

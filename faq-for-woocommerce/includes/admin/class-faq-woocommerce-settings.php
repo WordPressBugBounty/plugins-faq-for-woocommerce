@@ -80,6 +80,12 @@ class FAQ_Woocommerce_Settings {
                             'callback' => 'ffw_enable_inline_search',
                         ],
                         [
+                            'id' => 'ffw_enable_helpful_votes',
+                            'label' => esc_html__( 'Helpful Votes', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_enable_helpful_votes',
+                        ],
+                        [
                             'id' => 'ffw_tab_label',
                             'label' => esc_html__( 'Tab Label', 'faq-for-woocommerce' ),
                             'region' => 'free',
@@ -201,7 +207,7 @@ class FAQ_Woocommerce_Settings {
                         ],
                         [
                             'id' => 'ffw_enable_rtl',
-                            'label' => esc_html__( 'Enable RTL', 'faq-for-woocommerce' ),
+                            'label' => esc_html__( 'Right to Left (RTL)', 'faq-for-woocommerce' ),
                             'region' => 'free',
                             'callback' => 'ffw_enable_rtl',
                         ],
@@ -760,6 +766,25 @@ class FAQ_Woocommerce_Settings {
     }
 
     /**
+     * "Was this helpful?" votes under each answer.
+     *
+     * @since 2.1.0
+     */
+    function ffw_enable_helpful_votes() {
+        $val = isset( $this->options['ffw_enable_helpful_votes'] ) ? (string) $this->options['ffw_enable_helpful_votes'] : '2';
+        ?>
+        <select class="ffw-enable-helpful-votes" name="ffw_general_settings[ffw_enable_helpful_votes]">
+            <option value="1" <?php selected( $val, '1' ); ?>><?php esc_html_e( 'Enable', 'faq-for-woocommerce' ); ?></option>
+            <option value="2" <?php selected( $val, '2' ); ?>><?php esc_html_e( 'Disable', 'faq-for-woocommerce' ); ?></option>
+        </select>
+        <?php
+        echo sprintf(
+            '<p class="ffw-setting-description"><span>&#9432;</span>%s</p>',
+            esc_html__( 'Shows "Was this helpful? Yes / No" under each answer. Results appear in the Helpful column on All FAQs. Answer views are counted either way.', 'faq-for-woocommerce' )
+        );
+    }
+
+    /**
      * FAQ Width Callback.
      */
     function ffw_tab_label() {
@@ -1106,20 +1131,23 @@ class FAQ_Woocommerce_Settings {
      * @since 1.4.1
      */
     function ffw_enable_rtl() {
-        ?>
-        <div class="ffw-get-pro-wrapper">
-            <div class="ffw-get-pro-badge">
-                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
-                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
-            </div>
-            <div class="ffw-switch">
-                <input type="checkbox" class="ffw-free-setting-switcher ffw-enable-rtl" checked="checked">
-                <span class="ffw-switch-slider ffw-switch-round"></span>
-            </div>
-        </div>
+        $options = is_array( $this->options ) ? $this->options : array();
+        $mode    = isset( $options['ffw_rtl_mode'] ) ? sanitize_key( $options['ffw_rtl_mode'] ) : '';
 
+        if ( '' === $mode ) {
+            $mode = ffw_is_setting_enabled( $options, 'enable_rtl' ) ? 'always' : 'auto';
+        }
+        ?>
+        <select class="ffw-rtl-mode" name="ffw_general_settings[ffw_rtl_mode]">
+            <option value="auto" <?php selected( $mode, 'auto' ); ?>><?php esc_html_e( 'Automatic (follow the site language)', 'faq-for-woocommerce' ); ?></option>
+            <option value="always" <?php selected( $mode, 'always' ); ?>><?php esc_html_e( 'Always right to left', 'faq-for-woocommerce' ); ?></option>
+            <option value="never" <?php selected( $mode, 'never' ); ?>><?php esc_html_e( 'Never', 'faq-for-woocommerce' ); ?></option>
+        </select>
         <?php
-        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable RTL mode, FAQs are shown in `right to left` view.', 'faq-for-woocommerce'));
+        echo sprintf(
+            '<p class="ffw-setting-description"><span>&#9432;</span>%s</p>',
+            esc_html__( 'Shows FAQs right to left for languages such as Arabic, Hebrew and Persian. Automatic follows the site language.', 'faq-for-woocommerce' )
+        );
     }
 
     /**

@@ -17,7 +17,7 @@ jQuery(document).ready(function ($) {
             e.preventDefault();
 
             if ($(this).hasClass("ffw-active")) {
-                $(this).removeClass("ffw-active").find(".ffw-classic-answer").slideUp();
+                $(this).removeClass("ffw-active").parent('.ffw-accordion-item').find(".ffw-classic-answer").slideUp();
             } else {
                 $(".ffw-accordion-item > .ffw-button.ffw-active").parent('.ffw-accordion-item').find(".ffw-classic-answer").slideUp();
                 $(".ffw-accordion-item > .ffw-button").removeClass("ffw-active");

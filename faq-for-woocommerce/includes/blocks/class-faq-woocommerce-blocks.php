@@ -194,6 +194,10 @@ class FAQ_Woocommerce_Blocks {
                 'type'    => 'number',
                 'default' => 0,
             ),
+            'perPage'      => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
             'orderBy'      => array(
                 'type'    => 'string',
                 'default' => 'id',
@@ -205,6 +209,10 @@ class FAQ_Woocommerce_Blocks {
             'showSearch'   => array(
                 'type'    => 'boolean',
                 'default' => true,
+            ),
+            'showFilter'   => array(
+                'type'    => 'boolean',
+                'default' => false,
             ),
             'enableSchema' => array(
                 'type'    => 'boolean',

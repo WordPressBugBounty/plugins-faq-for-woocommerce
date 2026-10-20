@@ -167,6 +167,16 @@
 							setAttributes({ limit: value || 0 });
 						}
 					}),
+					el(RangeControl, {
+						label: __('FAQs before "Show more"', 'faq-for-woocommerce'),
+						help: __('0 shows all FAQs at once. Hidden FAQs still count for search, filters and schema.', 'faq-for-woocommerce'),
+						value: attributes.perPage,
+						min: 0,
+						max: 50,
+						onChange: function (value) {
+							setAttributes({ perPage: value || 0 });
+						}
+					}),
 					el(SelectControl, {
 						label: __('Order by', 'faq-for-woocommerce'),
 						value: attributes.orderBy,
@@ -203,7 +213,7 @@
 				el(
 					PanelBody,
 					{
-						title: __('Search & schema', 'faq-for-woocommerce'),
+						title: __('Search, filter & schema', 'faq-for-woocommerce'),
 						initialOpen: false
 					},
 					el(ToggleControl, {
@@ -212,6 +222,14 @@
 						checked: !!attributes.showSearch,
 						onChange: function (value) {
 							setAttributes({ showSearch: value });
+						}
+					}),
+					el(ToggleControl, {
+						label: __('Show category filter', 'faq-for-woocommerce'),
+						help: __('Buttons above the FAQs to show one FAQ category at a time.', 'faq-for-woocommerce'),
+						checked: !!attributes.showFilter,
+						onChange: function (value) {
+							setAttributes({ showFilter: value });
 						}
 					}),
 					el(ToggleControl, {

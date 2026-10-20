@@ -1,6 +1,6 @@
 <div class="ffw-layout-container">
     <div class="<?php echo esc_attr($ffw_wrapper_classes); ?>" id="ffw-wrapper">
-        <div style="position: absolute; width: 0px; height: 0px;">
+        <div style="position: absolute; width: 0px; height: 0px;" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg">
                 <symbol viewBox="0 0 24 24" id="expand-more">
                     <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/>
@@ -21,8 +21,8 @@
                 <details <?php echo $ffw_open_item ? 'open' : ''; ?> <?php echo ffw_get_faq_item_html_attrs( (int) $faq['id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                     <summary>
                         <?php echo sprintf('<span>%s</span>', esc_html__($faq['question'], 'faq-for-woocommerce') ); ?>
-                        <svg class="control-icon control-icon-expand" width="24" height="24" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-more" /></svg>
-                        <svg class="control-icon control-icon-close" width="24" height="24" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close" /></svg>
+                        <svg class="control-icon control-icon-expand" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-more" /></svg>
+                        <svg class="control-icon control-icon-close" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close" /></svg>
                     </summary>
                     <div class="ffw-trip-answer">
                         <?php

@@ -298,6 +298,18 @@ class FFW_Display_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
         );
 
         $this->add_control(
+            'per_page',
+            array(
+                'label'       => esc_html__( 'FAQs before "Show more"', 'faq-for-woocommerce' ),
+                'type'        => \Elementor\Controls_Manager::NUMBER,
+                'min'         => 0,
+                'max'         => 50,
+                'default'     => 0,
+                'description' => esc_html__( '0 shows all FAQs at once.', 'faq-for-woocommerce' ),
+            )
+        );
+
+        $this->add_control(
             'order_by',
             array(
                 'label'   => esc_html__( 'Order by', 'faq-for-woocommerce' ),
@@ -351,6 +363,19 @@ class FFW_Display_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
                 'return_value' => 'yes',
                 'default'      => 'yes',
                 'description'  => esc_html__( 'Filters this widget as visitors type. No extra shortcode needed.', 'faq-for-woocommerce' ),
+            )
+        );
+
+        $this->add_control(
+            'show_filter',
+            array(
+                'label'        => esc_html__( 'Show category filter', 'faq-for-woocommerce' ),
+                'type'         => \Elementor\Controls_Manager::SWITCHER,
+                'label_on'     => esc_html__( 'Yes', 'faq-for-woocommerce' ),
+                'label_off'    => esc_html__( 'No', 'faq-for-woocommerce' ),
+                'return_value' => 'yes',
+                'default'      => '',
+                'description'  => esc_html__( 'Buttons above the FAQs to show one FAQ category at a time.', 'faq-for-woocommerce' ),
             )
         );
 

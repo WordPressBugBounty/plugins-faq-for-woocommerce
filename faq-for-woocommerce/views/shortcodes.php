@@ -18,6 +18,16 @@
                         'description' => esc_html__('Show FAQs from one or more FAQ categories. Copy the category shortcode from the FAQ Categories screen. Example: 12 is a FAQ category ID.', 'faq-for-woocommerce'),
                     ],
                     [
+                        'code' => '[ffw_template filter="true"]',
+                        'title' => esc_html__('Display FAQs with a category filter', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Adds buttons above the FAQs so visitors can show one FAQ category at a time. Works with any other attribute, for example faq_ids or template. Needs FAQs from at least two categories.', 'faq-for-woocommerce'),
+                    ],
+                    [
+                        'code' => '[ffw_template per_page="5"]',
+                        'title' => esc_html__('Show 5 FAQs, then a "Show more" button', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Keeps long lists short. Search, the category filter and FAQ schema still include every FAQ. Use limit="5" instead to show only 5 FAQs in total.', 'faq-for-woocommerce'),
+                    ],
+                    [
                         'code' => '[ffw_template faq_ids="12,15"]',
                         'title' => esc_html__('Display selected FAQs', 'faq-for-woocommerce'),
                         'description' => esc_html__('Show specific FAQs by ID. Use a comma-separated list. Example: 12 and 15 are FAQ post IDs.', 'faq-for-woocommerce'),

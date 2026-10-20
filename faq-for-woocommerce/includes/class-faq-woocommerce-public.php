@@ -118,14 +118,13 @@ class FAQ_Woocommerce_Public {
 
 
     /**
-     * Enqueue scripts.
+     * Register scripts. Nothing is enqueued here: each FAQ render enqueues
+     * what its layout needs through ffw_enqueue_display_faq_assets().
      */
     public function ffw_public_scripts() {
-        global $wp_query, $post;
-
-		//get options.
-        $options = $this->options;
-		$layout = isset( $options['ffw_layout'] ) ? (int) $options['ffw_layout'] : 1;
+        if ( wp_script_is( 'ffw_public_js', 'registered' ) ) {
+            return;
+        }
 
         // Register scripts.
         wp_register_script( 'ffw_public_js', FFW_PLUGIN_URL . '/assets/public/js/faq-woocommerce-public.min.js', array( 'jquery' ), FFW_PLUGIN_VERSION, true );
@@ -134,26 +133,19 @@ class FAQ_Woocommerce_Public {
         wp_register_script( 'ffw_basic_js', FFW_PLUGIN_URL . '/assets/public/js/ffw-basic.js', array( 'jquery' ), FFW_PLUGIN_VERSION, true );
         wp_register_script( 'ffw-inline-search', FFW_PLUGIN_URL . '/assets/public/js/ffw-inline-search.js', array( 'jquery' ), FFW_VERSION, true );
 
-		// enqueue template JS files.
-        wp_enqueue_script( 'ffw_public_js' );
-        wp_enqueue_script( 'ffw-inline-search' );
         wp_localize_script( 'ffw_public_js', 'ffw_public_js', [
             'ajaxurl'               => admin_url( 'admin-ajax.php' ),
             'nonce'                 => wp_create_nonce( 'ffw_public_js' ),
             'search_empty'          => esc_html__( 'No FAQs match your search.', 'faq-for-woocommerce' ),
+            /* translators: 1: category name, 2: number of FAQs shown */
+            'filter_status'         => esc_html__( '%1$s: %2$d FAQs shown', 'faq-for-woocommerce' ),
+            'helpful_thanks'        => esc_html__( 'Thanks for your feedback!', 'faq-for-woocommerce' ),
+            /* translators: %d: number of FAQs not shown yet */
+            'show_more_count'       => esc_html__( '(%d more)', 'faq-for-woocommerce' ),
         ] );
-
-		if ( 4 === $layout ) {
-			wp_enqueue_script( 'ffw_pop_js' );
-		}elseif ( 5 === $layout ) {
-			wp_enqueue_script( 'ffw_basic_js' );
-		}else{
-            wp_enqueue_script( 'ffw_classic_js' );
-        }
-
-        do_action("ffw_enqueue_template_js", $layout);
     }
 
 }
 
-return new FAQ_Woocommerce_Public();
+// One shared instance; instance() is also used by templates and helpers.
+return FAQ_Woocommerce_Public::instance();

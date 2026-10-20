@@ -1,6 +1,6 @@
 (function($) {
     $(document).ready(function(){
-        $(document).on('click', '.ffw-accordion-heading', function(event){
+        $(document).on('click', '.ffw-basic-wrapper .ffw-accordion-heading', function(event){
             event.preventDefault();
     
             var isThisActive = $(this).parent(".ffw-accordion").hasClass("ffw-accordion-active");
@@ -9,11 +9,11 @@
                 return;
             }
     
-            $(".ffw-accordion-active").removeClass("ffw-accordion-active");
+            $(".ffw-basic-wrapper .ffw-accordion-active").removeClass("ffw-accordion-active");
             $(this).parent(".ffw-accordion").addClass("ffw-accordion-active");
             
             // slide content
-            $(".ffw-content").slideUp(250);
+            $(".ffw-basic-wrapper .ffw-content").slideUp(250);
             $(this).next(".ffw-content").slideDown(250);
         
         });

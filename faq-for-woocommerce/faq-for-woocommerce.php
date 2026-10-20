@@ -3,7 +3,7 @@
  * Plugin Name: Happy FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
  * Description: Create FAQs for your site and WooCommerce products with comment, FAQ schema and AI support.
- * Version: 2.0.5
+ * Version: 2.1.0
  * Author: HappyDevs
  * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
@@ -29,7 +29,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '2.0.5' );
+	define( 'FFW_VERSION', '2.1.0' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {
@@ -183,6 +183,14 @@ function ffw_activate_plugin() {
 
         if ( 'pending' === $wizard['status'] ) {
             set_transient( 'ffw_setup_wizard_redirect', 1, 5 * MINUTE_IN_SECONDS );
+
+            // New sites start with helpful votes on.
+            $settings = get_option( 'ffw_general_settings', array() );
+            $settings = is_array( $settings ) ? $settings : array();
+            if ( ! isset( $settings['ffw_enable_helpful_votes'] ) ) {
+                $settings['ffw_enable_helpful_votes'] = '1';
+                update_option( 'ffw_general_settings', $settings );
+            }
         }
     }
 

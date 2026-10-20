@@ -9,10 +9,11 @@
                     do_action('ffw_before_display_faq_item', array('faqs' => $faqs, 'counter' => $counter));
                     $ffw_open_item = ( isset($ffw_display_all_answers) && '1' === $ffw_display_all_answers )
                         || ( ! empty( $ffw_expand_first ) && 0 === $counter );
+                    $ffw_a11y_id = ffw_get_faq_a11y_id( $faq['id'] );
                     ?>
                     <div class="ffw-collapse ffw-accordion-item" <?php echo ffw_get_faq_item_html_attrs( (int) $faq['id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-                        <?php echo sprintf('<span class="ffw-button">%s</span>', esc_html__($faq['question'], 'faq-for-woocommerce') ); ?>
-                        <div class="ffw-content ffw-classic-answer" <?php echo $ffw_open_item ? 'style="display:block"' : '';  ?>>
+                        <?php echo sprintf('<span class="ffw-button%3$s" %2$s>%1$s</span>', esc_html__($faq['question'], 'faq-for-woocommerce'), ffw_get_faq_toggle_attrs( $ffw_a11y_id, $ffw_open_item ), $ffw_open_item ? ' ffw-active' : '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        <div class="ffw-content ffw-classic-answer" <?php echo ffw_get_faq_panel_attrs( $ffw_a11y_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo $ffw_open_item ? 'style="display:block"' : '';  ?>>
                             <?php
                             $post_id = get_the_ID();
                             $faq_id = (int) $faq['id'];

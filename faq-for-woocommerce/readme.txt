@@ -4,7 +4,7 @@ Tags: faq, woocommerce faq, product faq, accordion, schema
 Requires at least: 3.6
 Tested Up To: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.5
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ WordPress FAQ and WooCommerce product FAQ plugin with accordion layouts, Google 
 
 Write the answer once. Reuse it on a FAQ page, in Gutenberg, Elementor, or Divi, and on WooCommerce products. WooCommerce is optional — use it as a site FAQ plugin, then add product FAQs when you have a store.
 
-**Google FAQ schema** (FAQPage), an AI FAQ generator, comments, and custom accordion layouts are included.
+**Google FAQ schema** (FAQPage), an AI FAQ generator, a category filter, "Was this helpful?" votes, accessible keyboard-friendly accordions, RTL support, and custom accordion layouts are included. Scripts and styles load only on pages that show FAQs.
 
 [Demo](https://demo.happydevs.net/happyfaqs/product/beanie-with-logo/) | [Documentation](https://happydevs.net/docs/faq-for-woocommerce/overview) | [Video Tutorials](https://www.youtube.com/watch?v=CnsPBdgIbaU&list=PLqgTGQxEn_rZbnleeeuK18QJ984t6o3ZX&ab_channel=HappyDevs) | [Get Support](https://happydevs.net/support)
 
@@ -59,10 +59,15 @@ You can also attach FAQs from the product edit screen. One FAQ can appear in mor
 * Happy Prebuilt FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (library FAQs)
 * Happy Custom FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (write Q&A on the page)
 * AI FAQ generator
-* Inline FAQ search
+* Inline FAQ search and FAQ category filter
+* "Was this helpful?" votes and FAQ view counts
+* "Show more" button for long FAQ lists
+* Accessible FAQ accordions: keyboard and screen reader friendly
+* Lightweight: CSS and JS load only where FAQs appear
+* Setup wizard with ready-made common questions
 * Comments, media in answers, expand/collapse all
 * Assign FAQs to products, product categories, and product tags
-* WPML and Polylang
+* WPML, Polylang, and RTL (right-to-left) languages
 * FAQ Groups, AJAX search, import/export (PRO)
 * Customer questions, variation FAQs, shop/cart/checkout FAQs (PRO)
 
@@ -75,6 +80,7 @@ You can also attach FAQs from the product edit screen. One FAQ can appear in mor
 * FAQ categories (Shipping, Returns, and so on)
 * FAQ page setting: pick a page and Happy FAQs can inject the accordion
 * Shortcodes for all FAQs, a FAQ category, selected FAQ IDs, or the current product
+* Setup wizard on first activation: pick General or Product FAQs, start from common questions, and copy your shortcode
 
 **Display and extras**
 
@@ -82,6 +88,11 @@ You can also attach FAQs from the product edit screen. One FAQ can appear in mor
 * Happy Custom FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (write Q&A on the page)
 * Google FAQPage schema on help pages and product pages
 * Inline search that filters the FAQs already on the page
+* FAQ category filter: buttons that show one FAQ category at a time
+* "Show more" button: show a few FAQs first, reveal the rest on click (all FAQs stay in schema)
+* "Was this helpful? Yes / No" votes and answer view counts, with sortable Views and Helpful columns on All FAQs
+* Accessible accordions: button semantics, aria-expanded state, Enter/Space keys, and a visible focus outline
+* Loads CSS and JS only on pages that show FAQs, for the layouts in use
 * AI FAQ generator (OpenAI)
 * Images, video, and other media in answers
 * Expand / collapse all
@@ -89,6 +100,7 @@ You can also attach FAQs from the product edit screen. One FAQ can appear in mor
 * Five accordion layouts, colors, width, and display options
 * Classic Editor and block editor support
 * WPML and Polylang support
+* Right-to-left (RTL) layouts for Arabic, Hebrew, Persian, and other RTL languages, automatic for RTL site languages
 
 **Product FAQs**
 
@@ -132,6 +144,20 @@ Example: `[ffw_template template="1" id="20"]`
 
 Sort with `order` (`ASC` or `DESC`) and `order_by` (`id`, `date`, `title`, `name`, `modified`, `comment_count`, `author`).
 
+Add a **category filter** above the FAQs:
+
+`[ffw_template filter="true"]`
+
+Show **5 FAQs, then a "Show more" button**:
+
+`[ffw_template per_page="5"]`
+
+Show **only 5 FAQs** in total:
+
+`[ffw_template limit="5"]`
+
+Attributes can be combined, for example `[ffw_template faq_cat="32" filter="true" per_page="5"]`.
+
 Pro adds `group_id` for FAQ Groups (PRO), and `[ffw_search]` for AJAX library search (PRO).
 
 = Pro features =
@@ -145,7 +171,7 @@ Pro adds `group_id` for FAQ Groups (PRO), and `[ffw_search]` for AJAX library se
 * Hash deep-links (PRO): open a FAQ with a link such as `#ffw-faq-123`
 * Extra accordion layouts (PRO): Glow, Smart, Wow, Zoom
 * Import / export (PRO): FAQs, categories, groups, and product assignments as JSON
-* RTL and multi-column layout (PRO)
+* Multi-column layout (PRO)
 
 **Store extras** (need WooCommerce)
 
@@ -223,7 +249,7 @@ Product pages are included in free. Shop, cart, checkout, and product archive lo
 
 = Does it output Google FAQ schema? =
 
-Yes. FAQPage schema is included for help pages and product pages. Duplicate questions are removed so Google can show FAQ rich results.
+Yes. FAQPage schema is included for help pages and product pages, with duplicate questions removed. It helps search engines and AI answer engines understand your questions and answers.
 
 = Can I use Gutenberg, Elementor, or Divi? =
 
@@ -245,6 +271,26 @@ Five in free (Classic, Whitish, Trip, Pop, Basic). Four more in Pro (Glow, Smart
 
 Inline search (free) filters the FAQs already on the page. AJAX library search (Pro) searches all published FAQs and can be placed anywhere with `[ffw_search]`.
 
+= Can visitors filter FAQs by category? =
+
+Yes. Add `filter="true"` to the shortcode, or turn on **Show category filter** in the Happy Prebuilt FAQs block or Elementor widget. Visitors see one button per FAQ category.
+
+= Can I show a few FAQs and load the rest on click? =
+
+Yes. `[ffw_template per_page="5"]` shows five FAQs and a **Show more FAQs** button. The block and Elementor widget have the same option. Hidden FAQs still appear in search, the category filter, and FAQ schema.
+
+= Can I see which FAQs are helpful or most viewed? =
+
+Yes. Turn on **Helpful Votes** in Settings to show "Was this helpful? Yes / No" under each answer. **All FAQs** shows sortable Views and Helpful columns. IP addresses are not stored; repeat votes are blocked with a short-lived anonymous hash.
+
+= Are the FAQ accordions accessible? =
+
+Yes. Every layout works with the keyboard (Tab, Enter, Space), shows a visible focus outline, and tells screen readers whether an answer is open or closed.
+
+= Does it support right-to-left languages? =
+
+Yes, in the free version. **Settings → Right to Left (RTL)** follows your site language automatically, or you can set it to always or never.
+
 == Screenshots ==
 1. FAQs in Product Page
 2. Google FAQs Schema Support
@@ -259,6 +305,17 @@ Inline search (free) filters the FAQs already on the page. AJAX library search (
 11. Beautiful FAQs Templates
 
 == Changelog ==
+
+= 2.1.0 =
+* Added: FAQ category filter. Use `filter="true"` or the new block and Elementor option.
+* Added: "Show more" button for long lists (`per_page`), and `limit` on the shortcode.
+* Added: "Was this helpful?" votes and answer view counts, with sortable Views and Helpful columns on All FAQs.
+* Added: Right-to-left (RTL) support in the free version, automatic for RTL site languages.
+* Improved: Accessible accordions in every layout: keyboard support, aria-expanded state, and a visible focus outline.
+* Improved: CSS and JS now load only on pages that show FAQs, for the layouts in use.
+* Improved: Inline search now works with every layout.
+* Fixed: Shortcodes using a layout other than the default (for example Pop or Basic) did not open.
+* Fixed: A Pop layout answer could not be closed once opened.
 
 = 2.0.5 =
 * Added: Setup wizard on first activation. Choose General or Product FAQs, start from common questions and replies, copy your shortcode, and finish in a few clicks. Every step can be skipped.
