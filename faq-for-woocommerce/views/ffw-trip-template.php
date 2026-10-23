@@ -20,9 +20,14 @@
                 ?>
                 <details <?php echo $ffw_open_item ? 'open' : ''; ?> <?php echo ffw_get_faq_item_html_attrs( (int) $faq['id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                     <summary>
-                        <?php echo sprintf('<span>%s</span>', esc_html__($faq['question'], 'faq-for-woocommerce') ); ?>
-                        <svg class="control-icon control-icon-expand" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-more" /></svg>
-                        <svg class="control-icon control-icon-close" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close" /></svg>
+                        <?php echo sprintf('<span>%s</span>', esc_html( $faq['question'] ) ); ?>
+                        <?php
+                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static icon markup.
+                        echo ffw_get_toggle_icon(
+                            '<svg class="control-icon control-icon-expand" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-more" /></svg>'
+                            . '<svg class="control-icon control-icon-close" width="24" height="24" aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close" /></svg>'
+                        );
+                        ?>
                     </summary>
                     <div class="ffw-trip-answer">
                         <?php

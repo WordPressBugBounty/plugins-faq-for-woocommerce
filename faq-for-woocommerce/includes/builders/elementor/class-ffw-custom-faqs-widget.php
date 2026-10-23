@@ -119,6 +119,8 @@ class FFW_Custom_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
         $this->register_style_answer_controls();
         $this->register_style_search_box_controls();
         $this->register_style_pop_controls();
+
+        ffw_elementor_register_toggle_icon_controls( $this, false );
     }
 
     /**
@@ -700,6 +702,7 @@ class FFW_Custom_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .ffw-rotate-icon, {{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .dashicons' => 'color: {{VALUE}} !important;',
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .control-icon' => 'fill: {{VALUE}} !important; color: {{VALUE}} !important;',
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .ffw-collapse span.ffw-button:before' => 'border-top-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .ffw-toggle-icon' => '--ffw-icon-color: {{VALUE}};',
                 ),
             )
         );
@@ -714,6 +717,7 @@ class FFW_Custom_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .ffw-button.ffw-active .ffw-classic-icon:before, {{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .ffw-button.ffw-active .ffw-classic-icon:after' => 'background: {{VALUE}} !important;',
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper details[open] .control-icon' => 'fill: {{VALUE}} !important;',
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .ffw-collapse span.ffw-button.ffw-active:before' => 'border-top-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} :is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-toggle-icon' => '--ffw-icon-color: {{VALUE}};',
                 ),
             )
         );
@@ -734,6 +738,7 @@ class FFW_Custom_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .ffw-classic-icon' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .ffw-rotate-icon, {{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .dashicons' => 'font-size: {{SIZE}}{{UNIT}} !important; width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
                     '{{WRAPPER}} #ffw-main-wrapper #ffw-wrapper .control-icon' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
+                    '{{WRAPPER}} .ffw-toggle-icon' => '--ffw-icon-size: {{SIZE}}{{UNIT}};',
                 ),
             )
         );
@@ -1277,6 +1282,8 @@ class FFW_Custom_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
                 'show_search'   => isset( $settings['show_search'] ) ? $settings['show_search'] : 'yes',
                 'enable_schema' => isset( $settings['enable_schema'] ) ? $settings['enable_schema'] : 'yes',
                 'expand_first'  => isset( $settings['expand_first'] ) ? $settings['expand_first'] : '',
+                'icon_set'      => isset( $settings['toggle_icon_set'] ) ? $settings['toggle_icon_set'] : '',
+                'icon_position' => isset( $settings['toggle_icon_position'] ) ? $settings['toggle_icon_position'] : '',
             )
         );
     }

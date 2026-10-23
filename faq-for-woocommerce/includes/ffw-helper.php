@@ -145,7 +145,8 @@ if ( ! function_exists( 'ffw_get_faq_page_id' ) ) {
  * "Show more" paging for the list being rendered.
  *
  * ffw_get_template_by_faqs() starts it, each item asks whether it falls
- * after the first page, and the render ends it.
+ * after the first page, and the render ends it. A list shown inside an
+ * answer gets its own count, then the outer list's count carries on.
  *
  * @param string $action   start, next or end.
  * @param int    $per_page Items shown before "Show more" (start only).
@@ -154,24 +155,54 @@ if ( ! function_exists( 'ffw_get_faq_page_id' ) ) {
  */
 if ( ! function_exists( 'ffw_faq_paging' ) ) {
     function ffw_faq_paging( $action, $per_page = 0 ) {
-        static $limit = 0;
-        static $count = 0;
+        static $lists = array();
 
         if ( 'start' === $action ) {
-            $limit = absint( $per_page );
-            $count = 0;
+            $lists[] = array(
+                'limit' => absint( $per_page ),
+                'count' => 0,
+            );
             return false;
         }
 
         if ( 'end' === $action ) {
-            $limit = 0;
-            $count = 0;
+            array_pop( $lists );
             return false;
         }
 
-        $count++;
+        if ( ! $lists ) {
+            return false;
+        }
 
-        return $limit > 0 && $count > $limit;
+        $current = count( $lists ) - 1;
+        $lists[ $current ]['count']++;
+
+        return $lists[ $current ]['limit'] > 0 && $lists[ $current ]['count'] > $lists[ $current ]['limit'];
+    }
+}
+
+/**
+ * Library FAQs whose answers are being rendered, outermost first.
+ *
+ * A FAQ list placed inside an answer (for example the ffw_template shortcode)
+ * leaves these FAQs out, so an answer never shows itself again.
+ *
+ * @param string $action get, push or pop.
+ * @param int    $faq_id FAQ post ID (push only).
+ * @since 2.1.0
+ * @return int[]
+ */
+if ( ! function_exists( 'ffw_faq_answer_stack' ) ) {
+    function ffw_faq_answer_stack( $action = 'get', $faq_id = 0 ) {
+        static $stack = array();
+
+        if ( 'push' === $action ) {
+            $stack[] = (int) $faq_id;
+        } elseif ( 'pop' === $action ) {
+            array_pop( $stack );
+        }
+
+        return $stack;
     }
 }
 
@@ -231,6 +262,44 @@ if ( ! function_exists( 'ffw_get_show_more_html' ) ) {
             /* translators: %d: number of FAQs not shown yet */
             esc_html( sprintf( __( '(%d more)', 'faq-for-woocommerce' ), absint( $remaining ) ) )
         );
+    }
+}
+
+/**
+ * Clean extra wrapper classes from a block's className.
+ *
+ * @param mixed $class_name Space-separated classes.
+ * @since 3.0.0
+ * @return array
+ */
+if ( ! function_exists( 'ffw_parse_wrap_classes' ) ) {
+    function ffw_parse_wrap_classes( $class_name ) {
+        if ( ! is_string( $class_name ) || '' === trim( $class_name ) ) {
+            return array();
+        }
+
+        return array_values( array_filter( array_map( 'sanitize_html_class', preg_split( '/\s+/', trim( $class_name ) ) ) ) );
+    }
+}
+
+/**
+ * Whether classes include a Happy FAQs block style (Cards, Minimal, Soft).
+ *
+ * Styled lists render with the Basic layout, which the styles are made for.
+ *
+ * @param array $classes Wrapper classes.
+ * @since 3.0.0
+ * @return bool
+ */
+if ( ! function_exists( 'ffw_has_block_style' ) ) {
+    function ffw_has_block_style( $classes ) {
+        foreach ( (array) $classes as $class ) {
+            if ( 0 === strpos( (string) $class, 'is-style-ffw-' ) ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 
@@ -526,6 +595,121 @@ if ( ! function_exists( 'ffw_get_faqs_by_product_category_ids' ) ) {
 }
 
 /**
+ * Published FAQ posts, optionally limited to FAQ categories.
+ *
+ * @param array $args Display args (faq_cat or cat_ids).
+ * @param array $query Extra get_posts() args.
+ * @since 3.0.0
+ * @return WP_Post[]
+ */
+if ( ! function_exists( 'ffw_query_published_faqs' ) ) {
+    function ffw_query_published_faqs( $args, $query = array() ) {
+        $query = wp_parse_args(
+            $query,
+            array(
+                'post_type'      => 'ffw',
+                'post_status'    => 'publish',
+                'posts_per_page' => -1,
+                'no_found_rows'  => true,
+            )
+        );
+
+        $cats = ! empty( $args['faq_cat'] ) ? $args['faq_cat'] : ( ! empty( $args['cat_ids'] ) ? $args['cat_ids'] : '' );
+        if ( '' !== $cats && null !== $cats ) {
+            $ids   = array();
+            $slugs = array();
+            foreach ( (array) ( is_string( $cats ) ? preg_split( '/[\s,]+/', $cats, -1, PREG_SPLIT_NO_EMPTY ) : $cats ) as $cat ) {
+                if ( is_numeric( $cat ) ) {
+                    $ids[] = (int) $cat;
+                } else {
+                    $slugs[] = sanitize_title( $cat );
+                }
+            }
+
+            $tax_query = array( 'relation' => 'OR' );
+            if ( $ids ) {
+                $tax_query[] = array( 'taxonomy' => 'ffw-category', 'field' => 'term_id', 'terms' => $ids );
+            }
+            if ( $slugs ) {
+                $tax_query[] = array( 'taxonomy' => 'ffw-category', 'field' => 'slug', 'terms' => $slugs );
+            }
+            $query['tax_query'] = $tax_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+        }
+
+        return get_posts( $query );
+    }
+}
+
+/**
+ * Most viewed FAQs first.
+ *
+ * Ordered by answer views, then "yes" votes, comments and newest, so the
+ * list is useful before any views are recorded.
+ *
+ * @param array $args Display args.
+ * @since 3.0.0
+ * @return array
+ */
+if ( ! function_exists( 'ffw_get_popular_faqs' ) ) {
+    function ffw_get_popular_faqs( $args = array() ) {
+        $posts = ffw_query_published_faqs( $args );
+        if ( ! $posts ) {
+            return array();
+        }
+
+        update_meta_cache( 'post', wp_list_pluck( $posts, 'ID' ) );
+
+        $score = function ( $post ) {
+            return array(
+                (int) get_post_meta( $post->ID, '_ffw_views', true ),
+                (int) get_post_meta( $post->ID, '_ffw_helpful_yes', true ),
+                (int) $post->comment_count,
+                strtotime( $post->post_date_gmt ),
+            );
+        };
+
+        usort(
+            $posts,
+            function ( $a, $b ) use ( $score ) {
+                return $score( $b ) <=> $score( $a );
+            }
+        );
+
+        $ids = apply_filters( 'ffw_popular_faq_ids', wp_list_pluck( $posts, 'ID' ), $args );
+
+        return ffw_get_faq_list_by_faq_ids( ffw_map_faq_ids_to_current_language( $ids ) );
+    }
+}
+
+/**
+ * Newest FAQs first. order_by="modified" lists recently updated FAQs.
+ *
+ * @param array $args Display args.
+ * @since 3.0.0
+ * @return array
+ */
+if ( ! function_exists( 'ffw_get_recent_faqs' ) ) {
+    function ffw_get_recent_faqs( $args = array() ) {
+        $orderby = isset( $args['order_by'] ) && 'modified' === $args['order_by'] ? 'modified' : 'date';
+        $ids     = wp_list_pluck(
+            ffw_query_published_faqs(
+                $args,
+                array(
+                    // Newest ID breaks ties between FAQs published at the same moment.
+                    'orderby' => array(
+                        $orderby => 'DESC',
+                        'ID'     => 'DESC',
+                    ),
+                )
+            ),
+            'ID'
+        );
+
+        return ffw_get_faq_list_by_faq_ids( ffw_map_faq_ids_to_current_language( $ids ) );
+    }
+}
+
+/**
  * Resolve FAQs for shortcode, product tab, and builders.
  *
  * Sources: all, faq_cat, faq_ids, product, product_cats, current_product.
@@ -584,6 +768,14 @@ if ( ! function_exists( 'ffw_get_faqs_for_display' ) ) {
                 $faqs = ffw_get_faq_list_by_faq_ids(
                     ffw_map_faq_ids_to_current_language( ffw_parse_id_list( $args['faq_ids'] ) )
                 );
+                break;
+
+            case 'popular':
+                $faqs = ffw_get_popular_faqs( $args );
+                break;
+
+            case 'recent':
+                $faqs = ffw_get_recent_faqs( $args );
                 break;
 
             case 'group':
@@ -830,13 +1022,13 @@ if( ! function_exists('ffw_get_option_panel_body') ) {
                             <a href="#" class="ffw-single-delete-btn ffw-meta-btn" rel="<?php echo esc_attr(absint( $faq_item['id'] )); ?>">Remove</a>
                             <span class="ffw-sort-icon"></span>
                             <?php
-                            echo sprintf('<strong>%s</strong>', esc_html__($faq_item['question'], 'faq-for-woocommerce') );
+                            echo sprintf('<strong>%s</strong>', esc_html( $faq_item['question'] ) );
                             ?>
                         </h3>
                         <div class="ffw-metabox-content" style="display: none;">
                             <div class="data">
                                 <?php
-                                echo sprintf('<div>%s</div>', esc_html__($faq_item['answer'], 'faq-for-woocommerce') );
+                                echo sprintf('<div>%s</div>', esc_html( $faq_item['answer'] ) );
                                 ?>
                             </div>
                         </div>
@@ -883,6 +1075,10 @@ if ( ! function_exists('ffw_show_template_shortcode') ) {
             'order_by'     => 'id',
             'order'        => 'ASC',
 			'id'           => '',
+            'icon'          => '',
+            'icon_position' => '',
+            'icon_color'    => '',
+            'icon_size'     => '',
 		), $atts, 'ffw_template' );
 
 	    if( ffw_is_truthy( $atts['dynamic_post'] ) ) {
@@ -938,10 +1134,52 @@ if ( ! function_exists('ffw_show_template_shortcode') ) {
             $arguments['show_filter'] = ffw_is_truthy( $atts['filter'] ) || 'tabs' === strtolower( (string) $atts['filter'] );
         }
 
+        // icon="plus-minus" icon_position="left" icon_color="#4f46e5" icon_size="18".
+        $arguments['icon'] = ffw_normalize_icon_args( $atts );
+
 		return ffw_get_template( (int) $atts['id'], $arguments, true );
 	}
 }
 add_shortcode('ffw_template', 'ffw_show_template_shortcode');
+
+/**
+ * Toggle icon args from a shortcode, block, widget or module.
+ *
+ * Empty values use Settings → Style.
+ *
+ * @since 3.0.0
+ * @param array $raw Raw settings.
+ * @return array icon_set, icon_position, icon_color, icon_size.
+ */
+function ffw_normalize_icon_args( $raw = array() ) {
+    $raw  = is_array( $raw ) ? $raw : array();
+    $find = static function ( $keys ) use ( $raw ) {
+        foreach ( $keys as $key ) {
+            if ( isset( $raw[ $key ] ) && is_scalar( $raw[ $key ] ) && '' !== (string) $raw[ $key ] ) {
+                return (string) $raw[ $key ];
+            }
+        }
+        return '';
+    };
+
+    $set      = $find( array( 'icon_set', 'iconSet', 'toggle_icon_set', 'icon' ) );
+    $position = $find( array( 'icon_position', 'iconPosition', 'toggle_icon_position' ) );
+    $color    = $find( array( 'icon_color', 'iconColor' ) );
+    $size     = $find( array( 'icon_size', 'iconSize' ) );
+
+    // Elementor sliders send array( 'size' => 18, 'unit' => 'px' ).
+    if ( '' === $size && isset( $raw['icon_size'] ) && is_array( $raw['icon_size'] ) && isset( $raw['icon_size']['size'] ) ) {
+        $size = (string) $raw['icon_size']['size'];
+    }
+
+    return array(
+        // Unknown names fall back to the site setting.
+        'icon_set'      => array_key_exists( sanitize_key( $set ), FAQ_Woocommerce_Icons::choices() ) ? sanitize_key( $set ) : '',
+        'icon_position' => in_array( $position, array( 'left', 'right' ), true ) ? $position : '',
+        'icon_color'    => '' === $color ? '' : ffw_sanitize_css_color( $color ),
+        'icon_size'     => '' === $size ? 0 : min( 48, absint( $size ) ),
+    );
+}
 
 /**
  * Get template to show in front.
@@ -969,6 +1207,9 @@ if ( ! function_exists('ffw_get_template') ) {
         }
 
         $shortcode_wrap_class = $is_shortcode ? ['ffw-main-wrapper-shortcode'] : [];
+        if ( ! empty( $args['wrap_class'] ) && is_array( $args['wrap_class'] ) ) {
+            $shortcode_wrap_class = array_merge( $shortcode_wrap_class, $args['wrap_class'] );
+        }
 
         $display_args = array(
             'source'       => isset( $args['source'] ) ? $args['source'] : '',
@@ -986,7 +1227,7 @@ if ( ! function_exists('ffw_get_template') ) {
             || ! empty( $display_args['faq_cat'] )
             || ! empty( $display_args['faq_ids'] )
             || ! empty( $display_args['group_id'] )
-            || in_array( $display_args['source'], array( 'all', 'faq_cat', 'faq_ids', 'group' ), true );
+            || in_array( $display_args['source'], array( 'all', 'faq_cat', 'faq_ids', 'group', 'popular', 'recent' ), true );
 
         $is_product_archive = ffw_is_woocommerce_active()
             && (
@@ -1023,7 +1264,7 @@ if ( ! function_exists('ffw_get_template') ) {
 
         $display_schema_type = 'product_page';
         if ( $is_shortcode
-            || in_array( $display_args['source'], array( 'all', 'faq_cat', 'faq_ids', 'group' ), true )
+            || in_array( $display_args['source'], array( 'all', 'faq_cat', 'faq_ids', 'group', 'popular', 'recent' ), true )
             || ! empty( $display_args['faq_cat'] )
             || ! empty( $display_args['faq_ids'] )
             || ! empty( $display_args['group_id'] )
@@ -1043,17 +1284,22 @@ if ( ! function_exists('ffw_get_template') ) {
             'display_schema_type'  => $display_schema_type,
         );
 
-        foreach ( array( 'limit', 'per_page', 'show_search', 'show_filter', 'enable_schema', 'display_mode', 'expand_first' ) as $extra_key ) {
+        foreach ( array( 'limit', 'per_page', 'show_search', 'show_filter', 'enable_schema', 'display_mode', 'expand_first', 'icon' ) as $extra_key ) {
             if ( array_key_exists( $extra_key, $args ) ) {
                 $render_args[ $extra_key ] = $args[ $extra_key ];
             }
+        }
+
+        // Popular and recent lists are short unless a limit is given.
+        if ( in_array( $display_args['source'], array( 'popular', 'recent' ), true ) && empty( $render_args['limit'] ) ) {
+            $render_args['limit'] = (int) apply_filters( 'ffw_popular_recent_default_limit', 5, $display_args['source'] );
         }
 
         if ($is_shortcode) {
             return ffw_get_template_by_faqs($faqs, $render_args);
         }
 
-        echo ffw_get_template_by_faqs($faqs, $render_args);
+        echo ffw_get_template_by_faqs($faqs, $render_args); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- templates escape their own output.
 	}
 }
 
@@ -1143,6 +1389,25 @@ if ( ! function_exists('ffw_get_layout') ) {
 
 if( ! function_exists('ffw_get_template_by_faqs') ) {
     function ffw_get_template_by_faqs($faqs, $args = []) {
+        // Lists shown inside an answer: one level only, and without the
+        // FAQs whose answers contain them.
+        static $depth = 0;
+        if ( $depth >= 2 ) {
+            return;
+        }
+
+        $answer_stack = ffw_faq_answer_stack();
+        if ( $answer_stack && is_array( $faqs ) ) {
+            $faqs = array_values(
+                array_filter(
+                    $faqs,
+                    function ( $faq ) use ( $answer_stack ) {
+                        return ! is_array( $faq ) || ! isset( $faq['id'] ) || ! in_array( (int) $faq['id'], $answer_stack, true );
+                    }
+                )
+            );
+        }
+
         $limit = isset( $args['limit'] ) ? absint( $args['limit'] ) : 0;
         if ( $limit > 0 && is_array( $faqs ) && count( $faqs ) > $limit ) {
             $faqs = array_slice( $faqs, 0, $limit );
@@ -1194,6 +1459,15 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         if ( $is_rtl ) {
             $wrapper_classes[] = 'ffw-rtl';
         }
+
+        // Toggle icon set: this list's own choice, or Settings → Style.
+        $ffw_icon        = FAQ_Woocommerce_Icons::resolve( isset( $args['icon'] ) && is_array( $args['icon'] ) ? $args['icon'] : array() );
+        $wrapper_classes = array_merge( $wrapper_classes, FAQ_Woocommerce_Icons::wrapper_classes( $ffw_icon ) );
+        if ( FAQ_Woocommerce_Icons::is_custom( $ffw_icon ) ) {
+            FAQ_Woocommerce_Icons::register_style();
+            wp_enqueue_style( 'ffw-toggle-icons' );
+        }
+
         $wrapper_classes = implode(' ', $wrapper_classes);
 
         //faq schema.
@@ -1236,13 +1510,19 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         // Load CSS and JS for this layout only, and only on pages that show FAQs.
         ffw_enqueue_display_faq_assets( (int) $layout );
 
+        $depth++;
         ob_start();
 
         $expand_attr = $ffw_expand_first ? ' data-ffw-expand="first"' : '';
         if ( $is_rtl ) {
             $expand_attr .= ' dir="rtl"';
         }
-        $content .= '<div style="width: '.$width.'%;max-width: 100%;" class="'. esc_attr($wrapper_classes) .'" id="ffw-main-wrapper" data-item_id="'. esc_attr($id) .'" data-layout="'. esc_attr($layout) .'" data-archive_type="'. esc_attr($archive_type) .'"' . $expand_attr . ' >';
+        // Styled lists follow the block's content width, so skip the inline 100%.
+        $wrapper_css   = ( ffw_has_block_style( explode( ' ', $wrapper_classes ) ) && 100 === (int) $width ) ? '' : 'width: ' . $width . '%;max-width: 100%;';
+        $wrapper_css  .= FAQ_Woocommerce_Icons::wrapper_style( $ffw_icon );
+        $wrapper_style = '' === $wrapper_css ? '' : ' style="' . esc_attr( $wrapper_css ) . '"';
+        // data-ffw-icon lets AJAX re-renders (Pro search) keep this list's icon set.
+        $content .= '<div' . $wrapper_style . ' class="'. esc_attr($wrapper_classes) .'" id="ffw-main-wrapper" data-item_id="'. esc_attr($id) .'" data-layout="'. esc_attr($layout) .'" data-archive_type="'. esc_attr($archive_type) .'" data-ffw-icon="' . esc_attr( $ffw_icon['set'] ) . '"' . $expand_attr . ' >';
         $content .= '<input type="hidden" id="ffw-hidden-faqs" value="' . base64_encode(wp_json_encode($faqs)) . '" />';
 
         if ( array_key_exists( 'show_search', $args ) ) {
@@ -1283,6 +1563,9 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
 
         ffw_faq_paging( 'start', $per_page );
 
+        // Templates read the icon settings while they render.
+        FAQ_Woocommerce_Icons::push( $ffw_icon );
+
         //get faq templates
         if ( 'list' === $display_mode ) {
             include FFW_FILE_DIR . '/views/ffw-list-template.php';
@@ -1298,6 +1581,8 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
 
         do_action('ffw_includes_templates_file', $layout, $faqs, $id);
 
+        FAQ_Woocommerce_Icons::pop();
+
         ffw_faq_paging( 'end' );
 
         if ( $per_page ) {
@@ -1309,6 +1594,7 @@ if( ! function_exists('ffw_get_template_by_faqs') ) {
         do_action('ffw_after_faq_end');
 
         $content .= ob_get_clean();
+        $depth--;
 
         return $content . '</div>';
     }
@@ -1340,11 +1626,29 @@ if ( ! function_exists( 'ffw_render_display_faqs' ) ) {
             'enable_schema'  => true,
             'display_mode'   => 'accordion',
             'expand_first'   => false,
+            'class_name'     => '',
+            'icon'           => array(),
+            'style'          => array(),
         );
         $args = wp_parse_args( $args, $defaults );
 
+        $wrap_class = ffw_parse_wrap_classes( $args['class_name'] );
+
+        // Per-list colors and spacing, scoped to this list like Custom FAQs.
+        $style_html = '';
+        if ( is_array( $args['style'] ) && ffw_custom_faq_has_style_overrides( $args['style'] ) ) {
+            $instance     = function_exists( 'wp_unique_id' ) ? wp_unique_id( 'ffw-custom-style-' ) : uniqid( 'ffw-custom-style-' );
+            $wrap_class[] = $instance;
+            $css          = ffw_get_custom_faq_override_css( $args['style'], $instance );
+            if ( '' !== $css ) {
+                $style_html = '<style id="' . esc_attr( $instance ) . '-css">' . $css . '</style>';
+            }
+        }
+
         $layout = absint( $args['layout'] );
-        if ( $layout < 1 ) {
+        if ( ffw_has_block_style( $wrap_class ) ) {
+            $layout = 5;
+        } elseif ( $layout < 1 ) {
             $options = get_option( 'ffw_general_settings', array() );
             $layout  = isset( $options['ffw_layout'] ) ? (int) $options['ffw_layout'] : 1;
         }
@@ -1365,11 +1669,13 @@ if ( ! function_exists( 'ffw_render_display_faqs' ) ) {
             'enable_schema'  => ! empty( $args['enable_schema'] ),
             'display_mode'   => 'list' === $args['display_mode'] ? 'list' : 'accordion',
             'expand_first'   => ! empty( $args['expand_first'] ),
+            'wrap_class'     => $wrap_class,
+            'icon'           => is_array( $args['icon'] ) ? $args['icon'] : array(),
         );
 
         $html = ffw_get_template( (int) $template_args['product_id'], $template_args, true );
 
-        return is_string( $html ) ? $html : '';
+        return is_string( $html ) && '' !== $html ? $style_html . $html : '';
     }
 }
 
@@ -1473,6 +1779,8 @@ function ffw_get_builder_source_options( $format = 'list' ) {
         'all'     => esc_html__( 'All FAQs', 'faq-for-woocommerce' ),
         'faq_cat' => esc_html__( 'FAQ category', 'faq-for-woocommerce' ),
         'faq_ids' => esc_html__( 'Selected FAQs', 'faq-for-woocommerce' ),
+        'popular' => esc_html__( 'Most viewed FAQs', 'faq-for-woocommerce' ),
+        'recent'  => esc_html__( 'Newest FAQs', 'faq-for-woocommerce' ),
     );
 
     if ( ffw_is_woocommerce_active() ) {
@@ -1655,7 +1963,122 @@ function ffw_normalize_builder_display_args( $raw = array() ) {
         'enable_schema' => $enable_schema,
         'display_mode'  => isset( $raw['display_mode'] ) && 'list' === $raw['display_mode'] ? 'list' : 'accordion',
         'expand_first'  => ! empty( $raw['expand_first'] ) && ffw_builder_is_on( $raw['expand_first'] ),
+        'class_name'    => isset( $raw['className'] ) ? (string) $raw['className'] : ( isset( $raw['class_name'] ) ? (string) $raw['class_name'] : '' ),
+        'icon'          => ffw_normalize_icon_args( $raw ),
+        'style'         => ffw_normalize_style_args( $raw ),
     );
+}
+
+/**
+ * Elementor "Toggle icon" controls for the FAQ widgets.
+ *
+ * Icon set and position go in the Content tab. With $with_style, color,
+ * open color and size go in the Style tab (the Custom FAQs widget has its
+ * own Icon style section that also styles these icons).
+ *
+ * @since 3.0.0
+ * @param \Elementor\Widget_Base $widget     Widget.
+ * @param bool                   $with_style Add the style section.
+ * @return void
+ */
+function ffw_elementor_register_toggle_icon_controls( $widget, $with_style = true ) {
+    $widget->start_controls_section(
+        'section_toggle_icon',
+        array(
+            'label' => esc_html__( 'Toggle icon', 'faq-for-woocommerce' ),
+            'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+        )
+    );
+
+    $widget->add_control(
+        'toggle_icon_set',
+        array(
+            'label'   => esc_html__( 'Icon', 'faq-for-woocommerce' ),
+            'type'    => \Elementor\Controls_Manager::SELECT,
+            'default' => '',
+            'options' => array( '' => esc_html__( 'Site setting', 'faq-for-woocommerce' ) ) + FAQ_Woocommerce_Icons::choices(),
+        )
+    );
+
+    $widget->add_control(
+        'toggle_icon_position',
+        array(
+            'label'   => esc_html__( 'Position', 'faq-for-woocommerce' ),
+            'type'    => \Elementor\Controls_Manager::SELECT,
+            'default' => '',
+            'options' => array(
+                ''      => esc_html__( 'Site setting', 'faq-for-woocommerce' ),
+                'right' => esc_html__( 'Right of the question', 'faq-for-woocommerce' ),
+                'left'  => esc_html__( 'Left of the question', 'faq-for-woocommerce' ),
+            ),
+        )
+    );
+
+    $widget->end_controls_section();
+
+    if ( ! $with_style ) {
+        return;
+    }
+
+    $open = '{{WRAPPER}} :is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-toggle-icon';
+
+    $widget->start_controls_section(
+        'section_style_toggle_icon',
+        array(
+            'label' => esc_html__( 'Toggle icon', 'faq-for-woocommerce' ),
+            'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+        )
+    );
+
+    $widget->add_control(
+        'toggle_icon_color',
+        array(
+            'label'     => esc_html__( 'Color', 'faq-for-woocommerce' ),
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => array( '{{WRAPPER}} .ffw-toggle-icon' => '--ffw-icon-color: {{VALUE}};' ),
+        )
+    );
+
+    $widget->add_control(
+        'toggle_icon_open_color',
+        array(
+            'label'     => esc_html__( 'Open color', 'faq-for-woocommerce' ),
+            'type'      => \Elementor\Controls_Manager::COLOR,
+            'selectors' => array( $open => '--ffw-icon-color: {{VALUE}};' ),
+        )
+    );
+
+    $widget->add_responsive_control(
+        'toggle_icon_size',
+        array(
+            'label'      => esc_html__( 'Size', 'faq-for-woocommerce' ),
+            'type'       => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => array( 'px' ),
+            'range'      => array(
+                'px' => array(
+                    'min' => 10,
+                    'max' => 48,
+                ),
+            ),
+            'selectors'  => array( '{{WRAPPER}} .ffw-toggle-icon' => '--ffw-icon-size: {{SIZE}}{{UNIT}};' ),
+        )
+    );
+
+    $widget->end_controls_section();
+}
+
+/**
+ * Per-list style controls (colors, font sizes, border, spacing).
+ *
+ * @since 3.0.0
+ * @param array $raw Raw builder settings.
+ * @return array Same keys as Custom FAQs style args.
+ */
+function ffw_normalize_style_args( $raw = array() ) {
+    $all  = ffw_normalize_custom_faq_args( is_array( $raw ) ? $raw : array() );
+    $keys = array( 'question_color', 'question_bg_color', 'question_hover_color', 'question_font_size', 'answer_color', 'answer_bg_color', 'answer_font_size', 'border_color', 'border_radius', 'item_spacing' );
+
+    return array_intersect_key( $all, array_flip( $keys ) );
 }
 
 /**
@@ -1859,6 +2282,8 @@ function ffw_normalize_custom_faq_args( $raw = array() ) {
         'border_radius'        => isset( $raw['border_radius'] ) ? min( 48, absint( $raw['border_radius'] ) ) : 0,
         'item_spacing'         => isset( $raw['item_spacing'] ) ? min( 64, absint( $raw['item_spacing'] ) ) : 0,
         'custom_css'           => isset( $raw['custom_css'] ) ? ffw_sanitize_custom_block_css( $raw['custom_css'] ) : '',
+        'class_name'           => isset( $raw['className'] ) ? (string) $raw['className'] : ( isset( $raw['class_name'] ) ? (string) $raw['class_name'] : '' ),
+        'icon'                 => ffw_normalize_icon_args( $raw ),
     );
 }
 
@@ -2064,15 +2489,19 @@ function ffw_render_custom_faqs( $raw = array() ) {
         return '';
     }
 
+    $extra_class = ffw_parse_wrap_classes( $args['class_name'] );
+
     $layout = absint( $args['layout'] );
-    if ( $layout < 1 ) {
+    if ( ffw_has_block_style( $extra_class ) ) {
+        $layout = 5;
+    } elseif ( $layout < 1 ) {
         $options = get_option( 'ffw_general_settings', array() );
         $layout  = isset( $options['ffw_layout'] ) ? (int) $options['ffw_layout'] : 1;
     }
 
     ffw_enqueue_display_faq_assets( $layout );
 
-    $wrap_class = array( 'ffw-custom-faqs' );
+    $wrap_class = array_merge( array( 'ffw-custom-faqs' ), $extra_class );
     $style_html = '';
 
     if ( ffw_custom_faq_has_style_overrides( $args ) ) {
@@ -2094,6 +2523,7 @@ function ffw_render_custom_faqs( $raw = array() ) {
             'expand_first'         => $args['expand_first'],
             'shortcode_wrap_class' => $wrap_class,
             'display_schema_type'  => 'custom_page',
+            'icon'                 => $args['icon'],
         )
     );
 
@@ -2234,6 +2664,7 @@ function ffw_enqueue_display_faq_assets( $layout = 0 ) {
 
     wp_enqueue_style( 'ffw_public_styles' );
     wp_enqueue_style( 'ffw-display-faqs-style' );
+    wp_enqueue_style( 'ffw-block-styles' );
     wp_enqueue_script( 'ffw_public_js' );
     wp_enqueue_script( 'ffw-inline-search' );
 
@@ -2507,7 +2938,7 @@ if( ! function_exists('ffw_custom_count_column_for_product') ) {
             case 'faq_count' :
                 $terms =  (string) ffw_get_faqs_number_for_product($post_id);
                 if ( is_string( $terms ) )
-                    esc_html_e( $terms, 'faq-for-woocommerce' );
+                    echo esc_html( $terms );
                 else
                     esc_html_e( '0', 'faq-for-woocommerce' );
                 break;
@@ -2739,17 +3170,17 @@ add_filter('manage_ffw_customer_qna_posts_columns', 'ffw_add_column_to_customer_
 function ffw_manage_column_to_customer_questions_list($column, $post_id) {
     if ($column === 'customer_name') {
         $meta_value = get_post_meta($post_id, 'ffw_customer_name', true);
-        echo $meta_value ? esc_html($meta_value) : __('Empty', 'faq-for-woocommerce');
+        echo $meta_value ? esc_html($meta_value) : esc_html__('Empty', 'faq-for-woocommerce');
     }
 
     if ($column === 'customer_email') {
         $meta_value = get_post_meta($post_id, 'ffw_customer_email', true);
-        echo $meta_value ? esc_html($meta_value) : __('Empty', 'faq-for-woocommerce');
+        echo $meta_value ? esc_html($meta_value) : esc_html__('Empty', 'faq-for-woocommerce');
     }
 
     if ($column === 'location') {
         $meta_value = get_post_meta($post_id, 'ffw_customer_question_location', true);
-        echo $meta_value ? esc_html($meta_value) : __('Empty', 'faq-for-woocommerce');
+        echo $meta_value ? esc_html($meta_value) : esc_html__('Empty', 'faq-for-woocommerce');
     }
     
     if ($column === 'action') {
@@ -2830,8 +3261,8 @@ function ffw_manage_customer_question_submenu() {
 
     add_submenu_page(
         "edit.php?post_type={$parent_post_type}",
-        __('Customer Questions'),
-        __('Customer Questions'),
+        __('Customer Questions', 'faq-for-woocommerce'),
+        __('Customer Questions', 'faq-for-woocommerce'),
         'manage_options',
         "edit.php?post_type={$customer_question_post_type}"
     );
@@ -2870,9 +3301,12 @@ if( ! function_exists('ffw_show_content') ) {
             return;
         }
 
-        if ( $faq_id <= 0 ) {
+        // Never inside its own answer, for example through a shortcode in it.
+        if ( $faq_id <= 0 || in_array( $faq_id, ffw_faq_answer_stack(), true ) ) {
             return;
         }
+
+        ffw_faq_answer_stack( 'push', $faq_id );
 
         global $post;
         $post = get_post($faq_id);
@@ -2888,6 +3322,8 @@ if( ! function_exists('ffw_show_content') ) {
         wp_reset_postdata();
 
         do_action( 'ffw_after_faq_answer', $faq_id, $id );
+
+        ffw_faq_answer_stack( 'pop' );
     }
 }
 
@@ -2941,7 +3377,7 @@ function ffw_comments_form($post_id, $faq) {
             '<p class="ffw-comment-form-author">%s</p>',
             sprintf(
                 '<input id="author" name="author" placeholder="%s" type="text" value="%s" size="30" maxlength="245"%s />',
-                esc_html__( 'Type your name (required)' ),
+                esc_html__( 'Type your name (required)', 'faq-for-woocommerce' ),
                 esc_attr( $commenter['comment_author'] ),
                 $html_req
             )
@@ -2950,7 +3386,7 @@ function ffw_comments_form($post_id, $faq) {
             '<p class="ffw-comment-form-email">%s</p>',
             sprintf(
                 '<input id="email" name="email" placeholder="%s" %s value="%s" size="30" maxlength="100" aria-describedby="email-notes"%s />',
-                esc_html__( 'Type your email (required)' ),
+                esc_html__( 'Type your email (required)', 'faq-for-woocommerce' ),
                 ( 'type="email"' ),
                 esc_attr( $commenter['comment_author_email'] ),
                 $html_req
@@ -2960,7 +3396,7 @@ function ffw_comments_form($post_id, $faq) {
             '<p class="ffw-comment-form-url">%s</p>',
             sprintf(
                 '<input id="url" name="url" placeholder="%s" %s value="%s" size="30" maxlength="200" />',
-                esc_html__( 'Type your website (required)' ),
+                esc_html__( 'Type your website (required)', 'faq-for-woocommerce' ),
                 ( 'type="url"' ),
                 esc_attr( $commenter['comment_author_url'] )
             )
@@ -2977,7 +3413,7 @@ function ffw_comments_form($post_id, $faq) {
         'comment_notes_after' => '',
         'class_container' => 'ffw-comment-respond',
         // Redefine your own textarea (the comment body).
-        'comment_field' => '<input type="hidden" name="ffw_product_id_for_comment" value="' . $post_id . '"><p class="ffw-comment-form-comment"><label for="comment">' . _x( 'Comment', 'faq-for-woocommerce' ) . '</label><br /><textarea id="comment" name="comment" aria-required="true"></textarea></p>',
+        'comment_field' => '<input type="hidden" name="ffw_product_id_for_comment" value="' . absint( $post_id ) . '"><p class="ffw-comment-form-comment"><label for="comment">' . esc_html__( 'Comment', 'faq-for-woocommerce' ) . '</label><br /><textarea id="comment" name="comment" aria-required="true"></textarea></p>',
     );
 
     //comment form
@@ -3260,7 +3696,7 @@ function ffw_include_template( $template_name, $args = array(), $template_path =
 
 	if ( ! file_exists( $template_path . $template_name ) ) {
 		/* translators: %s template */
-		_doing_it_wrong( __FUNCTION__, sprintf( __( '%s does not exist.', 'faq-for-woocommerce' ), '<code>' . $template_name . '</code>' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( '%s does not exist.', 'faq-for-woocommerce' ), '<code>' . esc_html( $template_name ) . '</code>' ), '1.0.0' );
 		return;
 	}
 
@@ -3329,7 +3765,7 @@ function ffw_display_list_column_data($column, $post_id) {
                     $url = get_permalink($pid);
                     $links[] = "<a href='" . esc_url($url) . "'>" . esc_html( $title ) . " (#$pid)</a>";
                 }
-                echo implode(', ', $links);
+                echo wp_kses_post( implode(', ', $links) );
             } else {
                 echo '-';
             }
@@ -3352,7 +3788,7 @@ function ffw_display_list_column_data($column, $post_id) {
                 $categories = array_map(function ($cat_id) {
                     return get_term($cat_id)->name;
                 }, $category_ids);
-                echo implode(', ', $categories);
+                echo esc_html( implode(', ', $categories) );
             } else {
                 echo '-';
             }
@@ -3375,7 +3811,7 @@ function ffw_display_list_column_data($column, $post_id) {
                 $tags = array_map(function ($tag_id) {
                     return get_term($tag_id)->name;
                 }, $tag_ids);
-                echo implode(', ', $tags);
+                echo esc_html( implode(', ', $tags) );
             } else {
                 echo '-';
             }
@@ -3397,7 +3833,7 @@ function ffw_display_list_column_data($column, $post_id) {
                 }
             }
 
-            echo $display_pages ? implode(', ', $display_pages) : '-';
+            echo esc_html( $display_pages ? implode(', ', $display_pages) : '-' );
             break;
 
         case 'faqs_type':

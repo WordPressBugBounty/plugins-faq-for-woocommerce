@@ -1,0 +1,116 @@
+/**
+ * Happy FAQs → Analytics.
+ *
+ * @since 3.0.0
+ */
+.ffw-an-stats {
+	margin-bottom: 18px;
+}
+
+.ffw-an-stats .ffw-ui-stat-note a {
+	color: var(--ffw-ink);
+	font-weight: 600;
+}
+
+.ffw-app a.ffw-an-faq {
+	color: var(--ffw-ink);
+	font-weight: 550;
+	text-decoration: none;
+}
+
+.ffw-app a.ffw-an-faq:hover {
+	text-decoration: underline;
+}
+
+.ffw-an-barcol {
+	width: 28%;
+}
+
+.ffw-an-bar {
+	display: block;
+	height: 8px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: var(--ffw-tint);
+}
+
+.ffw-an-bar i {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--ffw-brand);
+}
+
+/* Locked preview. */
+.ffw-an-locked {
+	position: relative;
+	margin-top: 18px;
+}
+
+.ffw-an-sample {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	filter: blur(3px) saturate(0.8);
+	opacity: 0.55;
+	pointer-events: none;
+	user-select: none;
+}
+
+.ffw-an-chart {
+	padding: 18px;
+}
+
+.ffw-an-chart svg {
+	display: block;
+	width: 100%;
+	height: 180px;
+}
+
+.ffw-an-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 18px;
+}
+
+.ffw-an-list span {
+	display: flex;
+	justify-content: space-between;
+	font-size: 13px;
+}
+
+.ffw-an-overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.ffw-an-overlay .ffw-ui-upsell {
+	max-width: 520px;
+	box-shadow: var(--ffw-shadow-lg);
+}
+
+.ffw-an-benefits {
+	display: grid;
+	gap: 7px;
+	margin: 0 0 16px;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-an-benefits li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	color: #e4e4e7;
+	font-size: 13px;
+}
+
+.ffw-an-benefits .ffw-ui-icon {
+	color: var(--ffw-brand);
+}

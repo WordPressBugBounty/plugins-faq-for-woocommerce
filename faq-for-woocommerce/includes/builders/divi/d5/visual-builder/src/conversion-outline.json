@@ -1,0 +1,71 @@
+{
+  "advanced": {
+    "admin_label": "module.meta.adminLabel",
+    "animation": "module.decoration.animation",
+    "background": "module.decoration.background",
+    "disabled_on": "module.decoration.disabledOn",
+    "module": "module.advanced.htmlAttributes",
+    "overflow": "module.decoration.overflow",
+    "position_fields": "module.decoration.position",
+    "scroll": "module.decoration.scroll",
+    "sticky": "module.decoration.sticky",
+    "transform": "module.decoration.transform",
+    "transition": "module.decoration.transition",
+    "z_index": "module.decoration.zIndex",
+    "margin_padding": "module.decoration.spacing",
+    "max_width": "module.decoration.sizing",
+    "height": "module.decoration.sizing",
+    "link_options": "module.advanced.link",
+    "fonts": {
+      "header": "faqQuestion.decoration.font",
+      "body": "faqAnswer.decoration.font"
+    },
+    "text_shadow": {
+      "default": "module.advanced.text.textShadow"
+    },
+    "box_shadow": {
+      "default": "module.decoration.boxShadow"
+    },
+    "borders": {
+      "default": "module.decoration.border"
+    },
+    "filters": {
+      "default": "module.decoration.filters"
+    }
+  },
+  "css": {
+    "before": "css.*.before",
+    "after": "css.*.after",
+    "main_element": "css.*.mainElement"
+  },
+  "module": {
+    "faq_source": "faqSource.innerContent.*",
+    "faq_cat": "faqCat.innerContent.*",
+    "faq_ids": "faqIds.innerContent.*",
+    "group_id": "faqGroup.innerContent.*",
+    "product_id": "productId.innerContent.*",
+    "layout": "layout.innerContent.*",
+    "display_mode": "displayMode.innerContent.*",
+    "faq_limit": "faqLimit.innerContent.*",
+    "order_by": "orderBy.innerContent.*",
+    "faq_order": "faqOrder.innerContent.*",
+    "show_search": "showSearch.innerContent.*",
+    "enable_schema": "enableSchema.innerContent.*",
+    "expand_first": "expandFirst.innerContent.*"
+  },
+  "nonResponsiveAttributes": [
+    "faq_source",
+    "faq_cat",
+    "faq_ids",
+    "group_id",
+    "product_id",
+    "layout",
+    "display_mode",
+    "faq_limit",
+    "order_by",
+    "faq_order",
+    "show_search",
+    "enable_schema",
+    "expand_first"
+  ]
+}

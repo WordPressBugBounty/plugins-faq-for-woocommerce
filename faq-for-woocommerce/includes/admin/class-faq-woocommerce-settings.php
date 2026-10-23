@@ -182,6 +182,24 @@ class FAQ_Woocommerce_Settings {
                             'callback' => 'ffw_enable_customer_questions',
                         ],
                         [
+                            'id' => 'ffw_display_customer_questions',
+                            'label' => esc_html__( 'Display Customer Questions', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_display_customer_questions',
+                        ],
+                        [
+                            'id' => 'ffw_contact_form_suggestions',
+                            'label' => esc_html__( 'Contact Form Suggestions', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_contact_form_suggestions',
+                        ],
+                        [
+                            'id' => 'ffw_lms_faqs_display',
+                            'label' => esc_html__( 'Course and Lesson FAQs', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_lms_faqs_display',
+                        ],
+                        [
                             'id' => 'ffw_post_index',
                             'label' => esc_html__( 'FAQ Post Behaviour', 'faq-for-woocommerce' ),
                             'region' => 'free',
@@ -290,6 +308,19 @@ class FAQ_Woocommerce_Settings {
                             'label' => esc_html__( 'Width (%)', 'faq-for-woocommerce' ),
                             'region' => 'free',
                             'callback' => 'ffw_width_field',
+                        ],
+                        [
+                            'id' => 'ffw_icon_set',
+                            'label' => esc_html__( 'Toggle Icon', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_icon_set_field',
+                            'class' => 'ffw-row-full',
+                        ],
+                        [
+                            'id' => 'ffw_icon_style',
+                            'label' => esc_html__( 'Icon Position, Color and Size', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_icon_style_field',
                         ],
                         [
                             'id' => 'ffw_question_text_color',
@@ -586,14 +617,21 @@ class FAQ_Woocommerce_Settings {
                     'callback' => '',
                     'fields' => [
                         [
+                            'id' => 'ffw_ai_provider',
+                            'label' => esc_html__( 'AI Provider', 'faq-for-woocommerce' ),
+                            'region' => 'free',
+                            'callback' => 'ffw_ai_provider_field',
+                            'class' => 'ffw-row-full',
+                        ],
+                        [
                             'id' => 'ffw_ai_faqs_models',
-                            'label' => esc_html__( 'AI Model', 'faq-for-woocommerce' ),
+                            'label' => esc_html__( 'OpenAI Model', 'faq-for-woocommerce' ),
                             'region' => 'free',
                             'callback' => 'ffw_ai_faqs_models'
                         ],
                         [
                             'id' => 'ffw_ai_faqs_api_key',
-                            'label' => esc_html__( 'API Key', 'faq-for-woocommerce' ),
+                            'label' => esc_html__( 'OpenAI API Key', 'faq-for-woocommerce' ),
                             'region' => 'free',
                             'callback' => 'ffw_ai_faqs_api_key'
                         ],
@@ -622,7 +660,7 @@ class FAQ_Woocommerce_Settings {
             foreach( $option_arr as $opt_group => $sections ) {
 
                 // register option settings
-                register_setting( $opt_group, 'ffw_general_settings' );
+                register_setting( $opt_group, 'ffw_general_settings', array( 'sanitize_callback' => array( $this, 'sanitize_general_settings' ) ) );
 
                 foreach( $sections as $sec_key => $section ) {
 
@@ -631,7 +669,7 @@ class FAQ_Woocommerce_Settings {
                     // add settings section
                     add_settings_section(
                         $sec_key,
-                        esc_html__( '', 'faq-for-woocommerce' ),
+                        '',
                         $section_callback,
                         $opt_group
                     );
@@ -646,7 +684,9 @@ class FAQ_Woocommerce_Settings {
                                 $field['label'],
                                 array( $object, $field['callback'] ),
                                 $opt_group,
-                                $sec_key
+                                $sec_key,
+                                // Optional row class, e.g. a full-width row.
+                                isset( $field['class'] ) ? array( 'class' => $field['class'] ) : array()
                             );
                         }
                     }
@@ -655,6 +695,49 @@ class FAQ_Woocommerce_Settings {
 
             }
         }
+    }
+
+    /**
+     * Sanitize the general settings option before it is saved.
+     *
+     * Rich text fields keep post HTML, custom CSS keeps its line breaks,
+     * everything else is treated as plain text.
+     *
+     * @since 3.0.0
+     * @param mixed $input Raw option value.
+     * @return array
+     */
+    public function sanitize_general_settings( $input ) {
+        if ( ! is_array( $input ) ) {
+            return array();
+        }
+
+        foreach ( $input as $key => $value ) {
+            if ( in_array( $key, array( 'ffw_before_faq', 'ffw_after_faq' ), true ) ) {
+                $input[ $key ] = wp_kses_post( (string) $value );
+            } elseif ( 'ffw_custom_css' === $key ) {
+                $input[ $key ] = wp_strip_all_tags( (string) $value );
+            } else {
+                $input[ $key ] = $this->sanitize_setting_value( $value );
+            }
+        }
+
+        return $input;
+    }
+
+    /**
+     * Sanitize a plain setting value, keeping arrays and non-string scalars.
+     *
+     * @since 3.0.0
+     * @param mixed $value Raw value.
+     * @return mixed
+     */
+    private function sanitize_setting_value( $value ) {
+        if ( is_array( $value ) ) {
+            return array_map( array( $this, 'sanitize_setting_value' ), $value );
+        }
+
+        return is_string( $value ) ? sanitize_text_field( $value ) : $value;
     }
 
     /**
@@ -735,7 +818,7 @@ class FAQ_Woocommerce_Settings {
                 'id'               => 'ffw_faq_page',
                 'show_option_none' => esc_html__( '— Select a page —', 'faq-for-woocommerce' ),
                 'option_none_value'=> '0',
-                'selected'         => $page_id,
+                'selected'         => absint( $page_id ),
             )
         );
 
@@ -1282,6 +1365,72 @@ class FAQ_Woocommerce_Settings {
         echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Enable Customer Questions to make customer capable to ask a question.', 'faq-for-woocommerce'));
     }
 
+    /**
+     * Course and lesson FAQs for LMS plugins (Pro).
+     *
+     * @since 3.0.0
+     */
+    function ffw_lms_faqs_display() {
+        ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-free-setting-switcher ffw-lms-faqs-display" checked="checked">
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('FAQs on Tutor LMS, LearnDash and LearnPress courses and lessons.', 'faq-for-woocommerce'));
+    }
+
+    /**
+     * Display answered customer questions to visitors (Pro).
+     *
+     * @since 3.0.0
+     */
+    function ffw_display_customer_questions() {
+        ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-free-setting-switcher ffw-display-customer-questions" checked="checked">
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Show answered customer questions to visitors, on the product or page where they were asked.', 'faq-for-woocommerce'));
+    }
+
+    /**
+     * Contact form suggestions (Pro): locked row in the free plugin.
+     *
+     * @since 2.1.0
+     */
+    function ffw_contact_form_suggestions() {
+        ?>
+        <div class="ffw-get-pro-wrapper">
+            <div class="ffw-get-pro-badge">
+                <img src="<?php echo esc_url(FFW_PLUGIN_URL . '/assets/admin/images/crown.png'); ?>" alt="PRO Badge">
+                <span><?php esc_html_e('PRO', 'faq-for-woocommerce'); ?></span>
+            </div>
+
+            <div class="ffw-switch">
+                <input type="checkbox" class="ffw-free-setting-switcher ffw-contact-form-suggestions" checked="checked">
+                <span class="ffw-switch-slider ffw-switch-round"></span>
+            </div>
+        </div>
+        <?php
+        echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('While visitors type in WPForms, Contact Form 7 or Fluent Forms, show matching FAQs under the message, and count the tickets they avoid.', 'faq-for-woocommerce'));
+    }
+
 	/**
 	 * Role options.
 	 */
@@ -1491,6 +1640,80 @@ class FAQ_Woocommerce_Settings {
     }
 
     /**
+     * Toggle icon set picker: every set, shown closed and open.
+     *
+     * @since 3.0.0
+     */
+    function ffw_icon_set_field() {
+        $current = FAQ_Woocommerce_Icons::sanitize_set( isset( $this->options['ffw_icon_set'] ) ? $this->options['ffw_icon_set'] : 'default' );
+        ?>
+        <div class="ffw-icon-picker" role="radiogroup" aria-label="<?php esc_attr_e( 'Toggle icon', 'faq-for-woocommerce' ); ?>">
+            <?php foreach ( FAQ_Woocommerce_Icons::choices() as $ffw_id => $ffw_label ) : ?>
+                <label class="ffw-icon-choice<?php echo $ffw_id === $current ? ' is-selected' : ''; ?>">
+                    <input type="radio" name="ffw_general_settings[ffw_icon_set]" value="<?php echo esc_attr( $ffw_id ); ?>" <?php checked( $ffw_id, $current ); ?>>
+                    <span class="ffw-icon-choice-preview" aria-hidden="true">
+                        <?php if ( 'default' === $ffw_id ) : ?>
+                            <span class="ffw-icon-choice-text"><?php esc_html_e( 'Aa', 'faq-for-woocommerce' ); ?></span>
+                        <?php elseif ( 'none' === $ffw_id ) : ?>
+                            <span class="ffw-icon-choice-text">&mdash;</span>
+                        <?php else : ?>
+                            <?php echo FAQ_Woocommerce_Icons::svg( $ffw_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static icon markup. ?>
+                            <span class="ffw-accordion-active"><?php echo FAQ_Woocommerce_Icons::svg( $ffw_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static icon markup. ?></span>
+                        <?php endif; ?>
+                    </span>
+                    <span class="ffw-icon-choice-label"><?php echo esc_html( $ffw_label ); ?></span>
+                </label>
+            <?php endforeach; ?>
+        </div>
+        <?php
+        echo sprintf( '<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__( 'The open and close icon for every FAQ list. Each preview shows the closed and the open state. "Layout default" keeps the icon of your layout. Blocks and widgets can choose their own.', 'faq-for-woocommerce' ) );
+        ?>
+        <script>
+            jQuery( function ( $ ) {
+                $( '.ffw-icon-picker' ).on( 'change', 'input', function () {
+                    $( this ).closest( '.ffw-icon-picker' ).find( '.ffw-icon-choice' ).removeClass( 'is-selected' );
+                    $( this ).closest( '.ffw-icon-choice' ).addClass( 'is-selected' );
+                } );
+                if ( $.fn.wpColorPicker ) {
+                    $( '.ffw_icon_color' ).wpColorPicker();
+                }
+            } );
+        </script>
+        <?php
+    }
+
+    /**
+     * Toggle icon position, color and size.
+     *
+     * @since 3.0.0
+     */
+    function ffw_icon_style_field() {
+        $position = isset( $this->options['ffw_icon_position'] ) && 'left' === $this->options['ffw_icon_position'] ? 'left' : 'right';
+        $color    = isset( $this->options['ffw_icon_color'] ) ? $this->options['ffw_icon_color'] : '';
+        $size     = isset( $this->options['ffw_icon_size'] ) ? absint( $this->options['ffw_icon_size'] ) : 0;
+        ?>
+        <div class="ffw-icon-style-fields">
+            <label>
+                <span><?php esc_html_e( 'Position', 'faq-for-woocommerce' ); ?></span>
+                <select name="ffw_general_settings[ffw_icon_position]">
+                    <option value="right" <?php selected( $position, 'right' ); ?>><?php esc_html_e( 'Right of the question', 'faq-for-woocommerce' ); ?></option>
+                    <option value="left" <?php selected( $position, 'left' ); ?>><?php esc_html_e( 'Left of the question', 'faq-for-woocommerce' ); ?></option>
+                </select>
+            </label>
+            <label>
+                <span><?php esc_html_e( 'Size (px)', 'faq-for-woocommerce' ); ?></span>
+                <input type="number" min="10" max="48" step="1" placeholder="20" name="ffw_general_settings[ffw_icon_size]" value="<?php echo $size ? esc_attr( (string) $size ) : ''; ?>">
+            </label>
+            <label class="ffw-icon-style-color">
+                <span><?php esc_html_e( 'Color', 'faq-for-woocommerce' ); ?></span>
+                <input type="text" class="ffw_icon_color" name="ffw_general_settings[ffw_icon_color]" value="<?php echo esc_attr( $color ); ?>">
+            </label>
+        </div>
+        <?php
+        echo sprintf( '<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__( 'Used with an icon set. Leave color empty to match the question text.', 'faq-for-woocommerce' ) );
+    }
+
+    /**
      * Custom CSS Callback.
      */
     function ffw_custom_css_field() {
@@ -1541,7 +1764,7 @@ class FAQ_Woocommerce_Settings {
     function ffw_question_font_size_field() {
         $val = ( isset( $this->options['ffw_question_font_size'] ) ) ? $this->options['ffw_question_font_size'] : '';
         echo '<input type="range" class="ffw_question_font_size" name="ffw_general_settings[ffw_question_font_size]" min="0" max="50" step="1" value="' . esc_html($val) . '" />';
-        echo sprintf('<span class="ffw_question_font_size_label">%s</span>', esc_html__($val . 'px', 'faq-for-woocommerce') );
+        echo sprintf('<span class="ffw_question_font_size_label">%s</span>', esc_html( $val . 'px' ) );
         echo sprintf('<p class="ffw-setting-description"><span>&#9432;</span>%s</p>', esc_html__('Change the faq question font size, move the range control for increase/decrease font size.', 'faq-for-woocommerce'));
     }
 
@@ -1578,7 +1801,7 @@ class FAQ_Woocommerce_Settings {
     function ffw_answer_font_size_field() {
         $val = ( isset( $this->options['ffw_answer_font_size'] ) ) ? $this->options['ffw_answer_font_size'] : '';
         echo '<input type="range" class="ffw_answer_font_size" name="ffw_general_settings[ffw_answer_font_size]" min="0" max="50" step="1" value="' . esc_html($val) . '" />';
-        echo sprintf('<span class="ffw_answer_font_size_label">%s</span>', esc_html__($val . 'px', 'faq-for-woocommerce') );
+        echo sprintf('<span class="ffw_answer_font_size_label">%s</span>', esc_html( $val . 'px' ) );
     }
 
     /**
@@ -1946,13 +2169,19 @@ class FAQ_Woocommerce_Settings {
     function ffw_ai_faqs_models( ) {
         $options        = $this->options;
         $options        = ! empty( $options ) ? $options : [];
-        $ai_faqs_models = array_key_exists( 'ffw_ai_faqs_models', $options ) && ! empty($options['ffw_ai_faqs_model']) ? $options['ffw_ai_faqs_model'] : '';
-        
+        $ai_faqs_models = ! empty( $options['ffw_ai_faqs_model'] ) ? $options['ffw_ai_faqs_model'] : FAQ_Woocommerce_AI::DEFAULT_MODEL;
+
         $ai_models = [
-            'gpt-3.5-turbo' => 'GPT-3.5 Turbo',
-            'gpt-4-turbo' => 'GPT-4 Turbo',
-            'gpt-4' => 'GPT-4',
+            'gpt-4o-mini'   => 'GPT-4o mini (fast, low cost)',
+            'gpt-4.1-mini'  => 'GPT-4.1 mini',
+            'gpt-4o'        => 'GPT-4o',
+            'gpt-4.1'       => 'GPT-4.1',
         ];
+
+        // Keep a model saved by an older version selectable.
+        if ( ! isset( $ai_models[ $ai_faqs_models ] ) ) {
+            $ai_models[ $ai_faqs_models ] = $ai_faqs_models;
+        }
 
         if(!empty($ai_models)):
         ?>
@@ -1971,8 +2200,39 @@ class FAQ_Woocommerce_Settings {
      */
     function ffw_ai_faqs_api_key() {
         $val = ( isset( $this->options['ffw_ai_faqs_api_key'] ) ) ? $this->options['ffw_ai_faqs_api_key'] : '';
-        echo '<input type="text" placeholder="'. esc_attr('API Secret Key', 'faq-for-woocommerce') .'" class="ffw-api-key" name="ffw_general_settings[ffw_ai_faqs_api_key]" value="'. esc_html($val) .'" />';
-        echo sprintf(wp_kses_post('<p class="ffw-setting-description"><span>&#9432;</span>Get <a href="%s" target="_blank">API Key</a> to generate product faqs with Open AI.</p>'), esc_url('https://platform.openai.com/api-keys'));
+        echo '<input type="password" autocomplete="off" placeholder="' . esc_attr__( 'sk-…', 'faq-for-woocommerce' ) . '" class="ffw-api-key" name="ffw_general_settings[ffw_ai_faqs_api_key]" value="' . esc_attr( $val ) . '" />';
+        echo sprintf( '<p class="ffw-setting-description"><span>&#9432;</span>%1$s <a href="%2$s" target="_blank" rel="noopener">%3$s</a></p>', esc_html__( 'Only needed when WordPress AI is not connected.', 'faq-for-woocommerce' ), esc_url( 'https://platform.openai.com/api-keys' ), esc_html__( 'Get an OpenAI key', 'faq-for-woocommerce' ) );
+    }
+
+    /**
+     * Which AI to use, with the current connection status.
+     *
+     * @since 3.0.0
+     */
+    function ffw_ai_provider_field() {
+        $current = FAQ_Woocommerce_AI::preference();
+        $status  = FAQ_Woocommerce_AI::status();
+        $choices = array(
+            'auto'      => __( 'Automatic (recommended)', 'faq-for-woocommerce' ),
+            'wordpress' => __( 'WordPress AI only', 'faq-for-woocommerce' ),
+            'openai'    => __( 'My OpenAI key only', 'faq-for-woocommerce' ),
+        );
+        ?>
+        <select name="ffw_general_settings[ffw_ai_provider]">
+            <?php foreach ( $choices as $value => $label ) : ?>
+                <option value="<?php echo esc_attr( $value ); ?>" <?php selected( $current, $value ); ?>><?php echo esc_html( $label ); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <p class="ffw-setting-description">
+            <span>&#9432;</span>
+            <?php esc_html_e( 'Automatic uses WordPress AI when a provider is connected, otherwise your OpenAI key.', 'faq-for-woocommerce' ); ?>
+            <strong><?php echo esc_html( $status['label'] ); ?>.</strong>
+            <?php echo esc_html( $status['help'] ); ?>
+            <?php if ( FAQ_Woocommerce_AI::wordpress_ai_exists() ) : ?>
+                <a href="<?php echo esc_url( admin_url( 'options-connectors.php' ) ); ?>"><?php esc_html_e( 'Open Connectors', 'faq-for-woocommerce' ); ?></a>
+            <?php endif; ?>
+        </p>
+        <?php
     }
     
     /**
@@ -2020,7 +2280,7 @@ class FAQ_Woocommerce_Settings {
             <form action='options.php' method='post'>
                 <?php
 
-                echo ffw_dashboard_header();
+                ffw_dashboard_header();
 
                 ?>
                 <div class="ffw-dashboard-body-section-wrapper">

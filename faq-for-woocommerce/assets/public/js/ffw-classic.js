@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
     $.faq_classic = {
         init: function () {
             //default hide all answers
-            $('.ffw-accordion-item > button.ffw-button:not(.ffw-active)').parent('.ffw-accordion-item').find(".ffw-classic-answer").hide();
+            $('.ffw-accordion-item > button.ffw-button:not(.ffw-active)').parent('.ffw-accordion-item').children(".ffw-classic-answer").hide();
 
             //accordian slide js
             $(document).on('click', '.ffw-accordion-item > button.ffw-button', this.slideFAQs);
@@ -19,12 +19,15 @@ jQuery(document).ready(function ($) {
         slideFAQs: function (e) {
             e.preventDefault();
 
+            // Each list works on its own, so several lists can share a page.
+            var $list = $(this).closest('.ffw-accordion');
+
             if ($(this).hasClass("ffw-active")) {
-                $(this).removeClass("ffw-active").parent('.ffw-accordion-item').find(".ffw-classic-answer").slideUp();
+                $(this).removeClass("ffw-active").parent('.ffw-accordion-item').children(".ffw-classic-answer").slideUp();
             } else {
-                $(".ffw-accordion-item > button.ffw-button.ffw-active").parent('.ffw-accordion-item').find(".ffw-classic-answer").slideUp();
-                $(".ffw-accordion-item > button.ffw-button").removeClass("ffw-active");
-                $(this).addClass("ffw-active").parent('.ffw-accordion-item').find(".ffw-classic-answer").slideDown();
+                $list.find(".ffw-accordion-item > button.ffw-button.ffw-active").parent('.ffw-accordion-item').children(".ffw-classic-answer").slideUp();
+                $list.find(".ffw-accordion-item > button.ffw-button").removeClass("ffw-active");
+                $(this).addClass("ffw-active").parent('.ffw-accordion-item').children(".ffw-classic-answer").slideDown();
             }
 
             return false;

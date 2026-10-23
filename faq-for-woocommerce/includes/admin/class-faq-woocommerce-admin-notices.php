@@ -72,7 +72,7 @@ class FFW_Admin_Notices {
         }
         ?>
         <div class="ffw-coupon-notice notice notice-success is-dismissible" style="background: #0A0A0A;border-left-color: #fff;padding: 10px 50px;">
-            <p style="color: #fff;font-size: 18px;margin:0;"><?php _e('<strong style="color: #fff;text-decoration: line-through;">XPlainer Product FAQs</strong> is rebranded to <strong style="color: #fad54d;">`Happy WooCommerce FAQs`</strong>. <a href="https://happydevs.net/happy-woocommerce-faqs-pro" style="color: #bbf7d0;">Get <strong>20% discount</strong></a> on rebranding, Coupon: <strong style="color: #fad54d;">"IMHAPPY"</strong>.', 'faq-for-woocommerce'); ?></p>
+            <p style="color: #fff;font-size: 18px;margin:0;"><?php echo wp_kses_post( __('<strong style="color: #fff;text-decoration: line-through;">XPlainer Product FAQs</strong> is rebranded to <strong style="color: #fad54d;">`Happy WooCommerce FAQs`</strong>. <a href="https://happydevs.net/happy-woocommerce-faqs-pro" style="color: #bbf7d0;">Get <strong>20% discount</strong></a> on rebranding, Coupon: <strong style="color: #fad54d;">"IMHAPPY"</strong>.', 'faq-for-woocommerce') ); ?></p>
         </div>
         <?php
     }
@@ -127,7 +127,7 @@ class FFW_Admin_Notices {
                                 esc_html__( 'Cool! This is great that you have made %3$s+ FAQs with %1$s. Can you please take 60 seconds to leave your feedback. This encourages us to continue providing the best features for you. %2$s', 'faq-for-woocommerce' ),
                                 $pluginName, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                                 '<span style="font-size: 14px;">🙂</span>',
-                                $faq_posts_count
+                                absint( $faq_posts_count )
                             );
                             ?>
                         </p>

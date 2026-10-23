@@ -39,6 +39,7 @@ class FAQ_Woocommerce_Admin {
         include_once dirname( __FILE__ ) . '/class-faq-woocommerce-admin-assets.php';
         include_once dirname( __FILE__ ) . '/class-faq-woocommerce-onboarding.php';
         include_once dirname( __FILE__ ) . '/class-faq-woocommerce-setup-wizard.php';
+        include_once dirname( __FILE__ ) . '/class-faq-woocommerce-analytics-teaser.php';
         include_once dirname( __FILE__ ) . '/class-ffw-metaboxes.php';
 
         //Setting page
@@ -100,9 +101,10 @@ class FAQ_Woocommerce_Admin {
 
     public function admin_footer_version() {
 
-    	$footer_version = sprintf( '<span class="ffw-admin-footer-version">Version: %s</span>', esc_html__( FFW_VERSION , 'faq-for-woocommerce') );
+    	/* translators: %s: plugin version */
+    	$footer_version = sprintf( esc_html__( 'Version: %s', 'faq-for-woocommerce' ), esc_html( FFW_VERSION ) );
 
-    	echo esc_html($footer_version);
+    	echo '<span class="ffw-admin-footer-version">' . $footer_version . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 
     	return;
     }

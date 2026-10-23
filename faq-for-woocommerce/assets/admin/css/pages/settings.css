@@ -1,0 +1,404 @@
+/**
+ * Happy FAQs → Settings.
+ *
+ * @since 3.0.0
+ */
+.ffw-set-search {
+	position: relative;
+	display: block;
+	width: 280px;
+	max-width: 100%;
+}
+
+.ffw-set-search .ffw-ui-icon {
+	position: absolute;
+	top: 50%;
+	left: 11px;
+	color: var(--ffw-muted);
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
+.ffw-app .ffw-set-search .ffw-ui-input {
+	padding-left: 34px;
+	border-radius: 999px;
+}
+
+.ffw-set-layout {
+	display: grid;
+	grid-template-columns: 220px minmax(0, 1fr);
+	gap: 24px;
+	align-items: start;
+}
+
+.ffw-set-nav {
+	position: sticky;
+	top: 48px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.ffw-set-nav-pro {
+	padding: 14px;
+	border: 1px solid var(--ffw-line);
+	border-radius: var(--ffw-radius);
+	background: linear-gradient(160deg, #fff 40%, var(--ffw-brand-soft));
+}
+
+.ffw-set-nav-pro strong {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 13.5px;
+}
+
+.ffw-set-nav-pro p {
+	margin: 0 0 10px;
+	color: var(--ffw-muted);
+	font-size: 12.5px;
+	line-height: 1.45;
+}
+
+.ffw-set-main {
+	min-width: 0;
+}
+
+.ffw-set-main.has-preview {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 320px;
+	gap: 20px;
+	align-items: start;
+}
+
+.ffw-set-groups {
+	min-width: 0;
+}
+
+.ffw-set-groups > .ffw-ui-card + .ffw-ui-card,
+.ffw-set-groups .ffw-set-results + .ffw-set-results {
+	margin-top: 16px;
+}
+
+.ffw-set-results > .ffw-ui-card + .ffw-ui-card {
+	margin-top: 16px;
+}
+
+.ffw-set-results-title {
+	margin: 0 0 10px !important;
+	color: var(--ffw-muted) !important;
+	font-size: 12px !important;
+	font-weight: 650;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.ffw-ui-field.is-toggle .ffw-ui-field-control {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+/* Locked Pro fields. */
+.ffw-set-locked {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+}
+
+.ffw-set-locked .ffw-ui-select {
+	max-width: 260px;
+}
+
+/* Status line (AI). */
+.ffw-set-status {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin-top: 10px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	font-size: 12.5px;
+	line-height: 1.45;
+}
+
+.ffw-set-status.is-ok {
+	background: var(--ffw-good-soft);
+	color: #0b5c3b;
+}
+
+.ffw-set-status.is-off {
+	background: var(--ffw-warn-soft);
+	color: #6e4100;
+}
+
+.ffw-set-status .ffw-ui-icon {
+	margin-top: 1px;
+}
+
+.ffw-set-status a {
+	color: inherit;
+	font-weight: 600;
+}
+
+/* Range. */
+.ffw-set-range {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.ffw-set-range input[type="range"] {
+	width: 200px;
+	accent-color: var(--ffw-black);
+}
+
+.ffw-set-range input[type="range"].is-default {
+	opacity: 0.45;
+}
+
+/* Icon picker. */
+.ffw-set-icons {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+	gap: 8px;
+}
+
+.ffw-set-icon {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 12px 6px 10px;
+	border: 1px solid var(--ffw-line-strong);
+	border-radius: 12px;
+	background: #fff;
+	color: var(--ffw-ink);
+	font: inherit;
+	cursor: pointer;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ffw-set-icon:hover {
+	border-color: var(--ffw-faint);
+}
+
+.ffw-set-icon.is-selected {
+	border-color: var(--ffw-black);
+	background: var(--ffw-brand-soft);
+	box-shadow: 0 0 0 1px var(--ffw-black);
+}
+
+.ffw-set-icon:focus-visible {
+	outline: 2px solid var(--ffw-black);
+	outline-offset: 2px;
+}
+
+.ffw-set-icon-preview {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	height: 26px;
+	color: var(--ffw-ink);
+}
+
+.ffw-set-icon-preview .ffw-toggle-icon {
+	--ffw-icon-size: 20px;
+}
+
+.ffw-set-icon-closed,
+.ffw-set-icon-open {
+	display: inline-flex;
+}
+
+.ffw-set-icon-text {
+	color: var(--ffw-muted);
+	font-size: 15px;
+	font-weight: 650;
+}
+
+.ffw-set-icon-label {
+	font-size: 12px;
+	line-height: 1.3;
+	text-align: center;
+}
+
+.ffw-set-iconstyle {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 18px;
+}
+
+.ffw-set-sublabel {
+	display: block;
+	margin-bottom: 6px;
+	color: var(--ffw-muted);
+	font-size: 12px;
+	font-weight: 600;
+}
+
+/* Rich text. */
+.ffw-set-richtext .wp-editor-wrap {
+	max-width: 100%;
+}
+
+.ffw-set-richtext .wp-editor-container {
+	border-color: var(--ffw-line-strong);
+	border-radius: 0 0 var(--ffw-radius-sm) var(--ffw-radius-sm);
+}
+
+.ffw-set-richtext textarea.wp-editor-area {
+	width: 100%;
+	min-height: 140px;
+}
+
+.ffw-set-secret .ffw-ui-input {
+	font-family: Menlo, Consolas, monospace;
+	font-size: 13px;
+}
+
+/* Style preview. */
+.ffw-set-aside {
+	position: sticky;
+	top: 48px;
+}
+
+.ffw-set-preview {
+	overflow: hidden;
+	border: 1px solid var(--ffw-line);
+	border-radius: var(--ffw-radius);
+	background: #fff;
+}
+
+.ffw-set-preview-head {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 16px;
+	border-bottom: 1px solid var(--ffw-line);
+	font-size: 13px;
+	font-weight: 650;
+}
+
+.ffw-set-preview-canvas {
+	padding: 18px 16px;
+	background: repeating-linear-gradient(45deg, #fafafa, #fafafa 8px, #f6f6f7 8px, #f6f6f7 16px);
+}
+
+.ffw-set-pv {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-width: 100%;
+	margin: 0 auto;
+	transition: width 0.2s ease;
+}
+
+.ffw-set-pv-item {
+	overflow: hidden;
+	border-radius: 8px;
+	background: #fff;
+}
+
+.ffw-set-pv-q {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 11px 13px;
+	border: 1px solid #e3e3e8;
+	border-radius: 8px;
+	background: #fff;
+	color: #1d2327;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.ffw-set-pv-item.is-open .ffw-set-pv-q {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.ffw-set-pv-a {
+	padding: 11px 13px;
+	border: 1px solid #e3e3e8;
+	border-top: 0;
+	border-radius: 0 0 8px 8px;
+	background: #fff;
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.ffw-set-pv-icon {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+}
+
+.ffw-set-pv-icon .ffw-toggle-icon,
+.ffw-set-pv-icon svg {
+	--ffw-icon-size: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.ffw-set-pv-icon.is-text {
+	width: 18px;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 1;
+}
+
+.ffw-set-preview-note {
+	margin: 0 !important;
+	padding: 10px 16px;
+	border-top: 1px solid var(--ffw-line);
+	color: var(--ffw-muted) !important;
+	font-size: 12px !important;
+}
+
+@media (max-width: 1280px) {
+	.ffw-set-main.has-preview {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.ffw-set-aside {
+		position: static;
+		order: -1;
+	}
+}
+
+@media (max-width: 960px) {
+	.ffw-set-layout {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.ffw-set-nav {
+		position: static;
+	}
+
+	.ffw-set-nav .ffw-ui-sidenav {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		padding-bottom: 4px;
+	}
+
+	.ffw-set-nav .ffw-ui-sidenav button {
+		white-space: nowrap;
+	}
+
+	.ffw-set-nav-pro {
+		display: none;
+	}
+
+	.ffw-set-search {
+		width: 100%;
+	}
+}

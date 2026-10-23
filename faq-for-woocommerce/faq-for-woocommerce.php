@@ -3,15 +3,17 @@
  * Plugin Name: Happy FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
  * Description: Create FAQs for your site and WooCommerce products with comment, FAQ schema and AI support.
- * Version: 2.1.0
+ * Version: 3.0.0
  * Author: HappyDevs
  * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
  * Domain Path: /i18n/languages/
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  *
  * WP Requirement & Test
  * Requires at least: 4.4
- * Tested up to: 7.0
+ * Tested up to: 7.1
  * Requires PHP: 7.4
  *
  * WC Requirement & Test
@@ -29,7 +31,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '2.1.0' );
+	define( 'FFW_VERSION', '3.0.0' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {

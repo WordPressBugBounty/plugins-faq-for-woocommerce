@@ -1,0 +1,119 @@
+/**
+ * Happy FAQs: Help Center page (topic sidebar).
+ *
+ * @since 3.0.0
+ */
+
+.ffw-hc-sidebar {
+	position: sticky;
+	top: calc(var(--wp-admin--admin-bar--height, 0px) + 24px);
+}
+
+.ffw-hc-sidebar .ffw-hc-sidebar-label {
+	margin: 0 0 8px;
+	padding: 0 12px;
+	color: #5f5f6b;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.ffw-hc-sidebar .ffw-hc-topics {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-hc-sidebar .ffw-hc-topics li {
+	margin: 0;
+	list-style: none;
+}
+
+.ffw-hc-sidebar .ffw-hc-topics li a {
+	display: block;
+	padding: 9px 12px;
+	border-radius: 10px;
+	color: inherit;
+	font-size: 15px;
+	line-height: 1.4;
+	text-decoration: none;
+	transition: background-color 0.15s ease;
+}
+
+.ffw-hc-sidebar .ffw-hc-topics li a:hover,
+.ffw-hc-sidebar .ffw-hc-topics li a:focus {
+	background: #f1f1f6;
+}
+
+.ffw-hc-sidebar .ffw-hc-topics a:focus-visible {
+	outline: 2px solid #4f46e5;
+	outline-offset: 1px;
+}
+
+h3.ffw-hc-topic-title {
+	margin-top: 40px;
+	margin-bottom: 14px;
+	scroll-margin-top: calc(var(--wp-admin--admin-bar--height, 0px) + 24px);
+	font-size: 22px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+}
+
+.wp-block-column > h3.ffw-hc-topic-title:first-child {
+	margin-top: 0;
+}
+
+@media (max-width: 781px) {
+	.ffw-hc-sidebar {
+		position: static;
+		margin-bottom: 8px;
+	}
+
+	.ffw-hc-sidebar .ffw-hc-topics {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.ffw-hc-sidebar .ffw-hc-topics li a {
+		padding: 6px 12px;
+		border: 1px solid #e4e4ec;
+		border-radius: 999px;
+		font-size: 14px;
+	}
+
+	.ffw-hc-sidebar .ffw-hc-sidebar-label {
+		padding: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ffw-hc-sidebar .ffw-hc-topics li a {
+		transition: none;
+	}
+}
+
+.ffw-hc-search {
+	margin: 0 0 28px;
+}
+
+.ffw-hc-search .ffw-inline-search {
+	width: 100%;
+	min-height: 48px;
+	padding: 10px 16px;
+	border: 1px solid #d8d8e2;
+	border-radius: 12px;
+	background: #ffffff;
+	font-size: 16px;
+}
+
+.ffw-hc-search .ffw-inline-search:focus {
+	border-color: #4f46e5;
+	outline: 2px solid #4f46e5;
+	outline-offset: 0;
+}
+
+.ffw-hc-topic-hidden {
+	display: none !important;
+}

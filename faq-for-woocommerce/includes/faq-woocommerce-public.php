@@ -170,7 +170,7 @@ function ffw_new_product_tab( $tabs ) {
         if( empty($ffw_display_location) || $ffw_display_location === "product_tab" ) {
             // Adds the new tab
             $tabs['ffw_faqs_tab'] = array(
-                'title'    => esc_html__( $tab_label, 'faq-for-woocommerce' ),
+                'title'    => esc_html( $tab_label ),
                 'priority' => apply_filters('ffw_tab_priority', $priority),
                 'callback' => 'ffw_display_faqs_in_product_pages',
             );
@@ -260,7 +260,7 @@ if(!function_exists('ffw_display_faqs_in_shop_page')) {
 
         $faqs = ffw_get_faq_list_by_faq_ids($faq_ids);
 
-        echo ffw_get_template_by_faqs($faqs);
+        echo ffw_get_template_by_faqs($faqs); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- templates escape their own output.
     }
 }
 
@@ -284,7 +284,7 @@ if(!function_exists('ffw_display_faqs_in_cart_page')) {
 
         $faqs = ffw_get_faq_list_by_faq_ids($faq_ids);
 
-        echo ffw_get_template_by_faqs($faqs);
+        echo ffw_get_template_by_faqs($faqs); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- templates escape their own output.
     }
 }
 
@@ -309,7 +309,7 @@ if(!function_exists('ffw_display_faqs_in_checkout_page')) {
     
         $faqs = ffw_get_faq_list_by_faq_ids($faq_ids);
     
-        echo ffw_get_template_by_faqs($faqs);
+        echo ffw_get_template_by_faqs($faqs); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- templates escape their own output.
     }
 }
 
@@ -317,8 +317,9 @@ add_action('ffw_before_faq_start', 'ffw_before_faq_start');
 function ffw_before_faq_start() {
     $options = FAQ_Woocommerce_Public::instance()->options;
 
-    if( isset($options['ffw_before_faq']) ) {
-        echo esc_html($options['ffw_before_faq']);
+    if( isset($options['ffw_before_faq']) && '' !== trim( (string) $options['ffw_before_faq'] ) ) {
+        // Written in the rich text editor: allow post HTML.
+        echo '<div class="ffw-before-faq">' . wp_kses_post( wpautop( (string) $options['ffw_before_faq'] ) ) . '</div>';
     }
 
 }
@@ -343,8 +344,8 @@ add_action('ffw_after_faq_end', 'ffw_after_faq_end');
 function ffw_after_faq_end() {
     $options = FAQ_Woocommerce_Public::instance()->options;
 
-    if( isset($options['ffw_after_faq']) ) {
-        esc_html_e( $options['ffw_after_faq'], 'faq-for-woocommerce' );
+    if( isset($options['ffw_after_faq']) && '' !== trim( (string) $options['ffw_after_faq'] ) ) {
+        echo '<div class="ffw-after-faq">' . wp_kses_post( wpautop( (string) $options['ffw_after_faq'] ) ) . '</div>';
     }
 
 }

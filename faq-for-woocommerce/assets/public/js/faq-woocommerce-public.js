@@ -35,6 +35,7 @@ jQuery(document).ready(function ($) {
             data.append('action', 'ffw_faq_event');
             data.append('faq_id', faqId);
             data.append('event', event);
+            data.append('object_id', ffw_public_js.object_id || 0);
 
             if (event === 'view' && navigator.sendBeacon) {
                 navigator.sendBeacon(ffw_public_js.ajaxurl, data);

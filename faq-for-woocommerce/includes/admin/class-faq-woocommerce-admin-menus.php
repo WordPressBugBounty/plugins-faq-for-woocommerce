@@ -118,7 +118,7 @@ class FFW_Admin_Menu {
 
         $content .= ob_get_clean();
 
-        echo $content;
+        echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the included views escape their own output.
     }
 
     /**
@@ -141,7 +141,7 @@ class FFW_Admin_Menu {
 
         $content .= ob_get_clean();
 
-        echo $content;
+        echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the included views escape their own output.
     }
 
     /**
@@ -165,7 +165,7 @@ class FFW_Admin_Menu {
 
         $content .= ob_get_clean();
 
-        echo $content;
+        echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the included views escape their own output.
     }
 
     /**

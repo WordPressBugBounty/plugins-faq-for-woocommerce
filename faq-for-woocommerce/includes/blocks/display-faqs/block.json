@@ -75,6 +75,62 @@
     "groupId": {
       "type": "number",
       "default": 0
+    },
+    "questionColor": {
+      "type": "string",
+      "default": ""
+    },
+    "questionBgColor": {
+      "type": "string",
+      "default": ""
+    },
+    "questionHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "questionFontSize": {
+      "type": "number",
+      "default": 0
+    },
+    "answerColor": {
+      "type": "string",
+      "default": ""
+    },
+    "answerBgColor": {
+      "type": "string",
+      "default": ""
+    },
+    "answerFontSize": {
+      "type": "number",
+      "default": 0
+    },
+    "borderColor": {
+      "type": "string",
+      "default": ""
+    },
+    "borderRadius": {
+      "type": "number",
+      "default": 0
+    },
+    "itemSpacing": {
+      "type": "number",
+      "default": 0
+    },
+    "iconSet": {
+      "type": "string",
+      "default": ""
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": ""
+    },
+    "iconColor": {
+      "type": "string",
+      "default": ""
+    },
+    "iconSize": {
+      "type": "number",
+      "default": 0
     }
   }
 }

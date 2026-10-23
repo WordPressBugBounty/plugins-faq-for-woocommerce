@@ -1,0 +1,380 @@
+/**
+ * Happy FAQs → AI FAQs.
+ *
+ * @since 3.0.0
+ */
+.ffw-ai-status {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	max-width: 520px;
+	padding: 8px 8px 8px 14px;
+	border: 1px solid var(--ffw-line);
+	border-radius: 12px;
+	background: #fff;
+}
+
+.ffw-ai-status > span:nth-child(2) {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ffw-ai-status strong {
+	font-size: 13px;
+}
+
+.ffw-ai-status small {
+	overflow: hidden;
+	color: var(--ffw-muted);
+	font-size: 12px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ffw-ai-status-dot {
+	flex-shrink: 0;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: var(--ffw-warn);
+	box-shadow: 0 0 0 3px var(--ffw-warn-soft);
+}
+
+.ffw-ai-status.is-wordpress .ffw-ai-status-dot,
+.ffw-ai-status.is-openai .ffw-ai-status-dot {
+	background: var(--ffw-good);
+	box-shadow: 0 0 0 3px var(--ffw-good-soft);
+}
+
+.ffw-ai-grid {
+	display: grid;
+	grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+	gap: 18px;
+	align-items: start;
+}
+
+.ffw-ai-grid > .ffw-ui-card + .ffw-ui-card {
+	margin-top: 0;
+}
+
+.ffw-ai-form .ffw-ui-field {
+	padding: 12px 0;
+}
+
+.ffw-ai-row {
+	display: grid;
+	grid-template-columns: 110px minmax(0, 1fr);
+	gap: 12px;
+	border-top: 1px solid var(--ffw-line);
+}
+
+.ffw-ai-row .ffw-ui-field {
+	border-top: 0;
+}
+
+.ffw-ai-go {
+	width: 100%;
+	min-height: 42px;
+	margin-top: 8px;
+}
+
+/* Source picker. */
+.ffw-ai-combo {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.ffw-ai-results {
+	max-height: 230px;
+	margin: 0;
+	padding: 4px;
+	overflow-y: auto;
+	border: 1px solid var(--ffw-line);
+	border-radius: 10px;
+	list-style: none;
+}
+
+.ffw-ai-results li {
+	margin: 0;
+}
+
+.ffw-ai-results .ffw-ai-note {
+	padding: 8px 10px;
+	font-size: 13px;
+}
+
+.ffw-ai-results button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+	margin: 0;
+	padding: 8px 10px;
+	border: 0;
+	border-radius: 8px;
+	background: none;
+	color: var(--ffw-ink);
+	font: inherit;
+	font-size: 13.5px;
+	text-align: left;
+	cursor: pointer;
+}
+
+.ffw-ai-results button:hover {
+	background: var(--ffw-brand-soft);
+}
+
+.ffw-ai-results small {
+	color: var(--ffw-muted);
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+.ffw-ai-results .ffw-ai-browse {
+	justify-content: flex-start;
+	color: var(--ffw-muted);
+}
+
+.ffw-ai-chosen {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 12px;
+	border: 1px solid var(--ffw-black);
+	border-radius: 10px;
+	background: var(--ffw-brand-soft);
+}
+
+.ffw-ai-chosen > span {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ffw-ai-chosen small {
+	color: var(--ffw-muted);
+	font-size: 12px;
+}
+
+/* Results. */
+.ffw-ai-writing {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding: 60px 20px;
+	text-align: center;
+}
+
+.ffw-ai-items {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: ffwai;
+}
+
+.ffw-ai-items li {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	gap: 12px;
+	align-items: start;
+	margin: 0;
+	padding: 14px 0;
+	border-top: 1px solid var(--ffw-line);
+}
+
+.ffw-ai-items li:first-child {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.ffw-ai-items li > input[type="checkbox"] {
+	margin: 10px 0 0 !important;
+}
+
+.ffw-ai-items li.is-off .ffw-ai-item-body {
+	opacity: 0.5;
+}
+
+.ffw-ai-item-body {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.ffw-app .ffw-ai-q {
+	font-weight: 600;
+}
+
+.ffw-app .ffw-ai-a {
+	min-height: 72px;
+}
+
+.ffw-ai-improve {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px;
+	color: var(--ffw-muted);
+	font-size: 12.5px;
+}
+
+.ffw-ai-improve .ffw-ui-btn {
+	min-height: 26px;
+	padding: 0 8px;
+	font-size: 12px;
+}
+
+.ffw-ai-done {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	padding: 36px 20px;
+	text-align: center;
+}
+
+.ffw-ai-done-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 54px;
+	height: 54px;
+	border-radius: 50%;
+	background: var(--ffw-black);
+	color: var(--ffw-brand);
+}
+
+.ffw-app .ffw-ai-done h3 {
+	margin: 6px 0 0;
+	font-size: 18px;
+}
+
+/* Progress. */
+.ffw-ai-progress-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.ffw-ai-bar {
+	height: 8px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: var(--ffw-tint);
+}
+
+.ffw-ai-bar i {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--ffw-brand);
+	transition: width 0.3s ease;
+}
+
+.ffw-ai-log {
+	max-height: 320px;
+	margin: 14px 0 0;
+	padding: 0;
+	overflow-y: auto;
+	list-style: none;
+}
+
+.ffw-ai-log li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 7px 0;
+	border-top: 1px solid var(--ffw-line);
+	font-size: 13px;
+}
+
+.ffw-ai-log li span {
+	flex: 1;
+	min-width: 0;
+}
+
+.ffw-ai-log li small {
+	color: var(--ffw-muted);
+}
+
+.ffw-ai-log li.is-ok .ffw-ui-icon {
+	color: var(--ffw-good);
+}
+
+.ffw-ai-log li.is-error .ffw-ui-icon,
+.ffw-ai-log li.is-error small {
+	color: var(--ffw-bad);
+}
+
+/* Gaps. */
+.ffw-ai-gaps-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 320px;
+	gap: 18px;
+	align-items: start;
+}
+
+.ffw-ai-gaps-layout > .ffw-ui-card + aside {
+	margin: 0;
+}
+
+.ffw-ai-gaps-side > * + * {
+	margin-top: 16px;
+}
+
+.ffw-ai-gaps {
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-ai-gaps li {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	gap: 12px;
+	align-items: start;
+	margin: 0;
+	padding: 12px 22px;
+	border-top: 1px solid var(--ffw-line);
+}
+
+.ffw-ai-gaps li > input {
+	margin: 3px 0 0 !important;
+}
+
+.ffw-ai-gaps li.is-off .ffw-ai-gap-body {
+	opacity: 0.5;
+}
+
+.ffw-ai-gap-body strong {
+	display: block;
+	font-size: 14px;
+}
+
+.ffw-ai-gap-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px;
+	margin-top: 4px;
+	color: var(--ffw-muted);
+	font-size: 12.5px;
+}
+
+.ffw-ai-gap-meta .ffw-ui-badge {
+	margin-right: 4px;
+}
+
+@media (max-width: 1100px) {
+	.ffw-ai-grid,
+	.ffw-ai-gaps-layout {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}

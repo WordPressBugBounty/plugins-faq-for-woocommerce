@@ -86,9 +86,11 @@
 							setAttributes({ source: value });
 						}
 					}),
-					attributes.source === 'faq_cat'
+					['faq_cat', 'popular', 'recent'].indexOf(attributes.source) !== -1
 						? el(SelectControl, {
-							label: __('FAQ category', 'faq-for-woocommerce'),
+							label: attributes.source === 'faq_cat'
+								? __('FAQ category', 'faq-for-woocommerce')
+								: __('Limit to a FAQ category (optional)', 'faq-for-woocommerce'),
 							value: attributes.faqCat,
 							options: [{ value: '', label: __('Select a category', 'faq-for-woocommerce') }].concat(categories),
 							onChange: function (value) {
@@ -239,7 +241,9 @@
 							setAttributes({ enableSchema: value });
 						}
 					})
-				)
+				),
+				window.ffwBlockControls ? window.ffwBlockControls.iconPanel(attributes, setAttributes) : null,
+				window.ffwBlockControls ? window.ffwBlockControls.stylePanel(attributes, setAttributes) : null
 			),
 			el(
 				'div',

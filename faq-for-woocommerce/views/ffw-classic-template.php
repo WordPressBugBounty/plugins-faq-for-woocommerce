@@ -13,8 +13,8 @@
 			    ?>
                 <div class="ffw-accordion-item" <?php echo ffw_get_faq_item_html_attrs( (int) $faq['id'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                     <button type="button" class="ffw-button <?php echo $ffw_open_item ? 'ffw-active' : '';  ?>" <?php echo ffw_get_faq_toggle_attrs( $ffw_a11y_id, $ffw_open_item, true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-                        <?php echo sprintf('<span class="ffw-question">%s</span>', esc_html__($faq['question'], 'faq-for-woocommerce') ); ?>
-                        <span class="ffw-classic-icon" aria-hidden="true"></span>
+                        <?php echo sprintf('<span class="ffw-question">%s</span>', esc_html( $faq['question'] ) ); ?>
+                        <?php echo ffw_get_toggle_icon( '<span class="ffw-classic-icon" aria-hidden="true"></span>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static icon markup. ?>
                     </button>
                     <div class="ffw-classic-answer" <?php echo ffw_get_faq_panel_attrs( $ffw_a11y_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo $ffw_open_item ? 'style="display:block"' : 'style="display:none"';  ?>>
                         <?php

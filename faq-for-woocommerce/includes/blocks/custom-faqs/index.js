@@ -360,7 +360,8 @@
 							}
 						}, __('Reset styles', 'faq-for-woocommerce'))
 						: null
-				)
+				),
+				window.ffwBlockControls ? window.ffwBlockControls.iconPanel(attributes, setAttributes) : null
 			),
 			el(
 				'div',

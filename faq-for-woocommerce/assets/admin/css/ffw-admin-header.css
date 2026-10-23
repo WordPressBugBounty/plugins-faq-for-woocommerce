@@ -1,0 +1,324 @@
+/**
+ * Happy FAQs: slim brand header on every Happy FAQs screen.
+ *
+ * @since 3.0.0
+ */
+.ffw-hdr {
+	--ffw-hdr-bg: #111113;
+	--ffw-hdr-ink: #f4f4f5;
+	--ffw-hdr-muted: #a1a1aa;
+	--ffw-hdr-yellow: #ffc72c;
+	--ffw-hdr-yellow-hover: #ffd451;
+	position: relative;
+	z-index: 30;
+	margin: 0 0 18px -20px;
+	background: var(--ffw-hdr-bg);
+	color: var(--ffw-hdr-ink);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.rtl .ffw-hdr {
+	margin: 0 -20px 18px 0;
+}
+
+.ffw-hdr *,
+.ffw-hdr *::before,
+.ffw-hdr *::after {
+	box-sizing: border-box;
+}
+
+.ffw-hdr-inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 22px;
+	min-height: 56px;
+	padding: 8px 20px;
+}
+
+.ffw-hdr a {
+	color: inherit;
+	text-decoration: none;
+	box-shadow: none;
+}
+
+.ffw-hdr a:focus-visible,
+.ffw-hdr summary:focus-visible {
+	outline: 2px solid var(--ffw-hdr-yellow);
+	outline-offset: 2px;
+	border-radius: 8px;
+}
+
+/* Brand. */
+.ffw-hdr-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+.ffw-hdr-mark {
+	display: inline-flex;
+	line-height: 0;
+}
+
+.ffw-hdr-name {
+	color: #fff;
+	font-size: 15px;
+	font-weight: 650;
+	letter-spacing: -0.01em;
+}
+
+.ffw-hdr-pro {
+	padding: 1px 7px;
+	border-radius: 999px;
+	background: var(--ffw-hdr-yellow);
+	color: #111;
+	font-size: 10.5px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.ffw-hdr-version {
+	color: var(--ffw-hdr-muted);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Navigation. */
+.ffw-hdr-nav {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ffw-hdr-menu {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-hdr-item {
+	position: relative;
+	margin: 0;
+}
+
+.ffw-hdr-item > a,
+.ffw-hdr-more summary {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 7px 11px;
+	border-radius: 8px;
+	color: #d4d4d8;
+	font-size: 13.5px;
+	font-weight: 500;
+	line-height: 1.3;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ffw-hdr-item > a:hover,
+.ffw-hdr-more summary:hover,
+.ffw-hdr-more details[open] summary {
+	background: rgba(255, 255, 255, 0.08);
+	color: #fff;
+}
+
+.ffw-hdr-item.is-active > a,
+.ffw-hdr-more.is-active summary {
+	background: var(--ffw-hdr-yellow);
+	color: #111;
+	font-weight: 600;
+}
+
+.ffw-hdr-more summary {
+	list-style: none;
+}
+
+.ffw-hdr-more summary::-webkit-details-marker {
+	display: none;
+}
+
+.ffw-hdr-more summary svg {
+	transition: transform 0.15s ease;
+}
+
+.ffw-hdr-more details[open] summary svg {
+	transform: rotate(180deg);
+}
+
+.ffw-hdr-dropdown {
+	position: absolute;
+	top: calc(100% + 6px);
+	left: 0;
+	min-width: 210px;
+	margin: 0;
+	padding: 6px;
+	border: 1px solid #e4e4e7;
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 12px 32px rgba(17, 17, 19, 0.16);
+	list-style: none;
+}
+
+.rtl .ffw-hdr-dropdown {
+	right: 0;
+	left: auto;
+}
+
+.ffw-hdr-dropdown li {
+	margin: 0;
+}
+
+.ffw-hdr-dropdown a {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 10px;
+	border-radius: 8px;
+	color: #18181b !important;
+	font-size: 13.5px;
+	font-weight: 500;
+}
+
+.ffw-hdr-dropdown a:hover {
+	background: #f4f4f5;
+}
+
+.ffw-hdr-dropdown li.is-active a,
+.ffw-hdr-dropdown li.active a {
+	background: #fff6d6;
+	font-weight: 600;
+}
+
+.ffw-hdr-lock {
+	padding: 1px 6px;
+	border-radius: 999px;
+	background: #111;
+	color: var(--ffw-hdr-yellow);
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+/* Right side. */
+.ffw-hdr-actions {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-inline-start: auto;
+}
+
+.ffw-hdr-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 10px;
+	border-radius: 8px;
+	color: var(--ffw-hdr-muted) !important;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.ffw-hdr-link:hover {
+	background: rgba(255, 255, 255, 0.08);
+	color: #fff !important;
+}
+
+.ffw-hdr-upgrade {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-inline-start: 6px;
+	padding: 8px 14px;
+	border-radius: 9px;
+	background: var(--ffw-hdr-yellow);
+	color: #111 !important;
+	font-size: 13px;
+	font-weight: 650;
+	white-space: nowrap;
+	transition: background 0.15s ease;
+}
+
+.ffw-hdr-upgrade:hover {
+	background: var(--ffw-hdr-yellow-hover);
+}
+
+/* The previous header, still printed by some classic screens. */
+.ffw-screen .ffw-dashboard-header-wrapper {
+	display: none !important;
+}
+
+.ffw-screen .ffw-admin-wrapper:empty {
+	display: none;
+}
+
+@media (max-width: 1540px) {
+	.ffw-hdr-link span {
+		display: none;
+	}
+}
+
+@media (max-width: 782px) {
+	.ffw-hdr {
+		margin-left: -10px;
+	}
+
+	/* WordPress pads #wpbody below the mobile admin bar; the header sits above it. */
+	body.ffw-screen #wpcontent {
+		padding-top: 46px;
+	}
+
+	body.ffw-screen #wpbody {
+		padding-top: 0;
+	}
+
+	.rtl .ffw-hdr {
+		margin-right: -10px;
+		margin-left: 0;
+	}
+
+	.ffw-hdr-inner {
+		padding: 8px 12px;
+	}
+
+	.ffw-hdr-version {
+		display: none;
+	}
+
+	.ffw-hdr-nav {
+		order: 3;
+		flex-basis: 100%;
+	}
+
+	.ffw-hdr-menu {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		padding-bottom: 4px;
+		scrollbar-width: none;
+	}
+
+	.ffw-hdr-menu::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* The dropdown would be clipped by the scrolling row. */
+	.ffw-hdr-more {
+		position: static;
+	}
+
+	.ffw-hdr-dropdown {
+		top: auto;
+		left: 12px;
+		right: 12px;
+	}
+}

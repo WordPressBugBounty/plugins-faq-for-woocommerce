@@ -1,0 +1,132 @@
+/**
+ * Happy FAQs toggle icon sets.
+ *
+ * Loaded only for FAQ lists that use an icon set. Works with every layout:
+ * the toggle becomes a row with the question and the icon.
+ *
+ * @since 3.0.0
+ */
+
+/* Toggle row. Layout styles use #ffw-main-wrapper, hence the !important. */
+#ffw-main-wrapper.ffw-has-toggle-icons [aria-controls^="ffw-a-"],
+#ffw-main-wrapper.ffw-has-toggle-icons summary {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+#ffw-main-wrapper.ffw-has-toggle-icons [aria-controls^="ffw-a-"] > :not(.ffw-toggle-icon),
+#ffw-main-wrapper.ffw-has-toggle-icons summary > :not(.ffw-toggle-icon) {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+/* Right by default, whatever the template's markup order. */
+#ffw-main-wrapper.ffw-has-toggle-icons .ffw-toggle-icon {
+	order: 1;
+}
+
+/* Icon on the left. */
+#ffw-main-wrapper.ffw-icon-left [aria-controls^="ffw-a-"],
+#ffw-main-wrapper.ffw-icon-left summary {
+	justify-content: flex-start;
+}
+
+#ffw-main-wrapper.ffw-icon-left .ffw-toggle-icon {
+	order: -1;
+}
+
+/* Pop draws its own arrow with :before. */
+#ffw-main-wrapper.ffw-has-toggle-icons .ffw-collapse span.ffw-button:before {
+	content: none;
+	display: none;
+}
+
+/* The icon. */
+.ffw-toggle-icon {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: var(--ffw-icon-size, 20px);
+	height: var(--ffw-icon-size, 20px);
+	color: var(--ffw-icon-color, currentColor);
+	line-height: 0;
+	pointer-events: none;
+}
+
+.ffw-toggle-icon svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+	transition: transform 0.25s ease;
+}
+
+.ffw-toggle-icon .ffw-ti-v {
+	transform-box: view-box;
+	transform-origin: 12px 12px;
+	transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.ffw-toggle-icon .ffw-ti-open {
+	display: none;
+}
+
+.ffw-toggle-icon .ffw-ti-knob {
+	transition: transform 0.25s ease;
+}
+
+/*
+ * Open state. Layouts mark it differently: .ffw-active on the toggle
+ * (Classic, Whitish, Pop), .ffw-accordion-active on the item (Basic and the
+ * Pro layouts), details[open] (Trip), and aria-expanded on every toggle.
+ */
+:is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-ti-m-rotate-180 svg {
+	transform: rotate(180deg);
+}
+
+:is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-ti-m-rotate-90 svg {
+	transform: rotate(90deg);
+}
+
+:is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-ti-m-rotate-45 svg {
+	transform: rotate(45deg);
+}
+
+:is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-ti-m-plus .ffw-ti-v {
+	transform: scaleY(0);
+	opacity: 0;
+}
+
+:is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-ti-m-swap .ffw-ti-closed {
+	display: none;
+}
+
+:is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-ti-m-swap .ffw-ti-open {
+	display: inline;
+}
+
+:is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-ti-m-switch .ffw-ti-knob {
+	transform: translateX(9px);
+}
+
+/* Right-to-left: right-pointing icons point the other way. */
+.ffw-rtl .ffw-ti-chevron-right svg,
+.ffw-rtl .ffw-ti-arrow-right svg,
+.ffw-rtl .ffw-ti-caret-right svg {
+	transform: scaleX(-1);
+}
+
+.ffw-rtl :is(.ffw-button.ffw-active, .ffw-accordion-active, details[open] > summary, [aria-expanded="true"]) .ffw-ti-m-rotate-90 svg {
+	transform: scaleX(-1) rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ffw-toggle-icon svg,
+	.ffw-toggle-icon .ffw-ti-v,
+	.ffw-toggle-icon .ffw-ti-knob {
+		transition: none;
+	}
+}

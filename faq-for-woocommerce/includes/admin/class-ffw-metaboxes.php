@@ -26,6 +26,7 @@ if (!class_exists('FFW_Metaboxes', false)) :
             add_action( 'save_post', array( $this, 'save' ) );
             add_action( 'ffw_metabox_content_item', array( $this, 'global_faqs_box' ), 20 );
             add_action( 'ffw_metabox_content_item', array( $this, 'product_attribute_box' ), 20 );
+            add_action( 'ffw_metabox_content_item', array( $this, 'nested_faqs_box' ), 20 );
             add_action( 'ffw_metabox_content_item', array( $this, 'product_search_box' ) );
         }
 
@@ -397,6 +398,37 @@ if (!class_exists('FFW_Metaboxes', false)) :
                 </tr>
                 <?php
             endif;
+        }
+
+        /**
+         * Nested FAQs (Pro): locked row in the free plugin.
+         *
+         * @since 2.1.0
+         */
+        public function nested_faqs_box() {
+            if ( ffw_is_pro_activated() ) {
+                return;
+            }
+            ?>
+            <tr class="ffw-nested-faqs-row">
+                <th scope="row" class="titledesc">
+                    <label for="ffw_nested_faqs_locked">
+                        <span><?php esc_html_e( 'Nested FAQs', 'faq-for-woocommerce' ); ?></span>
+                        <div class="ffw-get-pro-wrapper">
+                            <div class="ffw-get-pro-badge">
+                                <span><?php esc_html_e( 'pro', 'faq-for-woocommerce' ); ?></span>
+                            </div>
+                        </div>
+                    </label>
+                </th>
+                <td class="">
+                    <select id="ffw_nested_faqs_locked" disabled>
+                        <option><?php esc_html_e( 'Search for a FAQ to nest…', 'faq-for-woocommerce' ); ?></option>
+                    </select>
+                    <p class="description"><?php esc_html_e( 'Show other FAQs inside this answer as a smaller accordion. Good for long help topics.', 'faq-for-woocommerce' ); ?></p>
+                </td>
+            </tr>
+            <?php
         }
 
         /**

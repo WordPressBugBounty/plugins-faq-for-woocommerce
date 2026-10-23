@@ -150,7 +150,7 @@ class FFW_Display_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
                 'options'     => $category_options,
                 'label_block' => true,
                 'condition'   => array(
-                    'source' => 'faq_cat',
+                    'source' => array( 'faq_cat', 'popular', 'recent' ),
                 ),
                 'description' => empty( $category_options )
                     ? esc_html__( 'No FAQ categories yet. Create one under Happy FAQs → Categories.', 'faq-for-woocommerce' )
@@ -475,6 +475,8 @@ class FFW_Display_Faqs_Elementor_Widget extends \Elementor\Widget_Base {
         );
 
         $this->end_controls_section();
+
+        ffw_elementor_register_toggle_icon_controls( $this );
     }
 
     /**

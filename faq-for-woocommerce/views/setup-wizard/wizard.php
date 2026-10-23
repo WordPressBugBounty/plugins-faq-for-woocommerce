@@ -144,42 +144,7 @@ $default_goal = 'product' === $state['goal'] && $has_woo ? 'product' : 'general'
             </template>
             <?php // Common questions prefilled per goal; users can edit them or just continue. ?>
             <script type="application/json" id="ffw-sw-samples"><?php
-                echo wp_json_encode(
-                    array(
-                        'general' => array(
-                            array(
-                                __( 'How can I contact you?', 'faq-for-woocommerce' ),
-                                __( 'You can reach us through the contact form on our website or by email. We reply within one business day.', 'faq-for-woocommerce' ),
-                            ),
-                            array(
-                                __( 'How long does delivery take?', 'faq-for-woocommerce' ),
-                                __( 'Orders are usually delivered within 3–7 business days, depending on your location. You will get a tracking link by email once your order ships.', 'faq-for-woocommerce' ),
-                            ),
-                            array(
-                                __( 'What is your refund policy?', 'faq-for-woocommerce' ),
-                                __( 'If you are not happy with your purchase, you can request a refund within 30 days of delivery. Items must be unused and in their original packaging.', 'faq-for-woocommerce' ),
-                            ),
-                        ),
-                        'product' => array(
-                            array(
-                                __( 'When will this product be delivered?', 'faq-for-woocommerce' ),
-                                __( 'This product usually ships within 1–2 business days and arrives within 3–7 business days. You will receive a tracking link by email.', 'faq-for-woocommerce' ),
-                            ),
-                            array(
-                                __( 'Can I return or exchange this product?', 'faq-for-woocommerce' ),
-                                __( 'Yes. You can return or exchange it within 30 days of delivery, as long as it is unused and in its original packaging.', 'faq-for-woocommerce' ),
-                            ),
-                            array(
-                                __( 'Is this product covered by a warranty?', 'faq-for-woocommerce' ),
-                                __( 'Yes. It is covered against manufacturing defects. Contact us with your order number and we will repair or replace it.', 'faq-for-woocommerce' ),
-                            ),
-                        ),
-                        'blank'   => array(
-                            __( 'Type your question', 'faq-for-woocommerce' ),
-                            __( 'Type the answer', 'faq-for-woocommerce' ),
-                        ),
-                    )
-                );
+                echo wp_json_encode( FAQ_Woocommerce_Setup_Wizard::samples() );
             ?></script>
         </section>
 
@@ -301,6 +266,7 @@ $default_goal = 'product' === $state['goal'] && $has_woo ? 'product' : 'general'
 
             <div class="ffw-sw-ready-links">
                 <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ffw' ) ); ?>"><?php esc_html_e( 'All FAQs', 'faq-for-woocommerce' ); ?></a>
+                <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ffw&page=ffw-patterns' ) ); ?>"><?php esc_html_e( 'FAQ patterns', 'faq-for-woocommerce' ); ?></a>
                 <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=ffw&page=woocommerce-faq' ) ); ?>"><?php esc_html_e( 'Settings', 'faq-for-woocommerce' ); ?></a>
                 <a href="<?php echo esc_url( FFW_DOC_URL ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Documentation', 'faq-for-woocommerce' ); ?></a>
             </div>

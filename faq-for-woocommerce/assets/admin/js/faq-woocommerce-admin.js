@@ -226,6 +226,13 @@ jQuery(document).ready(function ($) {
             // FAQ sorting.
             this.ffw_sorting_data();
 
+            // Open a settings tab from the URL, e.g. #ffw-ai-faqs.
+            if ( window.location.hash && $.fn.tab ) {
+                $('.ffw-settings-inner .nav-link').filter(function() {
+                    return $(this).attr('href') === window.location.hash;
+                }).tab('show');
+            }
+
         },
 
         hideDiscountNotice: function(e) {

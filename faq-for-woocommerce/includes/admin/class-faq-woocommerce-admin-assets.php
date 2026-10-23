@@ -34,8 +34,8 @@ if ( ! class_exists( 'FAQ_Woocommerce_Admin_Assets', false ) ) :
             wp_register_style( 'ffw_admin_styles', FFW_PLUGIN_URL . '/assets/admin/css/faq-woocommerce-admin.min.css', array(), time() );
             wp_register_style( 'ffw_admin_popup_styles', FFW_PLUGIN_URL . '/assets/admin/css/faq-woocommerce-popup.min.css', array(), time() );
 
-            wp_register_style( 'select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all' );
-            wp_register_script( 'select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array( 'jquery' ), '1.0', true );
+            wp_register_style( 'select2css', FFW_PLUGIN_URL . '/assets/admin/css/ffw-select2.min.css', array(), '4.1.0-rc.0', 'all' );
+            wp_register_script( 'select2', FFW_PLUGIN_URL . '/assets/admin/js/ffw-select2.min.js', array( 'jquery' ), '4.1.0-rc.0', true );
 
             // Add RTL support for admin styles.
             //wp_style_add_data( 'ffw_admin_styles', 'rtl', 'replace' );
@@ -43,6 +43,27 @@ if ( ! class_exists( 'FAQ_Woocommerce_Admin_Assets', false ) ) :
             // enqueue CSS.
             if( "ffw_page_woocommerce-faq" === $needle ) {
                 wp_enqueue_style( 'ffw_bootstrap' );
+
+                // Toggle icon picker in Settings → Style.
+                FAQ_Woocommerce_Icons::register_style();
+                wp_enqueue_style( 'ffw-toggle-icons' );
+                wp_add_inline_style( 'ffw-toggle-icons', '
+                    .form-table tr.ffw-row-full{flex:0 0 100% !important;width:100% !important;max-width:100% !important}
+                    .form-table tr.ffw-row-full td{width:auto;max-width:100%}
+                    .ffw-icon-picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px;max-width:100%}
+                    .ffw-icon-choice{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 8px 10px;border:1px solid #e2e4e7;border-radius:12px;background:#fff;cursor:pointer;text-align:center;transition:border-color .15s,box-shadow .15s}
+                    .ffw-icon-choice:hover{border-color:#a7aaad}
+                    .ffw-icon-choice.is-selected{border-color:#2271b1;box-shadow:0 0 0 1px #2271b1}
+                    .ffw-icon-choice input{position:absolute;opacity:0;pointer-events:none}
+                    .ffw-icon-choice input:focus-visible + .ffw-icon-choice-preview{outline:2px solid #2271b1;outline-offset:3px;border-radius:6px}
+                    .ffw-icon-choice-preview{display:flex;align-items:center;justify-content:center;gap:10px;height:28px;color:#1d2327}
+                    .ffw-icon-choice-preview .ffw-toggle-icon{--ffw-icon-size:22px}
+                    .ffw-icon-choice-text{font-size:15px;font-weight:600;color:#50575e}
+                    .ffw-icon-choice-label{font-size:12px;line-height:1.3;color:#3c434a}
+                    .ffw-icon-style-fields{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px}
+                    .ffw-icon-style-fields label{display:flex;flex-direction:column;gap:4px}
+                    .ffw-icon-style-fields input[type=number]{width:90px}
+                ' );
             }
 
             

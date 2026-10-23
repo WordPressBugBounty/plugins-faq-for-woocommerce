@@ -133,7 +133,7 @@ class FFW_Divi4_Display_Faqs extends ET_Builder_Module {
                 'description'     => esc_html__( 'Only FAQs in this category are shown.', 'faq-for-woocommerce' ),
                 'toggle_slug'     => 'faq_source',
                 'show_if'         => array(
-                    'faq_source' => 'faq_cat',
+                    'faq_source' => array( 'faq_cat', 'popular', 'recent' ),
                 ),
             ),
             'faq_ids'       => array(

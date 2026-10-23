@@ -23,6 +23,16 @@
                         'description' => esc_html__('Adds buttons above the FAQs so visitors can show one FAQ category at a time. Works with any other attribute, for example faq_ids or template. Needs FAQs from at least two categories.', 'faq-for-woocommerce'),
                     ],
                     [
+                        'code' => '[ffw_template source="popular"]',
+                        'title' => esc_html__('Display the most viewed FAQs', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Shows the 5 FAQs whose answers are opened most, then the most helpful ones. Add limit="10" for more, or faq_cat="12" to stay within one category.', 'faq-for-woocommerce'),
+                    ],
+                    [
+                        'code' => '[ffw_template source="recent"]',
+                        'title' => esc_html__('Display the newest FAQs', 'faq-for-woocommerce'),
+                        'description' => esc_html__('Shows the 5 most recently published FAQs. Add order_by="modified" to list recently updated FAQs instead.', 'faq-for-woocommerce'),
+                    ],
+                    [
                         'code' => '[ffw_template per_page="5"]',
                         'title' => esc_html__('Show 5 FAQs, then a "Show more" button', 'faq-for-woocommerce'),
                         'description' => esc_html__('Keeps long lists short. Search, the category filter and FAQ schema still include every FAQ. Use limit="5" instead to show only 5 FAQs in total.', 'faq-for-woocommerce'),
@@ -69,7 +79,7 @@
                                             <path fill="#31373D"
                                                 d="M299 5v43H43v299H0V48q0-18 12.5-30.5T43 5h256zm64 86q17 0 29.5 12.5T405 133v299q0 18-12.5 30.5T363 475H128q-18 0-30.5-12.5T85 432V133q0-17 12.5-29.5T128 91h235zm0 341V133H128v299h235z"/>
                                         </svg>
-                                        <span class="ffw-tooltip"><?php echo esc_html__('Click To Copy', 'materials-for-woocommerce')?></span>
+                                        <span class="ffw-tooltip"><?php echo esc_html__('Click To Copy', 'faq-for-woocommerce')?></span>
                                     </a>
                                 </div>
                             </div>

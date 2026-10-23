@@ -1,0 +1,185 @@
+/**
+ * Happy FAQs → Patterns.
+ *
+ * @since 3.0.0
+ */
+.ffw-pt2-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 18px;
+}
+
+.ffw-pt2-search {
+	position: relative;
+	display: block;
+	width: 280px;
+	max-width: 100%;
+}
+
+.ffw-pt2-search .ffw-ui-icon {
+	position: absolute;
+	top: 50%;
+	left: 11px;
+	color: var(--ffw-muted);
+	transform: translateY(-50%);
+}
+
+.ffw-app .ffw-pt2-search .ffw-ui-input {
+	padding-left: 34px;
+	border-radius: 999px;
+}
+
+.ffw-pt2-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 18px;
+}
+
+.ffw-pt2-card {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid var(--ffw-line);
+	border-radius: var(--ffw-radius);
+	background: #fff;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ffw-pt2-card:hover {
+	border-color: var(--ffw-faint);
+	box-shadow: 0 8px 22px rgba(17, 17, 19, 0.08);
+}
+
+.ffw-pt2-frame {
+	position: relative;
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-bottom: 1px solid var(--ffw-line);
+	background: #fff;
+	cursor: zoom-in;
+}
+
+.ffw-pt2-thumb {
+	position: relative;
+	height: 260px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.ffw-pt2-thumb iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 0;
+	opacity: 0;
+	transform-origin: 0 0;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
+}
+
+.ffw-pt2-thumb.is-loaded iframe {
+	opacity: 1;
+}
+
+.ffw-pt2-skeleton {
+	position: absolute;
+	inset: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.ffw-pt2-skeleton i {
+	display: block;
+	height: 22px;
+	border-radius: 8px;
+	background: linear-gradient(90deg, #f0f0f2 0%, #f7f7f8 50%, #f0f0f2 100%);
+	background-size: 200% 100%;
+	animation: ffw-ui-shimmer 1.2s ease infinite;
+}
+
+.ffw-pt2-skeleton i:first-child {
+	width: 40%;
+	height: 26px;
+	margin: 0 auto 8px;
+}
+
+.ffw-pt2-thumb.is-loaded .ffw-pt2-skeleton {
+	display: none;
+}
+
+.ffw-pt2-hint {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 10px;
+	border-radius: 999px;
+	background: var(--ffw-black);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 600;
+	opacity: 0;
+	transition: opacity 0.15s ease;
+}
+
+.ffw-pt2-frame:hover .ffw-pt2-hint,
+.ffw-pt2-frame:focus-visible .ffw-pt2-hint {
+	opacity: 1;
+}
+
+.ffw-pt2-body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 6px;
+	padding: 14px 16px 16px;
+}
+
+.ffw-app .ffw-pt2-body h3 {
+	margin: 4px 0 0;
+	font-size: 15px;
+	font-weight: 650;
+}
+
+.ffw-app .ffw-pt2-body p {
+	flex: 1;
+	margin: 0;
+	color: var(--ffw-muted);
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.ffw-pt2-actions {
+	margin-top: 8px;
+}
+
+.ffw-pt2-tip {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin: 22px 0 0 !important;
+	color: var(--ffw-muted) !important;
+	font-size: 12.5px !important;
+}
+
+.ffw-pt2-large {
+	display: block;
+	width: 100%;
+	height: min(64vh, 640px);
+	margin-top: 10px;
+	border: 1px solid var(--ffw-line);
+	border-radius: 10px;
+}
+
+.ffw-ui-modal.is-wide:has(.ffw-pt2-large) {
+	max-width: 1040px;
+}

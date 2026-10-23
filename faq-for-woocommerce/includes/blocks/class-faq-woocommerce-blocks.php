@@ -60,10 +60,21 @@ class FAQ_Woocommerce_Blocks {
      * @return void
      */
     public function register_blocks() {
+        // Toggle icon and style panels shared by both blocks.
+        wp_register_script(
+            'ffw-block-controls',
+            FFW_PLUGIN_URL . '/includes/blocks/shared/controls.js',
+            array( 'wp-element', 'wp-i18n', 'wp-components', 'wp-block-editor' ),
+            FFW_VERSION,
+            true
+        );
+        wp_localize_script( 'ffw-block-controls', 'ffwBlockIcons', $this->get_icon_editor_data() );
+
         wp_register_script(
             'ffw-display-faqs-editor',
             FFW_PLUGIN_URL . '/includes/blocks/display-faqs/index.js',
             array(
+                'ffw-block-controls',
                 'wp-blocks',
                 'wp-element',
                 'wp-i18n',
@@ -100,6 +111,7 @@ class FAQ_Woocommerce_Blocks {
             'ffw-custom-faqs-editor',
             FFW_PLUGIN_URL . '/includes/blocks/custom-faqs/index.js',
             array(
+                'ffw-block-controls',
                 'wp-blocks',
                 'wp-element',
                 'wp-i18n',
@@ -137,6 +149,38 @@ class FAQ_Woocommerce_Blocks {
                 'attributes'      => $this->get_custom_faqs_attributes(),
             )
         );
+
+        $this->register_block_styles();
+    }
+
+    /**
+     * Cards, Minimal and Soft styles for both FAQ blocks.
+     *
+     * @since 3.0.0
+     * @return void
+     */
+    protected function register_block_styles() {
+        if ( ! function_exists( 'register_block_style' ) ) {
+            return;
+        }
+
+        $styles = array(
+            'ffw-cards'   => __( 'Cards', 'faq-for-woocommerce' ),
+            'ffw-minimal' => __( 'Minimal', 'faq-for-woocommerce' ),
+            'ffw-soft'    => __( 'Soft', 'faq-for-woocommerce' ),
+        );
+
+        foreach ( array( 'happy-faq/display-faqs', 'happy-faq/custom-faqs' ) as $block ) {
+            foreach ( $styles as $name => $label ) {
+                register_block_style(
+                    $block,
+                    array(
+                        'name'  => $name,
+                        'label' => $label,
+                    )
+                );
+            }
+        }
     }
 
     /**
@@ -223,6 +267,62 @@ class FAQ_Woocommerce_Blocks {
                 'default' => false,
             ),
             'groupId'      => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
+            'questionColor' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'questionBgColor' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'questionHoverColor' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'questionFontSize' => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
+            'answerColor' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'answerBgColor' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'answerFontSize' => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
+            'borderColor' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'borderRadius' => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
+            'itemSpacing' => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
+            'iconSet' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'iconPosition' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'iconColor' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'iconSize' => array(
                 'type'    => 'number',
                 'default' => 0,
             ),
@@ -313,6 +413,22 @@ class FAQ_Woocommerce_Blocks {
                 'type'    => 'string',
                 'default' => '',
             ),
+            'iconSet' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'iconPosition' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'iconColor' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'iconSize' => array(
+                'type'    => 'number',
+                'default' => 0,
+            ),
         );
     }
 
@@ -374,6 +490,47 @@ class FAQ_Woocommerce_Blocks {
         wp_enqueue_style( 'ffw_trip_styles' );
         wp_enqueue_style( 'ffw_pop_styles' );
         wp_enqueue_style( 'ffw_basic_styles' );
+        wp_enqueue_style( 'ffw-block-styles' );
+
+        // Icon previews in the block panel and in the rendered preview.
+        FAQ_Woocommerce_Icons::register_style();
+        wp_enqueue_style( 'ffw-toggle-icons' );
+        wp_add_inline_style(
+            'ffw-toggle-icons',
+            '.ffw-block-icon-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}'
+            . '.ffw-block-icon-choice{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:68px;padding:8px 4px;border:1px solid #e0e0e0;border-radius:8px;background:#fff;color:#1e1e1e;cursor:pointer;font-size:11px;line-height:1.25;text-align:center}'
+            . '.ffw-block-icon-choice:hover{border-color:#949494}'
+            . '.ffw-block-icon-choice.is-selected{border-color:var(--wp-admin-theme-color,#3858e9);box-shadow:0 0 0 1px var(--wp-admin-theme-color,#3858e9)}'
+            . '.ffw-block-icon-choice:focus-visible{outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:1px}'
+            . '.ffw-block-icon-preview{display:flex;gap:6px;height:22px;align-items:center}.ffw-block-icon-preview .ffw-toggle-icon{--ffw-icon-size:18px}'
+            . '.ffw-block-icon-text{height:22px;line-height:22px;font-size:14px;font-weight:600;color:#757575}'
+            . '.ffw-block-help{margin:0 0 12px;color:#757575;font-size:12px}'
+        );
+    }
+
+    /**
+     * Icon sets for the block editor.
+     *
+     * @since 3.0.0
+     * @return array
+     */
+    protected function get_icon_editor_data() {
+        $sets = array();
+        foreach ( FAQ_Woocommerce_Icons::sets() as $id => $set ) {
+            $sets[] = array(
+                'value' => $id,
+                'label' => $set[0],
+                'svg'   => FAQ_Woocommerce_Icons::svg( $id ),
+            );
+        }
+
+        $choices = FAQ_Woocommerce_Icons::choices();
+        $site    = FAQ_Woocommerce_Icons::resolve();
+
+        return array(
+            'sets'      => $sets,
+            'siteLabel' => isset( $choices[ $site['set'] ] ) ? $choices[ $site['set'] ] : '',
+        );
     }
 }
 

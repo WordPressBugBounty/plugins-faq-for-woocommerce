@@ -1,0 +1,100 @@
+/**
+ * Happy FAQs → Customer Questions.
+ *
+ * @since 3.0.0
+ */
+.ffw-q-teaser {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 380px;
+	gap: 18px;
+	align-items: start;
+}
+
+.ffw-q-teaser > .ffw-ui-card + * {
+	margin-top: 0;
+}
+
+.ffw-q-list {
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-q-list li {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0;
+	padding: 14px 22px;
+	border-top: 1px solid var(--ffw-line);
+}
+
+.ffw-q-avatar {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background: var(--ffw-black);
+	color: var(--ffw-brand);
+	font-weight: 700;
+}
+
+.ffw-q-text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ffw-q-text small {
+	color: var(--ffw-muted);
+	font-size: 12px;
+}
+
+.ffw-q-fake-btn {
+	padding: 5px 12px;
+	border: 1px solid var(--ffw-line-strong);
+	border-radius: 8px;
+	font-size: 12.5px;
+	font-weight: 550;
+}
+
+.ffw-q-steps {
+	display: grid;
+	gap: 10px;
+	margin: 0 0 18px;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-q-steps li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	color: #e4e4e7;
+	font-size: 13.5px;
+}
+
+.ffw-q-steps li span {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: var(--ffw-brand);
+	color: #111;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+	.ffw-q-teaser {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}

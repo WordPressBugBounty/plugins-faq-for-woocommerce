@@ -108,6 +108,7 @@ class FAQ_Woocommerce_Public {
         // public style
         wp_register_style( 'ffw_public_styles', FFW_PLUGIN_URL . '/assets/public/css/style.min.css', array(), FFW_PLUGIN_VERSION );
         wp_register_style( 'ffw-display-faqs-style', FFW_PLUGIN_URL . '/includes/blocks/display-faqs/style.css', array(), FFW_VERSION );
+        wp_register_style( 'ffw-block-styles', FFW_PLUGIN_URL . '/assets/public/css/ffw-styles.css', array( 'ffw_basic_styles' ), FFW_VERSION );
 
         // do_action("ffw_register_template_js", $layout);
 
@@ -136,6 +137,10 @@ class FAQ_Woocommerce_Public {
         wp_localize_script( 'ffw_public_js', 'ffw_public_js', [
             'ajaxurl'               => admin_url( 'admin-ajax.php' ),
             'nonce'                 => wp_create_nonce( 'ffw_public_js' ),
+            // Page or product the FAQs are on, for analytics.
+            'object_id'             => is_singular() ? (int) get_queried_object_id() : 0,
+            // Search terms are only sent when an add-on (Happy FAQs Pro analytics) asks for them.
+            'track_search'          => (bool) apply_filters( 'ffw_track_searches', false ),
             'search_empty'          => esc_html__( 'No FAQs match your search.', 'faq-for-woocommerce' ),
             /* translators: 1: category name, 2: number of FAQs shown */
             'filter_status'         => esc_html__( '%1$s: %2$d FAQs shown', 'faq-for-woocommerce' ),

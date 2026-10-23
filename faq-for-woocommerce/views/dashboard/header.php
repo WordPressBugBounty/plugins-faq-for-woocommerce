@@ -53,6 +53,7 @@
                 $is_shortcode_page = false;
                 $is_ai_page = false;
                 $is_customer_question_page = false;
+                $is_analytics_page = isset( $_GET['page'] ) && 'ffw-analytics' === $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
                 $screen = get_current_screen();
 
@@ -62,7 +63,7 @@
 
                 if( isset($_GET['post_type']) && $_GET['post_type'] === "ffw" ) {
 
-                    if( $screen->base == "edit" ) {
+                    if( $screen->base == "edit" || ( isset( $_GET['page'] ) && 'ffw-faqs' === $_GET['page'] ) || ( isset( $_GET['taxonomy'] ) && 'ffw-category' === $_GET['taxonomy'] ) ) {
                         $is_faq_list_page = true;
                     }
 
@@ -93,7 +94,8 @@
             ?>
 
             <li class="ffw-menu <?php echo $is_dashboard_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ffw-dashboard")); ?>"><?php esc_html_e("Dashboard", "faq-for-woocommerce"); ?></a></li>
-            <li class="ffw-menu <?php echo $is_faq_list_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw")); ?>"><?php esc_html_e("FAQS", "faq-for-woocommerce"); ?></a></li>
+            <li class="ffw-menu <?php echo $is_analytics_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ffw-analytics")); ?>"><span><?php esc_html_e("Analytics", "faq-for-woocommerce"); ?></span></a></li>
+            <li class="ffw-menu <?php echo $is_faq_list_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ffw-faqs")); ?>"><?php esc_html_e("FAQS", "faq-for-woocommerce"); ?></a></li>
             <li class="ffw-menu <?php echo $is_shortcode_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ffw-shortcodes")); ?>"><span><?php esc_html_e("Shortcodes", "faq-for-woocommerce"); ?></span></a></li>
             <li class="ffw-menu <?php echo $is_ai_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw&page=ai-faqs")); ?>"><span><?php esc_html_e("AI FAQs", "faq-for-woocommerce"); ?></span></a></li>
             <li class="ffw-menu <?php echo $is_customer_question_page ? esc_attr('active') : ''; ?>"><a href="<?php echo esc_url(admin_url("edit.php?post_type=ffw_customer_qna")); ?>"><span><?php esc_html_e("Customer Questions", "faq-for-woocommerce"); ?></span></a></li>

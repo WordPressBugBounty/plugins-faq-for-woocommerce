@@ -1,0 +1,367 @@
+{
+  "name": "happy-faq/divi-custom-faqs",
+  "d4Shortcode": "ffw_custom_faqs",
+  "title": "Happy Custom FAQs",
+  "titles": "Happy Custom FAQs",
+  "category": "module",
+  "moduleClassName": "ffw_custom_faqs",
+  "moduleOrderClassName": "ffw_custom_faqs",
+  "childModuleName": "happy-faq/divi-custom-faq-item",
+  "childModuleTitle": "FAQ Item",
+  "childrenName": ["happy-faq/divi-custom-faq-item"],
+  "attributes": {
+    "module": {
+      "type": "object",
+      "selector": "{{selector}}",
+      "default": {
+        "meta": {
+          "adminLabel": {
+            "desktop": {
+              "value": "Happy Custom FAQs"
+            }
+          }
+        }
+      },
+      "settings": {
+        "meta": {
+          "adminLabel": {}
+        },
+        "decoration": {
+          "layout": {},
+          "background": {},
+          "sizing": {},
+          "spacing": {},
+          "border": {},
+          "boxShadow": {},
+          "filters": {},
+          "transform": {},
+          "animation": {},
+          "overflow": {},
+          "disabledOn": {},
+          "transition": {},
+          "position": {},
+          "zIndex": {},
+          "scroll": {},
+          "sticky": {}
+        }
+      }
+    },
+    "displayMode": {
+      "type": "object",
+      "default": {
+        "innerContent": {
+          "desktop": {
+            "value": "accordion"
+          }
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupName": "faqDisplay",
+            "priority": 10,
+            "render": true,
+            "attrName": "displayMode.innerContent",
+            "label": "Display mode",
+            "features": {
+              "dynamicContent": false,
+              "sticky": false,
+              "hover": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/select",
+              "type": "field",
+              "props": {
+                "options": {
+                  "accordion": { "label": "Accordion" },
+                  "list": { "label": "List" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "default": {
+        "innerContent": {
+          "desktop": {
+            "value": "0"
+          }
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupName": "faqDisplay",
+            "priority": 20,
+            "render": true,
+            "attrName": "layout.innerContent",
+            "label": "Layout",
+            "description": "Used when display mode is Accordion. 0 uses the layout from Happy FAQs settings.",
+            "features": {
+              "dynamicContent": false,
+              "sticky": false,
+              "hover": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/select",
+              "type": "field",
+              "props": {
+                "options": {
+                  "0": { "label": "Default (Settings)" },
+                  "1": { "label": "Classic" },
+                  "2": { "label": "Whitish" },
+                  "3": { "label": "Trip" },
+                  "4": { "label": "Pop" },
+                  "5": { "label": "Basic" },
+                  "6": { "label": "Glow" },
+                  "7": { "label": "Smart" },
+                  "8": { "label": "Wow" },
+                  "9": { "label": "Zoom" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "expandFirst": {
+      "type": "object",
+      "default": {
+        "innerContent": {
+          "desktop": {
+            "value": "off"
+          }
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupName": "faqDisplay",
+            "priority": 30,
+            "render": true,
+            "attrName": "expandFirst.innerContent",
+            "label": "Expand first FAQ",
+            "features": {
+              "dynamicContent": false,
+              "sticky": false,
+              "hover": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/toggle",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "showSearch": {
+      "type": "object",
+      "default": {
+        "innerContent": {
+          "desktop": {
+            "value": "on"
+          }
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupName": "faqOptions",
+            "priority": 10,
+            "render": true,
+            "attrName": "showSearch.innerContent",
+            "label": "Show search box",
+            "description": "Filters this module as visitors type.",
+            "features": {
+              "dynamicContent": false,
+              "sticky": false,
+              "hover": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/toggle",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "enableSchema": {
+      "type": "object",
+      "default": {
+        "innerContent": {
+          "desktop": {
+            "value": "on"
+          }
+        }
+      },
+      "settings": {
+        "innerContent": {
+          "groupType": "group-item",
+          "item": {
+            "groupName": "faqOptions",
+            "priority": 20,
+            "render": true,
+            "attrName": "enableSchema.innerContent",
+            "label": "Output FAQ schema",
+            "features": {
+              "dynamicContent": false,
+              "sticky": false,
+              "hover": false,
+              "responsive": false
+            },
+            "component": {
+              "name": "divi/toggle",
+              "type": "field"
+            }
+          }
+        }
+      }
+    },
+    "faqQuestion": {
+      "type": "object",
+      "selector": "{{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-question, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-button, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-faq-list-question, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-accordion-tittle, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-accordion-heading, {{selector}} #ffw-main-wrapper #ffw-wrapper details summary",
+      "styleProps": {
+        "font": {
+          "important": true
+        }
+      },
+      "settings": {
+        "decoration": {
+          "font": {
+            "priority": 10,
+            "component": {
+              "props": {
+                "groupLabel": "Question",
+                "fieldLabel": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "faqAnswer": {
+      "type": "object",
+      "selector": "{{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-classic-answer, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-content, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-faq-list-answer, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-trip-answer, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-basic-answer, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-accordion-body-content",
+      "styleProps": {
+        "font": {
+          "important": true
+        }
+      },
+      "settings": {
+        "decoration": {
+          "font": {
+            "priority": 20,
+            "component": {
+              "props": {
+                "groupLabel": "Answer",
+                "fieldLabel": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "faqItem": {
+      "type": "object",
+      "selector": "{{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-accordion-item, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-faq-list-item, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-collapse, {{selector}} #ffw-main-wrapper #ffw-wrapper details",
+      "settings": {
+        "decoration": {
+          "background": {
+            "priority": 30
+          },
+          "spacing": {
+            "priority": 40
+          },
+          "border": {
+            "priority": 50
+          },
+          "boxShadow": {
+            "priority": 60
+          }
+        }
+      }
+    },
+    "faqIcon": {
+      "type": "object",
+      "selector": "{{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-classic-icon, {{selector}} #ffw-main-wrapper #ffw-wrapper .ffw-rotate-icon, {{selector}} #ffw-main-wrapper #ffw-wrapper .control-icon, {{selector}} #ffw-main-wrapper #ffw-wrapper .dashicons",
+      "settings": {
+        "decoration": {
+          "font": {
+            "priority": 70,
+            "component": {
+              "props": {
+                "groupLabel": "Icon",
+                "fieldLabel": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "faqSearch": {
+      "type": "object",
+      "selector": "{{selector}} #ffw-main-wrapper .ffw-inline-search",
+      "settings": {
+        "decoration": {
+          "font": {
+            "priority": 80,
+            "component": {
+              "props": {
+                "groupLabel": "Search",
+                "fieldLabel": ""
+              }
+            }
+          },
+          "border": {
+            "priority": 90
+          },
+          "spacing": {
+            "priority": 100
+          }
+        }
+      }
+    },
+    "customCssFields": {
+      "mainElement": {
+        "subName": "mainElement",
+        "selectorSuffix": ""
+      },
+      "faqItem": {
+        "subName": "faqItem",
+        "selectorSuffix": " #ffw-wrapper .ffw-accordion-item"
+      },
+      "faqQuestion": {
+        "subName": "faqQuestion",
+        "selectorSuffix": " #ffw-wrapper .ffw-button"
+      },
+      "faqAnswer": {
+        "subName": "faqAnswer",
+        "selectorSuffix": " #ffw-wrapper .ffw-classic-answer"
+      },
+      "faqIcon": {
+        "subName": "faqIcon",
+        "selectorSuffix": " #ffw-wrapper .ffw-classic-icon"
+      },
+      "faqSearch": {
+        "subName": "faqSearch",
+        "selectorSuffix": " .ffw-inline-search"
+      }
+    }
+  },
+  "settings": {
+    "content": "auto",
+    "design": "auto",
+    "advanced": "auto"
+  }
+}

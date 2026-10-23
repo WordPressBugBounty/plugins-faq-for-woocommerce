@@ -52,6 +52,49 @@
 		return getItems($root).not('.ffw-faq-item-hidden, .ffw-faq-cat-hidden').length;
 	}
 
+	// Analytics (only when an add-on asks for it): send the term once the
+	// visitor stops typing, once per term per page view.
+	var logTimer;
+	var logged = {};
+
+	function logSearch($root, query) {
+		window.clearTimeout(logTimer);
+		var config = window.ffw_public_js;
+		if (!config || !config.track_search || query.length < 2) {
+			return;
+		}
+
+		logTimer = window.setTimeout(function () {
+			if (logged[query]) {
+				return;
+			}
+			logged[query] = true;
+
+			var data = new FormData();
+			data.append('action', 'ffw_search_event');
+			data.append('term', query);
+			data.append('results', countVisible($root));
+			data.append('object_id', config.object_id || 0);
+			if (navigator.sendBeacon) {
+				navigator.sendBeacon(config.ajaxurl, data);
+			} else {
+				$.ajax({ url: config.ajaxurl, method: 'POST', data: data, processData: false, contentType: false });
+			}
+		}, 1500);
+	}
+
+	// Help Center sidebar: hide a topic heading when none of its FAQs match.
+	function toggleTopics($root, active) {
+		$root.find('.ffw-hc-topic-title').each(function () {
+			var $title = $(this);
+			var $section = $title.nextUntil('.ffw-hc-topic-title');
+			var visible = getItems($section).not('.ffw-faq-item-hidden, .ffw-faq-cat-hidden').length;
+			var hide = active && !visible;
+			$title.toggleClass('ffw-hc-topic-hidden', hide);
+			$section.toggleClass('ffw-hc-topic-hidden', hide);
+		});
+	}
+
 	function filterFaqs($input) {
 		var query = $.trim($input.val()).toLowerCase();
 		var $root = getRoot($input);
@@ -65,6 +108,8 @@
 		var category = $root.find('.ffw-faq-filter-btn.is-active').attr('data-ffw-filter') || '';
 		setFiltering($root, query || category);
 		updateEmptyMessage($root, countVisible($root), !!query || !!category);
+		toggleTopics($root, !!query);
+		logSearch($root, query);
 	}
 
 	function filterByCategory($button) {

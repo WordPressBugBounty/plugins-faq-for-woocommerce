@@ -1,0 +1,62 @@
+{
+  "advanced": {
+    "admin_label": "module.meta.adminLabel",
+    "animation": "module.decoration.animation",
+    "background": "module.decoration.background",
+    "disabled_on": "module.decoration.disabledOn",
+    "module": "module.advanced.htmlAttributes",
+    "overflow": "module.decoration.overflow",
+    "position_fields": "module.decoration.position",
+    "scroll": "module.decoration.scroll",
+    "sticky": "module.decoration.sticky",
+    "transform": "module.decoration.transform",
+    "transition": "module.decoration.transition",
+    "z_index": "module.decoration.zIndex",
+    "margin_padding": "module.decoration.spacing",
+    "max_width": "module.decoration.sizing",
+    "height": "module.decoration.sizing",
+    "link_options": "module.advanced.link",
+    "fonts": {
+      "header": "faqQuestion.decoration.font",
+      "body": "faqAnswer.decoration.font"
+    },
+    "box_shadow": {
+      "default": "module.decoration.boxShadow",
+      "item": "faqItem.decoration.boxShadow"
+    },
+    "borders": {
+      "default": "module.decoration.border",
+      "item": "faqItem.decoration.border"
+    },
+    "filters": {
+      "default": "module.decoration.filters"
+    }
+  },
+  "css": {
+    "before": "css.*.before",
+    "after": "css.*.after",
+    "main_element": "css.*.mainElement",
+    "faq_item": "css.*.faqItem",
+    "faq_question": "css.*.faqQuestion",
+    "faq_answer": "css.*.faqAnswer",
+    "faq_icon": "css.*.faqIcon",
+    "faq_search": "css.*.faqSearch"
+  },
+  "module": {
+    "layout": "layout.innerContent.*",
+    "display_mode": "displayMode.innerContent.*",
+    "show_search": "showSearch.innerContent.*",
+    "enable_schema": "enableSchema.innerContent.*",
+    "expand_first": "expandFirst.innerContent.*"
+  },
+  "children": {
+    "ffw_custom_faq_item": "happy-faq/divi-custom-faq-item"
+  },
+  "nonResponsiveAttributes": [
+    "layout",
+    "display_mode",
+    "show_search",
+    "enable_schema",
+    "expand_first"
+  ]
+}

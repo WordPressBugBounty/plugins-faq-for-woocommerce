@@ -119,6 +119,20 @@ class FAQ_Woocommerce_Schema {
     }
 
     /**
+     * Whether a FAQ is already in this page's FAQPage schema.
+     *
+     * Lets add-ons add related questions (for example nested FAQs) only
+     * where their parent is in the schema.
+     *
+     * @since 2.1.0
+     * @param int $faq_id FAQ post ID.
+     * @return bool
+     */
+    public static function is_collected( $faq_id ) {
+        return isset( self::$collected_faqs[ (string) (int) $faq_id ] );
+    }
+
+    /**
      * Output one FAQPage JSON-LD block for all collected FAQs.
      *
      * @since 1.8.18

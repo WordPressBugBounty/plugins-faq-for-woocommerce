@@ -1,0 +1,463 @@
+/**
+ * Happy FAQs → Dashboard.
+ *
+ * @since 3.0.0
+ */
+.ffw-dash-hero {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 16px 24px;
+	margin: 4px 0 18px;
+	padding: 26px 28px;
+	overflow: hidden;
+	border-radius: 16px;
+	background: var(--ffw-black);
+	color: #fff;
+}
+
+.ffw-dash-hero::after {
+	content: "";
+	position: absolute;
+	right: -80px;
+	bottom: -120px;
+	width: 320px;
+	height: 320px;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(255, 199, 44, 0.32), transparent 68%);
+	pointer-events: none;
+}
+
+.ffw-dash-hero > * {
+	position: relative;
+	z-index: 1;
+}
+
+.ffw-app .ffw-dash-hero h1 {
+	margin: 2px 0 6px;
+	padding: 0;
+	color: #fff;
+	font-size: 26px;
+	font-weight: 650;
+	letter-spacing: -0.02em;
+}
+
+.ffw-app .ffw-dash-hero p {
+	margin: 0;
+	color: #d4d4d8;
+}
+
+.ffw-app .ffw-dash-hero .ffw-dash-eyebrow {
+	color: var(--ffw-brand);
+	font-size: 12px;
+	font-weight: 650;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.ffw-dash-hero .ffw-ui-btn:not(.is-brand) {
+	border-color: rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.06);
+	color: #fff;
+}
+
+.ffw-dash-hero .ffw-ui-btn:not(.is-brand):hover {
+	background: rgba(255, 255, 255, 0.14);
+	color: #fff;
+}
+
+.ffw-dash-hero .ffw-ui-btn.is-tertiary {
+	border-color: transparent;
+	background: transparent;
+}
+
+.ffw-dash-stats {
+	margin-bottom: 18px;
+}
+
+.ffw-dash-stats .ffw-ui-stat-note a {
+	color: var(--ffw-ink);
+	font-weight: 600;
+}
+
+.ffw-dash-cols {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 340px;
+	gap: 18px;
+	align-items: start;
+	margin-bottom: 18px;
+}
+
+.ffw-dash-main > .ffw-ui-card + .ffw-ui-card,
+.ffw-dash-side > * + * {
+	margin-top: 18px;
+}
+
+/* Checklist. */
+.ffw-dash-progress {
+	height: 6px;
+	margin: 0 0 14px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: var(--ffw-tint);
+}
+
+.ffw-dash-progress i {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--ffw-brand);
+	transition: width 0.3s ease;
+}
+
+.ffw-dash-steplist {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-dash-steplist li {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin: 0;
+	padding: 12px 0;
+	border-top: 1px solid var(--ffw-line);
+}
+
+.ffw-dash-steplist li:first-child {
+	border-top: 0;
+}
+
+.ffw-dash-step-mark {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border: 1px solid var(--ffw-line-strong);
+	border-radius: 50%;
+	color: var(--ffw-muted);
+	font-size: 12.5px;
+	font-weight: 650;
+}
+
+.ffw-dash-steplist li.is-done .ffw-dash-step-mark {
+	border-color: var(--ffw-black);
+	background: var(--ffw-black);
+	color: var(--ffw-brand);
+}
+
+.ffw-dash-step-text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ffw-dash-step-text strong {
+	font-size: 14px;
+}
+
+.ffw-dash-step-text span {
+	color: var(--ffw-muted);
+	font-size: 12.5px;
+}
+
+.ffw-dash-steplist li.is-done .ffw-dash-step-text strong {
+	color: var(--ffw-muted);
+	text-decoration: line-through;
+	text-decoration-color: var(--ffw-faint);
+}
+
+.ffw-app a.ffw-dash-faq {
+	color: var(--ffw-ink);
+	font-weight: 550;
+	text-decoration: none;
+}
+
+.ffw-app a.ffw-dash-faq:hover {
+	text-decoration: underline;
+}
+
+/* Link lists. */
+.ffw-dash-links {
+	margin: 8px 0 0;
+	padding: 0 8px 8px;
+	list-style: none;
+}
+
+.ffw-dash-links li {
+	margin: 0;
+}
+
+.ffw-app .ffw-dash-links a {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	color: var(--ffw-ink);
+	text-decoration: none;
+}
+
+.ffw-app .ffw-dash-links a:hover {
+	background: var(--ffw-tint);
+}
+
+.ffw-dash-link-icon {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 9px;
+	background: var(--ffw-brand-soft);
+	color: var(--ffw-black);
+}
+
+.ffw-dash-link-text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ffw-dash-link-text strong {
+	font-size: 13.5px;
+}
+
+.ffw-dash-link-text span {
+	color: var(--ffw-muted);
+	font-size: 12.5px;
+}
+
+.ffw-dash-link-arrow {
+	color: var(--ffw-faint);
+}
+
+.ffw-dash-why {
+	display: grid;
+	gap: 7px;
+	margin: 0 0 16px;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-dash-why li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	color: #e4e4e7;
+	font-size: 13px;
+}
+
+.ffw-dash-why .ffw-ui-icon {
+	color: var(--ffw-brand);
+}
+
+/* Comparison. */
+.ffw-dash-compare-table td strong {
+	display: block;
+	font-size: 13.5px;
+}
+
+.ffw-dash-compare-table td span {
+	color: var(--ffw-muted);
+	font-size: 12.5px;
+}
+
+.ffw-dash-compare-table .is-mark {
+	width: 90px;
+	text-align: center;
+}
+
+.ffw-dash-compare-group td {
+	background: #fbfbfc;
+}
+
+.ffw-dash-compare-group strong {
+	margin-bottom: 2px;
+}
+
+.ffw-dash-yes {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: var(--ffw-good-soft);
+	color: var(--ffw-good) !important;
+}
+
+.ffw-dash-yes.is-pro {
+	background: var(--ffw-black);
+	color: var(--ffw-brand) !important;
+}
+
+.ffw-dash-no {
+	color: var(--ffw-faint) !important;
+	font-size: 16px !important;
+}
+
+/* Comparison: Pro-only rows stand out. */
+.ffw-dash-compare-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px 20px;
+	margin: 14px 22px 14px;
+	padding: 14px 16px;
+	border-radius: 12px;
+	background: var(--ffw-black);
+	color: #fff;
+}
+
+.ffw-dash-compare-sum {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.ffw-dash-compare-num {
+	color: var(--ffw-brand);
+	font-size: 30px;
+	font-weight: 750;
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+
+.ffw-dash-compare-sum strong {
+	display: block;
+	font-size: 14.5px;
+}
+
+.ffw-dash-compare-sum small {
+	color: #c4c4cc;
+	font-size: 12.5px;
+}
+
+.ffw-dash-compare-bar .ffw-ui-segment {
+	border-color: rgba(255, 255, 255, 0.14);
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.ffw-dash-compare-bar .ffw-ui-segment button {
+	color: #d4d4d8;
+}
+
+.ffw-dash-compare-bar .ffw-ui-segment button.is-active {
+	background: var(--ffw-brand);
+	color: #111;
+}
+
+.ffw-dash-compare-table tr.is-pro-only td {
+	background: #fffbea;
+}
+
+.ffw-dash-compare-table tr.is-pro-only td:first-child {
+	box-shadow: inset 3px 0 0 var(--ffw-brand);
+}
+
+.ffw-dash-compare-table tbody tr.is-pro-only:hover td {
+	background: #fff6d6;
+}
+
+.ffw-dash-compare-table td strong .ffw-ui-badge {
+	margin-left: 4px;
+	vertical-align: 1px;
+}
+
+.ffw-dash-compare-table .is-pro-col {
+	background: rgba(255, 199, 44, 0.08);
+}
+
+.ffw-dash-pro-head {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: var(--ffw-black);
+	color: var(--ffw-brand);
+	letter-spacing: 0.04em;
+}
+
+.ffw-dash-no {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: var(--ffw-tint);
+}
+
+/* Page builders. */
+.ffw-dash-builder-list {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ffw-dash-builder-list li {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	margin: 0;
+	padding: 14px 6px 12px;
+	border: 1px solid var(--ffw-line);
+	border-radius: 12px;
+	text-align: center;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ffw-dash-builder-list li:hover {
+	box-shadow: 0 6px 16px rgba(17, 17, 19, 0.08);
+	transform: translateY(-2px);
+}
+
+.ffw-dash-builder-logo {
+	display: inline-flex;
+	margin-bottom: 4px;
+}
+
+.ffw-dash-builder-list strong {
+	font-size: 13px;
+}
+
+.ffw-dash-builder-list span {
+	color: var(--ffw-muted);
+	font-size: 11.5px;
+	line-height: 1.35;
+}
+
+.ffw-app .ffw-dash-builder-list .ffw-dash-builder-ok {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	margin-top: 4px;
+	padding: 1px 7px;
+	border-radius: 999px;
+	background: var(--ffw-good-soft);
+	color: var(--ffw-good);
+	font-size: 11px;
+	font-weight: 650;
+}
+
+@media (max-width: 1100px) {
+	.ffw-dash-cols {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}

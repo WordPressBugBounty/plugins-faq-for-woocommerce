@@ -90,6 +90,22 @@
     "customCss": {
       "type": "string",
       "default": ""
+    },
+    "iconSet": {
+      "type": "string",
+      "default": ""
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": ""
+    },
+    "iconColor": {
+      "type": "string",
+      "default": ""
+    },
+    "iconSize": {
+      "type": "number",
+      "default": 0
     }
   }
 }

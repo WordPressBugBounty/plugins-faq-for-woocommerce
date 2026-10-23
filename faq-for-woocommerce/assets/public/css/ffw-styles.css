@@ -1,0 +1,253 @@
+/**
+ * Happy FAQs block styles: Cards, Minimal and Soft.
+ *
+ * Applied with the block "Styles" panel (is-style-ffw-*) on Happy Prebuilt
+ * FAQs and Happy Custom FAQs. Lists with a style render with the Basic
+ * layout, which these rules are written for.
+ *
+ * @since 3.0.0
+ */
+
+.ffw-main-wrapper[class*="is-style-ffw-"] {
+	--ffw-ink: #18181b;
+	--ffw-muted: #52525b;
+	--ffw-line: #e7e7ee;
+	--ffw-line-strong: #d6d6df;
+	--ffw-surface: #ffffff;
+	--ffw-tint: #f5f5f8;
+	--ffw-tint-strong: #efeff4;
+	--ffw-radius: 16px;
+	font-size: 16px;
+}
+
+/* Base: full-width items, roomy rows, a drawn plus/minus icon. */
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-layout-container,
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-basic-wrapper,
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container {
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-accordion {
+	width: 100%;
+	margin: 0;
+	transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-accordion .ffw-accordion-heading {
+	gap: 16px;
+	padding: 20px 24px;
+	border: 0;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-accordion .ffw-accordion-tittle {
+	color: var(--ffw-ink);
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 1.45;
+	letter-spacing: -0.005em;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-accordion .ffw-basic-answer {
+	padding: 0 24px 22px;
+	color: var(--ffw-muted);
+	font-size: 16px;
+	line-height: 1.7;
+	text-align: start;
+}
+
+/*
+ * Settings print "#ffw-wrapper ... !important" borders and colors for the Basic
+ * layout. Styled lists replace them; a block's own color settings (two IDs) still win.
+ */
+.ffw-main-wrapper[class*="is-style-ffw-"] #ffw-wrapper.ffw-basic-wrapper .ffw-accordion-item .ffw-accordion-heading,
+.ffw-main-wrapper[class*="is-style-ffw-"] #ffw-wrapper.ffw-basic-wrapper .ffw-accordion-item .ffw-basic-answer {
+	border: 0 !important;
+	background: transparent !important;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] #ffw-wrapper.ffw-basic-wrapper .ffw-accordion-item .ffw-basic-answer {
+	color: var(--ffw-muted) !important;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] #ffw-wrapper.ffw-basic-wrapper .ffw-accordion-item .ffw-button {
+	background: transparent !important;
+	color: var(--ffw-ink) !important;
+	font-size: 18px !important;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-basic-answer > :first-child {
+	margin-top: 0;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-basic-answer > :last-child {
+	margin-bottom: 0;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-rotate-icon {
+	position: relative;
+	flex: 0 0 28px;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: var(--ffw-tint);
+	font-size: 0;
+	line-height: 0;
+	transform: none !important;
+	transition: background-color 0.2s ease;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-rotate-icon > * {
+	display: none !important;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-rotate-icon::before,
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-rotate-icon::after {
+	content: "" !important;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 11px;
+	height: 1.75px;
+	border-radius: 2px;
+	background: var(--ffw-ink);
+	transform: translate(-50%, -50%);
+	transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-rotate-icon::after {
+	transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-heading[aria-expanded="true"] .ffw-rotate-icon::after,
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-active .ffw-rotate-icon::after {
+	transform: translate(-50%, -50%) rotate(0deg);
+	opacity: 0;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-heading:hover .ffw-rotate-icon {
+	background: var(--ffw-tint-strong);
+}
+
+/* Cards: white cards with a hairline border and a soft lift when open. */
+.ffw-main-wrapper.is-style-ffw-cards .ffw-accordion-container .ffw-accordion {
+	margin-bottom: 12px;
+	border: 1px solid var(--ffw-line);
+	border-radius: var(--ffw-radius);
+	background: var(--ffw-surface);
+	box-shadow: 0 1px 2px rgba(24, 24, 27, 0.04);
+	overflow: hidden;
+}
+
+.ffw-main-wrapper.is-style-ffw-cards .ffw-accordion-container .ffw-accordion:hover {
+	border-color: var(--ffw-line-strong);
+}
+
+.ffw-main-wrapper.is-style-ffw-cards .ffw-accordion-container .ffw-accordion.ffw-accordion-active {
+	border-color: var(--ffw-line-strong);
+	box-shadow: 0 12px 32px -18px rgba(24, 24, 27, 0.25);
+}
+
+/* Separate rule: browsers without :has() would drop a combined one. */
+.ffw-main-wrapper.is-style-ffw-cards .ffw-accordion-container .ffw-accordion:has(> [aria-expanded="true"]) {
+	border-color: var(--ffw-line-strong);
+	box-shadow: 0 12px 32px -18px rgba(24, 24, 27, 0.25);
+}
+
+/* Minimal: hairline separators, no boxes. */
+.ffw-main-wrapper.is-style-ffw-minimal .ffw-accordion-container .ffw-accordion {
+	border-bottom: 1px solid var(--ffw-line);
+	border-radius: 0;
+	background: transparent;
+}
+
+.ffw-main-wrapper.is-style-ffw-minimal .ffw-accordion-container .ffw-accordion:first-child {
+	border-top: 1px solid var(--ffw-line);
+}
+
+.ffw-main-wrapper.is-style-ffw-minimal .ffw-accordion-container .ffw-accordion .ffw-accordion-heading {
+	padding: 22px 4px;
+}
+
+.ffw-main-wrapper.is-style-ffw-minimal .ffw-accordion-container .ffw-accordion .ffw-basic-answer {
+	padding: 0 48px 24px 4px;
+}
+
+.ffw-main-wrapper.is-style-ffw-minimal .ffw-accordion-container .ffw-rotate-icon {
+	background: transparent;
+	border: 1px solid var(--ffw-line-strong);
+}
+
+/* Soft: tinted tiles without borders. */
+.ffw-main-wrapper.is-style-ffw-soft .ffw-accordion-container .ffw-accordion {
+	margin-bottom: 10px;
+	border-radius: 14px;
+	background: var(--ffw-tint);
+}
+
+.ffw-main-wrapper.is-style-ffw-soft .ffw-accordion-container .ffw-accordion:hover,
+.ffw-main-wrapper.is-style-ffw-soft .ffw-accordion-container .ffw-accordion.ffw-accordion-active {
+	background: var(--ffw-tint-strong);
+}
+
+.ffw-main-wrapper.is-style-ffw-soft .ffw-accordion-container .ffw-rotate-icon {
+	background: var(--ffw-surface);
+}
+
+/* Search box and extras inside styled lists. */
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-inline-search-wrap {
+	margin: 0 0 16px;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-inline-search {
+	display: block;
+	width: 100%;
+	max-width: none;
+	padding: 13px 18px;
+	border: 1px solid var(--ffw-line);
+	border-radius: 999px;
+	background: var(--ffw-surface);
+	color: var(--ffw-ink);
+	font-size: 15px;
+	box-shadow: 0 1px 2px rgba(24, 24, 27, 0.04);
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-inline-search:focus {
+	border-color: var(--ffw-ink);
+	outline: none;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-faq-filter {
+	margin-bottom: 20px;
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-helpful {
+	margin-top: 16px;
+	border-top-color: var(--ffw-line);
+}
+
+.ffw-main-wrapper[class*="is-style-ffw-"] > br {
+	display: none;
+}
+
+@media (max-width: 600px) {
+	.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-accordion .ffw-accordion-heading {
+		padding: 18px;
+	}
+
+	.ffw-main-wrapper[class*="is-style-ffw-"] .ffw-accordion-container .ffw-accordion .ffw-basic-answer {
+		padding: 0 18px 20px;
+	}
+
+	.ffw-main-wrapper.is-style-ffw-minimal .ffw-accordion-container .ffw-accordion .ffw-basic-answer {
+		padding: 0 4px 20px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ffw-main-wrapper[class*="is-style-ffw-"] * {
+		transition: none !important;
+	}
+}

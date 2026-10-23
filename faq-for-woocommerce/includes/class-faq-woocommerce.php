@@ -27,7 +27,7 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
          *
          * @var string
          */
-        public $version = '2.1.0';
+        public $version = '3.0.0';
 
         /**
          * The single instance of the class.
@@ -128,6 +128,10 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
 			include_once FFW_ABSPATH . '/includes/class-faq-comments.php';
 			include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-schema.php';
 			include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-insights.php';
+			include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-icons.php';
+			include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-ai.php';
+			include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-faq-manager.php';
+			include_once FFW_ABSPATH . '/includes/admin/app/load.php';
 
             if ( $this->is_request('admin') ) {
                 include_once FFW_ABSPATH . '/includes/admin/class-faq-woocommerce-admin.php';
@@ -136,6 +140,8 @@ if ( ! class_exists( 'FAQ_Woocommerce', false ) ) :
             include_once FFW_ABSPATH . '/includes/class-faq-woocommerce-public.php';
             include_once FFW_ABSPATH . '/includes/faq-woocommerce-public.php';
             include_once FFW_ABSPATH . '/includes/blocks/class-faq-woocommerce-blocks.php';
+            include_once FFW_ABSPATH . '/includes/patterns/class-faq-woocommerce-patterns.php';
+            include_once FFW_ABSPATH . '/includes/patterns/class-faq-woocommerce-help-center.php';
             include_once FFW_ABSPATH . '/includes/builders/class-faq-woocommerce-builders.php';
 
         }

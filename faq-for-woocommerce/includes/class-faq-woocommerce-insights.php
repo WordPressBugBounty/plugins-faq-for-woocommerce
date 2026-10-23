@@ -91,6 +91,7 @@ class FAQ_Woocommerce_Insights {
     public function ajax_event() {
         $faq_id = isset( $_POST['faq_id'] ) ? absint( wp_unslash( $_POST['faq_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $event  = isset( $_POST['event'] ) ? sanitize_key( wp_unslash( $_POST['event'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $object = isset( $_POST['object_id'] ) ? absint( wp_unslash( $_POST['object_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
         $meta_keys = array(
             'view' => self::META_VIEWS,
@@ -118,7 +119,14 @@ class FAQ_Woocommerce_Insights {
         set_transient( $guard, 1, $window );
         self::increment( $faq_id, $meta_keys[ $event ] );
 
-        do_action( 'ffw_faq_event_recorded', $faq_id, $event );
+        /**
+         * A view or vote was counted.
+         *
+         * @param int    $faq_id FAQ post ID.
+         * @param string $event  view, yes or no.
+         * @param int    $object Page or product it happened on (0 if unknown, not validated).
+         */
+        do_action( 'ffw_faq_event_recorded', $faq_id, $event, $object );
 
         wp_send_json_success( array( 'counted' => true ) );
     }
