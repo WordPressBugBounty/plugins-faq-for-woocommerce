@@ -67,6 +67,7 @@ if ( ! function_exists( 'ffw_dashboard_feature_table' ) ) {
                 array( __( 'AJAX library search', 'faq-for-woocommerce' ), __( 'Autocomplete across all published FAQs. Place it with [ffw_search], a block, or an Elementor widget.', 'faq-for-woocommerce' ), false ),
                 array( __( 'Hash deep-links', 'faq-for-woocommerce' ), __( 'Open a specific FAQ with a link like #ffw-faq-123.', 'faq-for-woocommerce' ), false ),
                 array( __( 'Extra layouts', 'faq-for-woocommerce' ), __( 'Glow, Smart, Wow, and Zoom layouts in addition to the five free templates.', 'faq-for-woocommerce' ), false ),
+                array( __( 'Settings import / export', 'faq-for-woocommerce' ), __( 'Download every setting as one file and import it on another site, with a list of every change first and undo.', 'faq-for-woocommerce' ), true ),
                 array( __( 'Spreadsheet import / export', 'faq-for-woocommerce' ), __( 'Import CSV or Excel files with column matching, a preview of every change and undo. Export to CSV, or back up everything as JSON.', 'faq-for-woocommerce' ), false ),
                 array( __( 'RTL support', 'faq-for-woocommerce' ), __( 'Display FAQs right-to-left when your language needs it.', 'faq-for-woocommerce' ), true ),
                 array( __( 'Multi-column layout', 'faq-for-woocommerce' ), __( 'Show FAQs in more than one column.', 'faq-for-woocommerce' ), false ),

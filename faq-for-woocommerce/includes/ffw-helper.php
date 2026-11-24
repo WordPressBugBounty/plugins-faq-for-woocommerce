@@ -2317,6 +2317,148 @@ function ffw_sanitize_css_color( $color ) {
 }
 
 /**
+ * A color from the Style settings, safe to print in CSS.
+ *
+ * More forgiving than ffw_sanitize_css_color(): older versions printed any
+ * saved value, so named colors and modern color functions keep working.
+ *
+ * @since 3.0.1
+ * @param mixed $color Saved value.
+ * @return string Empty when not set or not valid.
+ */
+function ffw_style_setting_color( $color ) {
+    $color = is_scalar( $color ) ? trim( (string) $color ) : '';
+
+    return preg_match( '/^[#a-zA-Z][a-zA-Z0-9#(),.%\s\/_-]*$/', $color ) ? $color : '';
+}
+
+/**
+ * Custom CSS from the settings, safe to print in a style tag.
+ *
+ * @since 3.0.1
+ * @param string $css CSS.
+ * @return string
+ */
+function ffw_prepare_custom_css( $css ) {
+    return str_replace( '</', '', wp_strip_all_tags( (string) $css ) );
+}
+
+/**
+ * CSS for Settings → Style, for every layout.
+ *
+ * One list per layout rule, printed in the footer and used by the live
+ * preview on the settings page, so both always match. Blocks and widgets
+ * override it with selectors that have two IDs. Classic reads its question
+ * values from the custom properties, because its own rules are !important.
+ *
+ * @since 3.0.1
+ * @param array $options Values of ffw_general_settings.
+ * @return string
+ */
+function ffw_get_style_settings_css( $options ) {
+    $options = is_array( $options ) ? $options : array();
+    $color   = static function ( $key ) use ( $options ) {
+        return isset( $options[ $key ] ) ? ffw_style_setting_color( $options[ $key ] ) : '';
+    };
+
+    $q_color  = $color( 'ffw_question_text_color' );
+    $q_bg     = $color( 'ffw_question_bg_color' );
+    $q_bg_odd = $color( 'ffw_question_bg_secondary_color' );
+    $q_border = $color( 'ffw_question_border_color' );
+    $a_color  = $color( 'ffw_answer_text_color' );
+    $a_bg     = $color( 'ffw_answer_bg_color' );
+    $a_border = $color( 'ffw_answer_border_color' );
+    $size     = isset( $options['ffw_question_font_size'] ) && is_scalar( $options['ffw_question_font_size'] ) ? (float) $options['ffw_question_font_size'] : 0;
+    $q_size   = $size > 0 ? $size . 'px' : '';
+
+    $rule = static function ( $selector, $declarations ) {
+        $body = '';
+        foreach ( $declarations as $property => $value ) {
+            if ( '' !== $value ) {
+                $body .= $property . ':' . $value . ' !important;';
+            }
+        }
+        return '' === $body ? '' : $selector . '{' . $body . "}\n";
+    };
+
+    $question = array(
+        'background' => $q_bg,
+        'color'      => $q_color,
+        'font-size'  => $q_size,
+    );
+    $answer   = array(
+        'background' => $a_bg,
+        'color'      => $a_color,
+    );
+
+    // Without a color, borders follow the text color, as they always have.
+    $border   = static function ( $value ) {
+        return trim( '1px solid ' . $value );
+    };
+    $unstyled = ':where(.ffw-main-wrapper:not([class*="is-style-ffw-"]))';
+
+    $css  = '';
+    $vars = '';
+    foreach ( array( '--ffw-question-color' => $q_color, '--ffw-question-bg' => $q_bg, '--ffw-question-size' => $q_size ) as $name => $value ) {
+        $vars .= '' === $value ? '' : $name . ':' . $value . ';';
+    }
+    $css .= '' === $vars ? '' : '.ffw-main-wrapper{' . $vars . "}\n";
+
+    // Classic and Whitish.
+    $item = '#ffw-wrapper .ffw-accordion .ffw-accordion-item';
+    $css .= $rule( $item . ' .ffw-button', $question );
+    $css .= $rule( $item . ' .ffw-button', array( 'border' => $border( $q_border ) ) );
+    $css .= $rule( '#ffw-wrapper.ffw-classic-layout .ffw-accordion .ffw-accordion-item .ffw-button', array( 'border-bottom' => 'none' ) );
+    $css .= $rule( '#ffw-wrapper.ffw-classic-layout .ffw-accordion .ffw-accordion-item .ffw-button span:where(:not(.ffw-toggle-icon))', array( 'color' => $q_color ) );
+    $css .= $rule( '#ffw-wrapper.ffw-classic-layout .ffw-accordion .ffw-accordion-item:last-child .ffw-button', array( 'border-bottom' => $border( $q_border ) ) );
+    $css .= $rule( $item . ' .ffw-classic-answer', $answer + array( 'border' => $border( $a_border ) ) );
+
+    // Basic. The question row gets the background, not only its text.
+    $item = '#ffw-wrapper.ffw-basic-wrapper .ffw-accordion-item';
+    $css .= $rule( $item . ' .ffw-button', $question );
+    $css .= $rule( $unstyled . ' ' . $item . ' .ffw-accordion-heading', array( 'background' => $q_bg, 'color' => $q_color ) );
+    $css .= $rule( $item . ' .ffw-accordion-heading', array( 'border-bottom' => $border( $q_border ) ) );
+    $css .= $rule( $item . ' .ffw-basic-answer', $answer + array( 'border-bottom' => $border( $a_border ) ) );
+
+    // Glow (Pro).
+    $item = '#ffw-wrapper .ffw-accordion-container .ffw-accordion-border .ffw-accordion';
+    $css .= $rule( $item . ' .ffw-accordion-heading', $question );
+    $css .= $rule( $item . ' .ffw-accordion-heading', array( 'border' => $border( $q_border ) ) );
+    $css .= $rule( $item . ' .ffw-accordion-heading', array( 'border-bottom' => 'none' ) );
+    $css .= $rule( $item . ' .ffw-accordion-heading .ffw-accordion-tittle', array( 'color' => $q_color, 'font-size' => $q_size ) );
+    $css .= $rule( $item . ' .ffw-accordion-body-content', $answer + array( 'border' => $border( $a_border ) ) );
+
+    // Smart, Wow and Zoom (Pro).
+    $item = '#ffw-wrapper .ffw-accordion-container .ffw-accordion-outline-border .ffw-accordion';
+    $css .= $rule( $item . ' .ffw-accordion-heading', $question + array( 'border-color' => $q_border ) );
+    $css .= $rule( $item . ' .ffw-accordion-heading .ffw-accordion-tittle', array( 'color' => $q_color, 'font-size' => $q_size ) );
+    $css .= $rule( $item . ' .ffw-accordion-body-content', $answer + array( 'border' => '' === $a_border ? '' : $border( $a_border ) ) );
+
+    // Trip. Not the FAQs or <details> inside an answer.
+    $css .= $rule(
+        '#ffw-main-wrapper details:where(.ffw-wrapper > *)',
+        array(
+            'background' => $q_bg,
+            'color'      => $q_color,
+            'border'     => $border( $q_border ),
+        )
+    );
+    $css .= $rule( '#ffw-main-wrapper details:where(.ffw-wrapper > *) > summary', array( 'font-size' => $q_size ) );
+    $css .= $rule( '#ffw-main-wrapper details .ffw-trip-answer', $answer + array( 'border' => '' === $a_border ? '' : $border( $a_border ) ) );
+    $css .= '#ffw-main-wrapper details .ffw-trip-answer{padding:10px 0;' . ( '' === $a_border ? 'border:none;' : '' ) . "}\n";
+    $css .= "#ffw-main-wrapper details .ffw-trip-answer iframe{display:block;position:relative;z-index:9999;}\n";
+
+    // Pop. Every other question uses the second color when there is one.
+    $css .= $rule( '#ffw-main-wrapper .ffw-collapse:nth-child(even) > .ffw-button', array( 'background' => $q_bg ) );
+    $css .= $rule( '#ffw-main-wrapper .ffw-collapse:nth-child(odd) > .ffw-button', array( 'background' => '' === $q_bg_odd ? $q_bg : $q_bg_odd ) );
+    $css .= $rule( '#ffw-main-wrapper .ffw-collapse > .ffw-button', array( 'color' => $q_color, 'font-size' => $q_size ) );
+    $css .= $rule( '#ffw-main-wrapper .ffw-collapse > .ffw-button:before', array( 'border-top-color' => $q_color ) );
+    $css .= $rule( '#ffw-main-wrapper .ffw-collapse .ffw-content', $answer + array( 'border' => $border( $a_border ) ) );
+
+    return $css;
+}
+
+/**
  * Strip dangerous tokens from per-block custom CSS.
  *
  * @since 2.0.0
@@ -2387,8 +2529,8 @@ function ffw_get_custom_faq_override_css( $args, $instance ) {
             $root . ' .ffw-faq-list-question',
             $root . ' .ffw-accordion-tittle',
             $root . ' .ffw-accordion-heading',
-            $root . ' .ffw-accordion-heading span',
-            $root . ' .ffw-button span',
+            $root . ' .ffw-accordion-heading span:not(.ffw-toggle-icon)',
+            $root . ' .ffw-button span:not(.ffw-toggle-icon)',
             $root . ' details',
             $root . ' details summary',
             $root . ' .ffw-collapse > span',
@@ -2400,8 +2542,8 @@ function ffw_get_custom_faq_override_css( $args, $instance ) {
             $root . ' .ffw-button:hover',
             $root . ' .ffw-button:focus',
             $root . ' .ffw-button.ffw-active',
-            $root . ' .ffw-button:hover span',
-            $root . ' .ffw-button.ffw-active span',
+            $root . ' .ffw-button:hover span:not(.ffw-toggle-icon)',
+            $root . ' .ffw-button.ffw-active span:not(.ffw-toggle-icon)',
             $root . ' details[open] summary',
             $root . ' .ffw-collapse > span.ffw-active',
         )

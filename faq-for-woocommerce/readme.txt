@@ -1,20 +1,26 @@
-=== Happy FAQs - WordPress FAQ and Product FAQ ===
+=== Happy FAQs – FAQ, Product FAQ & Help Center ===
 Contributors: happydevs, nayanchamp7, azha18
-Tags: faq, woocommerce faq, product faq, accordion, schema
+Tags: faq, accordion, faq schema, product faq, woocommerce faq
 Requires at least: 4.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-All-in-one FAQ plugin: site FAQs for any page and WooCommerce product FAQs, with FAQ schema, AI FAQs, Gutenberg, Elementor, and Divi.
+Add FAQs anywhere in WordPress & WooCommerce. AI-written answers with no API key, product FAQs by category & tag, help center and FAQ schema.
 
 == Description ==
 
-**Happy FAQs** is the **all-in-one FAQ plugin** for WordPress and WooCommerce: **Site FAQs** for any page and **Product FAQs** for your store, in one plugin. Create unlimited FAQs in one library and show them as a beautiful accordion wherever your visitors and customers have questions.
+**Write your frequently asked questions once and show them everywhere: help pages, a one-click Help Center, and WooCommerce product pages.** AI writes the first drafts for you, with no API key on WordPress 7.0+.
 
-**Site FAQs**: create general FAQs once and display them anywhere: a FAQ page, a one-click Help Center, posts, Gutenberg, Elementor, Divi, or a shortcode. **Product FAQs**: add FAQs to products, product categories, and tags, let customers ask and answer each other with Product Q&A, and show FAQs on shop, cart, and checkout pages (PRO). WooCommerce is optional: start with site FAQs, then add product FAQs when you open a store.
+**Product FAQs that fill themselves in.** Assign an FAQ to a product category or tag once, and every product in it shows that FAQ. Free, with no add-on needed.
+
+[Documentation](https://happydevs.net/docs/faq-for-woocommerce/overview) | [Video Tutorials](https://www.youtube.com/watch?v=CnsPBdgIbaU&list=PLqgTGQxEn_rZbnleeeuK18QJ984t6o3ZX&ab_channel=HappyDevs) | [Get Support](https://happydevs.net/support) | [Happy FAQs Pro](https://happydevs.net/happy-faqs/?utm_source=wporg&utm_medium=readme&utm_campaign=pro)
+
+**Site FAQs**: create FAQs once in one library and show them anywhere: a FAQ page, a one-click Help Center, posts, Gutenberg, Elementor, Divi, or a shortcode. **Product FAQs**: add FAQs to products, product categories, and tags. WooCommerce is optional: start with site FAQs, then add product FAQs when you open a store. Happy FAQs Pro adds product Q&A and FAQs on shop, cart, and checkout pages.
+
+[youtube https://www.youtube.com/watch?v=un0tVKTzCTw]
 
 = ✨ New in Happy FAQs 3.0 =
 
@@ -36,20 +42,17 @@ Write the answer once. Reuse it on a FAQ page, in Gutenberg, Elementor, or Divi,
 
 **22 toggle icon sets** (chevrons, arrows, carets, plus/minus, plus-to-close, folder, switch, and more) work with every accordion layout. Choose one site-wide or per block and widget, and set its position, color, and size.
 
-**Google FAQ schema** (FAQPage), an AI FAQ generator that works with the AI provider connected in WordPress (no extra API key), a category filter, "Was this helpful?" votes, accessible keyboard-friendly accordions, RTL support, and custom accordion layouts are included. Scripts and styles load only on pages that show FAQs.
+**FAQ schema** (FAQPage structured data), an AI FAQ generator that works with the AI provider connected in WordPress (no extra API key), a category filter, "Was this helpful?" votes, accessible keyboard-friendly accordions, RTL support, and custom accordion layouts are included. Scripts and styles load only on pages that show FAQs.
 
-[Documentation](https://happydevs.net/docs/faq-for-woocommerce/overview) | [Video Tutorials](https://www.youtube.com/watch?v=CnsPBdgIbaU&list=PLqgTGQxEn_rZbnleeeuK18QJ984t6o3ZX&ab_channel=HappyDevs) | [Get Support](https://happydevs.net/support)
+> **Happy FAQs Pro**<br />
+> **See the questions you haven't answered yet.** FAQ analytics shows the searches that found no answer, with one click to add the missing FAQ, and AI gap filling drafts those answers overnight from the product's own data.<br />
+> **Stop support tickets before they're sent.** FAQ suggestions inside WPForms, Contact Form 7, and Fluent Forms show a matching answer while visitors type, and Pro counts every ticket avoided.
 
-[youtube https://www.youtube.com/watch?v=CnsPBdgIbaU]
-
-> **Upgrade to Happy FAQs Pro**<br />
-> Upgrade to [Happy FAQs Pro](https://happydevs.net/happy-woocommerce-faqs-pro) now for priority email support and all PRO features.
-
-> Pro adds an **FAQ analytics dashboard**, FAQ suggestions in contact forms, FAQ Groups, nested FAQs, AJAX FAQ search, extra accordion layouts, CSV and Excel import/export, visitor questions on any page, variation product FAQs, and shop, cart, and checkout FAQs.
+> Pro also adds product Q&A with voting, visitor questions on any page, variation product FAQs, shop, cart, and checkout FAQs, course FAQs, bulk AI FAQs, FAQ Groups, nested FAQs, AJAX FAQ search, extra accordion layouts, CSV and Excel import/export, and priority email support. [See Happy FAQs Pro](https://happydevs.net/happy-faqs/?utm_source=wporg&utm_medium=readme&utm_campaign=pro)
 
 = Who it is for =
 
-* **WordPress sites** that need a FAQ accordion, help center, or FAQ page with Google schema
+* **WordPress sites** that need a FAQ accordion, help center, or FAQ page with FAQ schema
 * **WooCommerce stores** that need product FAQs, category FAQs, and question-and-answer content on products
 * **Builders** using Gutenberg, Elementor, or Divi
 
@@ -82,7 +85,7 @@ You can also attach FAQs from the product edit screen. One FAQ can appear in mor
 * **22 toggle icon sets** with position, color, and size controls, for every layout
 * Per-block style controls: question and answer colors, font sizes, border, corner radius, and spacing
 * FAQ accordion layouts (5 free, 4 more in Pro)
-* Google FAQ schema (FAQPage) on pages and products
+* FAQ schema (FAQPage) on pages and products, one merged block per page with duplicates removed
 * FAQ categories, shortcodes, and an FAQ page setting
 * Happy Prebuilt FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (library FAQs)
 * Happy Custom FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (write Q&A on the page)
@@ -107,64 +110,81 @@ You can also attach FAQs from the product edit screen. One FAQ can appear in mor
 * **Course and lesson FAQs** for Tutor LMS, LearnDash, and LearnPress (PRO)
 * Variation FAQs, shop/cart/checkout FAQs (PRO)
 
-= Free features =
+= FAQ accordion =
 
-**General FAQs**
+* Unlimited FAQs in one reusable library, with FAQ categories (Shipping, Returns, and so on)
+* Five accordion layouts (Classic, Whitish, Trip, Pop, Basic), colors, width, and display options
+* **22 toggle icon sets** for the open and close icon: chevron, bold chevron, chevron in circle, solid circle, or square, chevron right, double chevron, arrow, arrow in circle, arrow right, caret, caret right, caret in circle, plus/minus (regular, light, in circle, solid circle, or square), plus to close (plain or in circle), folder, and switch
+* Every icon animates between closed and open, and works with all accordion layouts (5 free, 4 Pro)
+* Icon position (left or right of the question), color, and size: site-wide in **Settings → Style**, or per block, Elementor widget, and shortcode
+* **3 block styles**: Cards, Minimal, and Soft, for Happy Prebuilt FAQs and Happy Custom FAQs
+* Per-block style controls: question and answer colors, font sizes, border color, corner radius, and spacing
+* Inline search that filters the FAQs already on the page
+* FAQ category filter: buttons that show one FAQ category at a time
+* "Show more" button: show a few FAQs first, reveal the rest on click (all FAQs stay in schema)
+* Expand / collapse all, or open every answer on load
+* Images, video, and other media in answers, and comments on FAQs
+* Right-to-left (RTL) layouts for Arabic, Hebrew, Persian, and other RTL languages, automatic for RTL site languages
+* Light, elegant design that follows your theme's fonts and works on mobile
 
-* Unlimited FAQs in one reusable library
-* **FAQs screen**: All FAQs, Add New, and Categories in tabs on one page, with no page reloads. Search questions and answers, filter by status or category, sort by views or helpful votes, quick add, quick edit, duplicate, copy a shortcode, and bulk publish, move to drafts, trash, or add to a category. Each FAQ shows where it appears (products, categories, tags, store pages, or global), and the full editor with the Happy FAQs Panel opens in place
-* Place FAQs on any WordPress page or post
-* FAQ categories (Shipping, Returns, and so on)
-* FAQ page setting: pick a page and Happy FAQs can inject the accordion
-* Shortcodes for all FAQs, a FAQ category, selected FAQ IDs, or the current product
-* Setup wizard on first activation: pick General or Product FAQs, start from common questions, and copy your shortcode
+= FAQ page and Help Center =
 
-**FAQ pattern library**
-
+* **Help Center builder** on **Happy FAQs → Help Center Page**: pick filter tabs or a category sidebar (topic list with a section per category and one search box for every topic), a Cards, Minimal or Soft style, a most asked questions section, and a contact button, with a live preview. Create a draft or publish in one click; the page stays in sync with your FAQ library. With Pro, the page gets a search across every FAQ at the top and an "Ask a question" form
 * **21 ready-made FAQ sections**, bundled with the plugin: no account, no remote downloads, works offline
 * 6 general patterns: centered, two-column, contact card, minimal, two lists, and a help center with search
 * 2 live lists: most viewed questions and newest questions, updated automatically
 * 3 store patterns: shipping and returns, orders and payments, and product questions
 * 10 industry patterns: pricing and billing, getting started, agency services, online course, restaurant, events, hotel, gym membership, real estate, and privacy
 * **Happy FAQs → Patterns** gallery with live previews in your theme, category tabs, and search
-* One click creates a draft page from a pattern, or copy it into any page
-* **Help Center builder** on **Happy FAQs → Help Center Page**: pick filter tabs or a category sidebar (topic list with a section per category and one search box for every topic), a Cards, Minimal or Soft style, a most asked questions section, and a contact button, with a live preview. Create a draft or publish in one click; the page stays in sync with your FAQ library. With Pro, the page gets a search across every FAQ at the top and an "Ask a question" form
-* Also in the block editor inserter under **Patterns → Happy FAQs**
-* **3 block styles**: Cards, Minimal, and Soft, for Happy Prebuilt FAQs and Happy Custom FAQs
-* Light, elegant design that follows your theme's fonts and works on mobile
+* One click creates a draft page from a pattern, or copy it into any page. Also in the block editor inserter under **Patterns → Happy FAQs**
+* FAQ page setting: pick a page and Happy FAQs adds the accordion to it
 
-**Display and extras**
+= WooCommerce product FAQ =
 
-* **22 toggle icon sets** for the open and close icon: chevron, bold chevron, chevron in circle, solid circle, or square, chevron right, double chevron, arrow, arrow in circle, arrow right, caret, caret right, caret in circle, plus/minus (regular, light, in circle, solid circle, or square), plus to close (plain or in circle), folder, and switch
-* Every icon animates between closed and open, and works with all accordion layouts (5 free, 4 Pro)
-* Icon position (left or right of the question), color, and size: site-wide in **Settings → Style**, or per block, Elementor widget, and shortcode
-* Per-block style controls in Happy Prebuilt FAQs and Happy Custom FAQs: question and answer colors, font sizes, border color, corner radius, and spacing
-* Happy Prebuilt FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (library FAQs, same markup as the shortcode)
-* Happy Custom FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (write Q&A on the page)
-* Google FAQPage schema on help pages and product pages
-* Inline search that filters the FAQs already on the page
-* FAQ category filter: buttons that show one FAQ category at a time
-* "Show more" button: show a few FAQs first, reveal the rest on click (all FAQs stay in schema)
-* "Was this helpful? Yes / No" votes and answer view counts, with sortable Views and Helpful columns on All FAQs
-* Accessible accordions: button semantics, aria-expanded state, Enter/Space keys, and a visible focus outline
-* Loads CSS and JS only on pages that show FAQs, for the layouts in use
+* Assign FAQs to products from the product screen or the FAQ screen
+* **Inherit FAQs from WooCommerce product categories and tags**, free
+* Drag to sort FAQs on each product
+* Product tab, show/hide answers on load, and tab order
+* `[ffw_template dynamic_post="true"]` for product templates
+
+= AI FAQ generator =
+
 * **AI FAQ generator**: write FAQs from a WooCommerce product, any page or post, or a topic you type. Pick how many, the language, and what to focus on. Questions already on the product or page are skipped. Edit every question and answer before saving, publish or save as drafts, and add them to the page in one click
 * **No Happy FAQs API key needed**: AI uses the provider connected in WordPress (Settings → Connectors, WordPress 7.0 or later). Your own OpenAI key still works as a fallback, or on older WordPress
 * **Improve with AI** in the FAQ editor (block and classic): improve, shorten, expand, or make an answer friendlier or more professional, and review it before it replaces the old one
-* Images, video, and other media in answers
-* Expand / collapse all
-* Comments on FAQs
-* Five accordion layouts, colors, width, and display options
+
+= FAQ schema =
+
+* FAQPage structured data (JSON-LD) on help pages and product pages
+* One merged schema block per page, with duplicate questions removed, even with several FAQ lists on the page
+* No duplicate schema with Yoast SEO or Rank Math: on a page that also has their FAQ block, Happy FAQs leaves the FAQ schema to them
+* Answers in schema as HTML or plain text, or switch schema off
+* Choose whether single FAQ pages are indexed by search engines
+
+Structured FAQs give search engines and AI assistants a clean version of your answers to read. Google now shows FAQ rich results only for a limited set of sites, so don't count on them.
+
+= Elementor, Divi and Gutenberg FAQ =
+
+* Happy Prebuilt FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (library FAQs, same markup as the shortcode)
+* Happy Custom FAQs: Gutenberg block, Elementor widget, and Divi 4/5 module (write Q&A on the page)
+* Shortcodes for all FAQs, a FAQ category, selected FAQ IDs, or the current product, with a shortcode builder and live preview
 * Classic Editor and block editor support
+
+= Accessible =
+
+Every layout uses button semantics, an aria-expanded state, Enter and Space keys, and a visible focus outline.
+
+= Lightweight =
+
+CSS and JS load only on pages that show FAQs, and only for the layouts in use.
+
+= Easy to manage =
+
+* **FAQs screen**: All FAQs, Add New, and Categories in tabs on one page, with no page reloads. Search questions and answers, filter by status or category, sort by views or helpful votes, quick add, quick edit, duplicate, copy a shortcode, and bulk publish, move to drafts, trash, or add to a category. Each FAQ shows where it appears (products, categories, tags, store pages, or global), and the full editor with the Happy FAQs Panel opens in place
+* **Settings import and export**: download every setting as one file and import it on another site. You see each change before it is saved, and you can undo the import. API keys stay out of the file unless you include them
+* Setup wizard on first activation: pick General or Product FAQs, start from common questions, and copy your shortcode
+* "Was this helpful? Yes / No" votes and answer view counts, with sortable Views and Helpful columns on All FAQs. No IP addresses are stored
 * WPML and Polylang support
-* Right-to-left (RTL) layouts for Arabic, Hebrew, Persian, and other RTL languages, automatic for RTL site languages
-
-**Product FAQs**
-
-* Assign FAQs to products from the product screen or the FAQ screen
-* Inherit FAQs from WooCommerce product categories and tags
-* Drag to sort FAQs on each product
-* Product tab, show/hide answers on load, and tab order
 
 = Shortcodes =
 
@@ -225,7 +245,7 @@ Pro adds `group_id` for FAQ Groups (PRO), and `[ffw_search]` for AJAX library se
 
 = Pro features =
 
-[Upgrade to Happy FAQs Pro](https://happydevs.net/happy-woocommerce-faqs-pro)
+[Upgrade to Happy FAQs Pro](https://happydevs.net/happy-faqs/?utm_source=wporg&utm_medium=readme&utm_campaign=pro)
 
 **Library**
 
@@ -260,7 +280,7 @@ Pro adds `group_id` for FAQ Groups (PRO), and `[ffw_search]` for AJAX library se
 
 = Get started =
 
-1. Install and activate Happy WooCommerce FAQs.
+1. Install and activate Happy FAQs.
 2. Follow the setup wizard that opens on first activation, or add a few FAQs yourself.
 3. Paste `[ffw_template]` on a page, insert **Happy Prebuilt FAQs** or **Happy Custom FAQs** (Gutenberg, Elementor, or Divi), or choose an FAQs page in **Happy FAQs → Settings**.
 4. For a store, open a FAQ, use the **Happy FAQs Panel** metabox, and assign products, product categories, or tags.
@@ -271,14 +291,14 @@ Pro adds `group_id` for FAQ Groups (PRO), and `[ffw_search]` for AJAX library se
 
 Requirements:
 
-* WordPress 3.6 or later
+* WordPress 4.4 or later
 * PHP 7.4 or later
 * WooCommerce is optional. Install WooCommerce only if you need product FAQs.
 
 = From the dashboard =
 
 1. Go to **Plugins → Add New**.
-2. Search for **Happy WooCommerce FAQs**, **Product FAQ**, or **WooCommerce FAQ**.
+2. Search for **Happy FAQs**.
 3. Install and activate.
 
 = Manual =
@@ -292,7 +312,7 @@ Requirements:
 
 = Is this a WooCommerce FAQ plugin or a WordPress FAQ plugin? =
 
-Both. Happy WooCommerce FAQs is a WordPress FAQ accordion plugin. Product FAQs work when WooCommerce is active. You can use it without WooCommerce for site FAQs.
+Both. Happy FAQs is a WordPress FAQ accordion plugin. Product FAQs work when WooCommerce is active. You can use it without WooCommerce for site FAQs.
 
 = Do I need WooCommerce? =
 
@@ -322,9 +342,17 @@ Yes, in the free version. Every product in that category or tag can inherit thos
 
 Product pages are included in free. Shop, cart, checkout, and product archive locations are Pro.
 
-= Does it output Google FAQ schema? =
+= Does Happy FAQs add FAQ schema? =
 
-Yes. FAQPage schema is included for help pages and product pages, with duplicate questions removed. It helps search engines and AI answer engines understand your questions and answers.
+Yes. FAQPage structured data (JSON-LD) is added for help pages and product pages. If a page has several FAQ lists, they are merged into one schema block with duplicate questions removed. You can switch schema off, or output answers as plain text.
+
+= Will my FAQs show as rich results in Google? =
+
+Probably not. Since 2023, Google shows FAQ rich results only for a limited set of sites. FAQ schema is still useful: it gives search engines and AI assistants a clean, structured version of your answers.
+
+= Will Happy FAQs slow down my site? =
+
+It loads its CSS and JavaScript only on pages that show FAQs, and only for the layouts you use.
 
 = Can I make a help center page? =
 
@@ -338,9 +366,17 @@ Yes. Happy FAQs includes **21 ready-made FAQ patterns**. Open **Happy FAQs → P
 
 Yes. Free includes **Happy Prebuilt FAQs** and **Happy Custom FAQs** as a Gutenberg block, Elementor widget, and Divi 4/5 module. Prebuilt shows FAQs from your library. Custom lets you write questions and answers on the page.
 
+= Can I copy my settings to another site? =
+
+Yes, in the free version. Go to **Happy FAQs → Settings → Import / Export**, download the settings file, and import it on the other site. You see every change before it is saved, and you can undo it. The file holds settings only, not your FAQs.
+
 = Can I import FAQs from a spreadsheet? =
 
 Yes, with Happy FAQs Pro. Go to **Happy FAQs → Import / Export**, add a CSV or Excel file (or paste cells from Google Sheets), check the matched columns, review the changes, and import. You can undo an import afterwards. **Download CSV** exports your FAQs to edit in a spreadsheet and import again.
+
+= Can I move my FAQs from another FAQ plugin? =
+
+Yes, with Happy FAQs Pro: export your FAQs from the other plugin as a spreadsheet, then use **Happy FAQs → Import / Export**. You see a review of every change before anything is saved, and you can undo the last 5 imports.
 
 = Can I put FAQs inside another FAQ's answer? =
 
@@ -399,21 +435,31 @@ Yes. Every layout works with the keyboard (Tab, Enter, Space), shows a visible f
 Yes, in the free version. **Settings → Right to Left (RTL)** follows your site language automatically, or you can set it to always or never.
 
 == Screenshots ==
-1. One plugin for site FAQs and product FAQs: FAQ pages, product FAQs with Q&A, and cart and checkout FAQs (Free + Pro)
-2. FAQs on every product page: answer buyer questions in a clean accordion tab (Free)
-3. A brand-new dashboard with live stats, a setup checklist, and shortcuts (Free)
-4. 21 ready-made FAQ patterns for stores, services, and industries (Free)
-5. One-click Help Center page with search, most asked questions, and topics (Free)
-6. AI FAQ generator: write FAQs from a product, page, or topic, no extra API key (Free)
-7. All your FAQs on one screen with views, helpful votes, and bulk actions (Free)
-8. Shortcode builder with a live preview (Free)
-9. 22 toggle icons and live styling (Free)
-10. 9 accordion layouts: 5 free and 4 more in Pro (Free)
-11. Product Q&A with voting: customers answer each other, you moderate (Pro)
-12. FAQ analytics dashboard: opens, helpful rate, and searches with no answer (Pro)
-13. Spreadsheet import and export with a preview of every change (Pro)
+1. Answer every question from one FAQ library: on FAQ pages, product pages, and (with Pro) cart and checkout (Free + Pro)
+2. Answer buyer questions right on the product page, in a clean FAQ tab (Free)
+3. See your setup progress, live counts, and next steps on the dashboard (Free)
+4. Start from 21 ready-made FAQ sections for stores, services, and industries (Free)
+5. Build a Help Center page in one click, with search, most asked questions, and topics (Free)
+6. Let AI write FAQs from a product, page, or topic, with no extra API key (Free)
+7. Manage every FAQ on one screen: views, helpful votes, and bulk actions (Free)
+8. Build any shortcode with a live preview, no docs needed (Free)
+9. Match your site with 22 toggle icons and live styling (Free)
+10. Pick from 9 accordion layouts: 5 free and 4 more in Pro (Free + Pro)
+11. Let customers answer each other with product Q&A and voting, moderated by you (Pro)
+12. See what visitors searched for and couldn't find, then add the missing FAQ (Pro)
+13. Move FAQs in and out with spreadsheet import and export, with a preview of every change (Pro)
 
 == Changelog ==
+
+= 3.0.1 =
+* Added: Settings → Import / Export. Download every Happy FAQs setting as a JSON file and import it on this site or another one, with a list of every change first and an undo. API keys are left out unless you include them, and the FAQ page is matched by its address. Developers can use the `ffw_settings_export`, `ffw_settings_import` and `ffw_settings_is_secret` filters.
+* Improved: On a page that also has a Yoast SEO or Rank Math FAQ block, Happy FAQs leaves the FAQ schema to that plugin, so the page has one FAQPage block instead of two, which Google treats as an error. Developers can change this with the `ffw_seo_faq_block_on_page` filter.
+* Improved: The review request now shows only on Happy FAQs screens, and only after your FAQs have helped visitors (100 answers opened, 5 "helpful" votes on one FAQ, or 10 published FAQs). "Maybe later" hides it for 60 days; "Leave a review" or "I already did" hides it for good.
+* Improved: The plugin is called Happy FAQs everywhere: settings, the Pro popup, the usage-data opt-in, and the comment above the FAQ schema in your page source.
+* Removed: An old, unused rebranding notice.
+* Fixed: Colors and sizes from Settings → Style that did not reach the page. The Classic layout ignored the question background, question text color and font size, and the icon took the question text color instead of its own. Pop, Basic and the Pro layouts had the same kind of gaps. Custom CSS with `>` or quotes works too.
+* Improved: The preview in Settings → Style is now real: your layout in your theme, updated as you edit and before you save.
+* Fixed: A "block_categories is deprecated" notice in the debug log on WordPress 5.8 and later.
 
 = 3.0.0 =
 * Added: A new admin. Every Happy FAQs screen is rebuilt with a slim header, and its actions work without page reloads: Dashboard with a setup checklist and live counts, Settings with search and a live style preview, a shortcode builder with a live preview, Templates with live previews of your FAQs, AI FAQs, Analytics, Help Center page builder, Patterns, Customer Questions and the setup wizard. Saved settings and data are unchanged, and each previous screen is still there (add `&ffw_classic=1`).
@@ -871,3 +917,8 @@ Yes, in the free version. **Settings → Right to Left (RTL)** follows your site
 
 = 1.0.0 =
 * First Release.
+
+== Upgrade Notice ==
+
+= 3.0.1 =
+Settings → Style colors now reach every layout, with a real live preview. Settings import and export, no duplicate FAQ schema next to Yoast SEO or Rank Math FAQ blocks, a quieter review request, and the Happy FAQs name everywhere.

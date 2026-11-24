@@ -26,6 +26,10 @@
 	var FIELDS = data.fields || {};
 	var LAYOUT = data.layout || [];
 
+	// Not a set of fields: its own panel, last in the list.
+	var TRANSFER = { id: 'import-export', label: __( 'Import / Export', D ), icon: 'download', groups: [] };
+	var SECTIONS = data.transfer ? LAYOUT.concat( [ TRANSFER ] ) : LAYOUT;
+
 	// Old tab anchors still open the right section.
 	var OLD_TABS = { 'ffw-general': 'general', 'ffw-style': 'style', 'ffw-schema': 'seo', 'ffw-comment': 'comments', 'ffw-ai-faqs': 'ai' };
 
@@ -501,75 +505,433 @@
 	 * Style preview.
 	 * ------------------------------------------------------------------ */
 
-	function StylePreview( props ) {
-		var values = props.values;
-		var icon = null;
-		var set = values.ffw_icon_set || 'default';
-		( data.icons || [] ).some( function ( item ) {
-			if ( item.value === set ) {
-				icon = item;
-				return true;
+	// Colors and sizes are swapped in place. These change the markup, so they reload it.
+	var RELOAD_KEYS = [ 'ffw_icon_set', 'ffw_icon_position' ];
+
+	function pick( values, keys ) {
+		var out = {};
+		keys.forEach( function ( key ) {
+			if ( undefined !== values[ key ] && null !== values[ key ] ) {
+				out[ key ] = String( values[ key ] );
 			}
-			return false;
 		} );
-		var left = 'left' === values.ffw_icon_position;
-		var iconStyle = {
-			color: values.ffw_icon_color || values.ffw_question_text_color || undefined,
-			width: ( values.ffw_icon_size || 18 ) + 'px',
-			height: ( values.ffw_icon_size || 18 ) + 'px'
-		};
-		function iconFor( open ) {
-			if ( 'none' === set ) {
-				return null;
+		return out;
+	}
+
+	// The site's layout and theme in a frame, with the values being edited.
+	function StylePreview( props ) {
+		var config = data.stylePreview;
+		var frame = useRef( null );
+		var loaded = useRef( false );
+		var first = useRef( true );
+		var request = useRef( 0 );
+		var sent = useRef( JSON.stringify( pick( props.values, RELOAD_KEYS ) ) );
+		var reload = useRef( false );
+		var reply = useRef( null );
+		var heightState = useState( 220 );
+		var busyState = useState( true );
+		var errorState = useState( '' );
+
+		var current = JSON.stringify( pick( props.values, config.keys ) );
+
+		function post( message ) {
+			if ( frame.current && frame.current.contentWindow ) {
+				frame.current.contentWindow.postMessage( message, new window.URL( config.url, window.location.href ).origin );
 			}
-			if ( ! icon || ! icon.svg ) {
-				return el( 'span', { className: 'ffw-set-pv-icon is-text', style: { color: iconStyle.color } }, open ? '−' : '+' );
+		}
+
+		function show() {
+			if ( reply.current && loaded.current ) {
+				post( Object.assign( { ffwStylePreview: 'css' }, reply.current ) );
 			}
-			return el( 'span', {
-				className: ui.cx( 'ffw-set-pv-icon', open && 'ffw-accordion-active' ),
-				style: iconStyle,
-				dangerouslySetInnerHTML: { __html: icon.svg }
+		}
+
+		function update() {
+			var id = ++request.current;
+			var markup = JSON.stringify( pick( props.values, RELOAD_KEYS ) );
+			busyState[ 1 ]( true );
+			ui.api( '/settings/style-preview', { method: 'POST', data: { values: JSON.parse( current ) } } ).then( function ( result ) {
+				if ( id !== request.current ) {
+					return;
+				}
+				errorState[ 1 ]( '' );
+				reply.current = result;
+				if ( markup !== sent.current ) {
+					sent.current = markup;
+					if ( loaded.current ) {
+						post( { ffwStylePreview: 'reload' } );
+					} else {
+						reload.current = true;
+					}
+					return; // onLoad clears the spinner.
+				}
+				show();
+				busyState[ 1 ]( false );
+			} ).catch( function ( error ) {
+				if ( id === request.current ) {
+					errorState[ 1 ]( ( error && error.message ) || __( 'The preview could not be updated.', D ) );
+					busyState[ 1 ]( false );
+				}
 			} );
 		}
-		var question = {
-			color: values.ffw_question_text_color || undefined,
-			background: values.ffw_question_bg_color || undefined,
-			borderColor: values.ffw_question_border_color || undefined,
-			fontSize: values.ffw_question_font_size ? values.ffw_question_font_size + 'px' : undefined,
-			flexDirection: left ? 'row-reverse' : 'row',
-			justifyContent: left ? 'flex-end' : 'space-between'
-		};
-		var answer = {
-			color: values.ffw_answer_text_color || undefined,
-			background: values.ffw_answer_bg_color || undefined,
-			borderColor: values.ffw_answer_border_color || undefined
-		};
-		var items = [
-			[ __( 'How long does shipping take?', D ), __( 'Orders ship within 1–2 business days. Delivery takes 3–5 days in most areas.', D ), true ],
-			[ __( 'Can I return an item?', D ), '', false ],
-			[ __( 'Do you ship internationally?', D ), '', false ]
-		];
+
+		useEffect( function () {
+			// The frame opens with the saved values.
+			if ( first.current ) {
+				first.current = false;
+				if ( ! props.dirty ) {
+					return undefined;
+				}
+				sent.current = '';
+			}
+			var timer = window.setTimeout( update, 250 );
+			return function () {
+				window.clearTimeout( timer );
+			};
+		}, [ current ] );
+
+		useEffect( function () {
+			function onMessage( event ) {
+				if ( ! frame.current || event.source !== frame.current.contentWindow || ! event.data || 'size' !== event.data.ffwStylePreview ) {
+					return;
+				}
+				heightState[ 1 ]( Math.max( 120, Math.min( 900, Number( event.data.height ) || 0 ) ) );
+			}
+			window.addEventListener( 'message', onMessage );
+			return function () {
+				window.removeEventListener( 'message', onMessage );
+			};
+		}, [] );
+
 		return el(
 			'div',
 			{ className: 'ffw-set-preview' },
-			el( 'div', { className: 'ffw-set-preview-head' }, el( ui.Icon, { name: 'eye', size: 15 } ), __( 'Preview', D ) ),
 			el(
 				'div',
-				{ className: 'ffw-set-preview-canvas' },
+				{ className: 'ffw-set-preview-head' },
+				el( ui.Icon, { name: 'eye', size: 15 } ),
+				__( 'Live preview', D ),
+				busyState[ 0 ] ? el( 'span', { className: 'ffw-ui-spin', 'aria-label': __( 'Loading', D ) } ) : null
+			),
+			el( 'iframe', {
+				ref: frame,
+				className: 'ffw-set-preview-frame',
+				src: config.url,
+				title: __( 'Preview of your FAQ style', D ),
+				style: { height: heightState[ 0 ] + 'px' },
+				onLoad: function () {
+					loaded.current = true;
+					if ( reload.current ) {
+						reload.current = false;
+						post( { ffwStylePreview: 'reload' } );
+						return;
+					}
+					busyState[ 1 ]( false );
+					show();
+				}
+			} ),
+			el(
+				'p',
+				{ className: 'ffw-set-preview-note' },
+				errorState[ 0 ] || __( 'Your layout and theme with sample questions. Changes show here before you save.', D )
+			)
+		);
+	}
+
+	/* ------------------------------------------------------------------
+	 * Import / Export.
+	 * ------------------------------------------------------------------ */
+
+	function download( name, contents ) {
+		var url = window.URL.createObjectURL( new window.Blob( [ contents ], { type: 'application/json' } ) );
+		var link = document.createElement( 'a' );
+		link.href = url;
+		link.download = name;
+		document.body.appendChild( link );
+		link.click();
+		document.body.removeChild( link );
+		window.setTimeout( function () {
+			window.URL.revokeObjectURL( url );
+		}, 1000 );
+	}
+
+	// Fields drawn by other plugins are HTML: put the new values in it.
+	function legacyHtmlWith( html, values ) {
+		var box = document.createElement( 'template' );
+		box.innerHTML = html || '';
+		Array.prototype.forEach.call( box.content.querySelectorAll( '[name^="ffw_general_settings["]' ), function ( input ) {
+			var match = input.name.match( /^ffw_general_settings\[([^\]]+)\](\[\])?$/ );
+			if ( ! match ) {
+				return;
+			}
+			var value = values[ match[ 1 ] ];
+			var list = ( Array.isArray( value ) ? value : undefined === value || null === value ? [] : [ value ] ).map( String );
+			if ( 'checkbox' === input.type || 'radio' === input.type ) {
+				// A form posts "on" for a box without a value.
+				var own = input.hasAttribute( 'value' ) ? input.value : 'on';
+				input.toggleAttribute( 'checked', list.indexOf( own ) !== -1 || ( 'checkbox' === input.type && ! match[ 2 ] && list.length > 0 && isOn( list[ 0 ] ) ) );
+			} else if ( 'SELECT' === input.tagName ) {
+				Array.prototype.forEach.call( input.options, function ( option ) {
+					option.toggleAttribute( 'selected', list.indexOf( option.value ) !== -1 );
+				} );
+			} else if ( 'TEXTAREA' === input.tagName ) {
+				input.textContent = list[ 0 ] || '';
+			} else if ( 'hidden' !== input.type ) {
+				input.setAttribute( 'value', list[ 0 ] || '' );
+			}
+		} );
+		return box.innerHTML;
+	}
+
+	function ChangeList( props ) {
+		var sections = [];
+		props.changes.forEach( function ( change ) {
+			var last = sections[ sections.length - 1 ];
+			if ( ! last || last.label !== change.section ) {
+				last = { label: change.section, items: [] };
+				sections.push( last );
+			}
+			last.items.push( change );
+		} );
+		return el(
+			'div',
+			{ className: 'ffw-set-changes', tabIndex: 0, role: 'region', 'aria-label': __( 'Changes', D ) },
+			sections.map( function ( section, index ) {
+				return el(
+					'div',
+					{ key: index, className: 'ffw-set-changes-section' },
+					el( 'h3', null, section.label, ' ', el( ui.Badge, null, section.items.length ) ),
+					el( 'ul', null, section.items.map( function ( change ) {
+						return el(
+							'li',
+							{ key: change.key },
+							el( 'span', { className: 'ffw-set-change-label' }, change.label ),
+							el( 'span', { className: 'ffw-set-change-values' },
+								el( 'del', null, el( 'span', { className: 'ffw-ui-sr' }, __( 'From:', D ), ' ' ), change.from ),
+								el( 'span', { className: 'ffw-set-change-arrow', 'aria-hidden': 'true' }, '→' ),
+								el( 'ins', null, el( 'span', { className: 'ffw-ui-sr' }, __( 'To:', D ), ' ' ), change.to )
+							)
+						);
+					} ) )
+				);
+			} )
+		);
+	}
+
+	function Notes( props ) {
+		return props.notes && props.notes.length ? el(
+			ui.Notice,
+			{ tone: 'info' },
+			1 === props.notes.length
+				? el( 'p', null, props.notes[ 0 ] )
+				: el( 'ul', { className: 'ffw-set-notes' }, props.notes.map( function ( note, index ) {
+					return el( 'li', { key: index }, note );
+				} ) )
+		) : null;
+	}
+
+	function Transfer( props ) {
+		var transfer = props.transfer;
+		var secretsState = useState( false );
+		var busyState = useState( '' );
+		var errorState = useState( '' );
+		var overState = useState( false );
+		var fileState = useState( null );
+		var doneState = useState( null );
+		var file = fileState[ 0 ];
+		var done = doneState[ 0 ];
+		var busy = busyState[ 0 ];
+
+		function runExport() {
+			busyState[ 1 ]( 'export' );
+			ui.api( '/settings/export', { query: { secrets: secretsState[ 0 ] && transfer.hasSecret ? 1 : 0 } } ).then( function ( result ) {
+				busyState[ 1 ]( '' );
+				download( result.name, JSON.stringify( result.file, null, 2 ) );
+				ui.toast( sprintf( __( 'Downloaded %s', D ), result.name ) );
+			} ).catch( function ( error ) {
+				busyState[ 1 ]( '' );
+				ui.toast( ui.errorText( error ), 'error' );
+			} );
+		}
+
+		function choose( picked ) {
+			if ( ! picked || busy ) {
+				return;
+			}
+			errorState[ 1 ]( '' );
+			doneState[ 1 ]( null );
+			if ( picked.size > transfer.maxSize ) {
+				errorState[ 1 ]( __( 'That file is too large to be a Happy FAQs settings file.', D ) );
+				return;
+			}
+			busyState[ 1 ]( 'read' );
+			var reader = new window.FileReader();
+			reader.onerror = function () {
+				busyState[ 1 ]( '' );
+				errorState[ 1 ]( __( 'Your browser could not read that file.', D ) );
+			};
+			reader.onload = function () {
+				ui.api( '/settings/import', { method: 'POST', data: { file: String( reader.result ), preview: true } } ).then( function ( result ) {
+					busyState[ 1 ]( '' );
+					fileState[ 1 ]( { name: picked.name, text: String( reader.result ), preview: result } );
+				} ).catch( function ( error ) {
+					busyState[ 1 ]( '' );
+					errorState[ 1 ]( ui.errorText( error ) );
+				} );
+			};
+			reader.readAsText( picked );
+		}
+
+		function runImport() {
+			busyState[ 1 ]( 'import' );
+			ui.api( '/settings/import', { method: 'POST', data: { file: file.text, preview: false } } ).then( function ( result ) {
+				busyState[ 1 ]( '' );
+				fileState[ 1 ]( null );
+				doneState[ 1 ]( { count: result.changes.length, notes: result.notes } );
+				props.onSaved( result );
+				ui.toast( __( 'Settings imported.', D ) );
+			} ).catch( function ( error ) {
+				busyState[ 1 ]( '' );
+				ui.toast( ui.errorText( error ), 'error' );
+			} );
+		}
+
+		function undo() {
+			ui.confirm( {
+				title: __( 'Undo the import?', D ),
+				message: __( 'Every setting goes back to how it was before the import, including settings you changed since.', D ),
+				confirm: __( 'Undo import', D ),
+				danger: true
+			} ).then( function ( ok ) {
+				if ( ! ok ) {
+					return;
+				}
+				busyState[ 1 ]( 'undo' );
+				ui.api( '/settings/restore', { method: 'POST' } ).then( function ( result ) {
+					busyState[ 1 ]( '' );
+					doneState[ 1 ]( null );
+					fileState[ 1 ]( null );
+					props.onSaved( result );
+					ui.toast( __( 'Import undone. Your previous settings are back.', D ) );
+				} ).catch( function ( error ) {
+					busyState[ 1 ]( '' );
+					ui.toast( ui.errorText( error ), 'error' );
+				} );
+			} );
+		}
+
+		var importBody;
+		if ( file ) {
+			var changes = file.preview.changes;
+			var from = [
+				file.preview.site ? file.preview.site.replace( /^https?:\/\//, '' ).replace( /\/$/, '' ) : '',
+				file.preview.exported,
+				file.preview.version ? sprintf( __( 'Happy FAQs %s', D ), file.preview.version ) : ''
+			].filter( Boolean ).join( ' · ' );
+			importBody = el(
+				'div',
+				{ className: 'ffw-set-import' },
+				el( 'div', { className: 'ffw-set-file' },
+					el( ui.Icon, { name: 'page', size: 18 } ),
+					el( 'div', null, el( 'strong', null, file.name ), from ? el( 'span', null, from ) : null )
+				),
+				changes.length
+					? el( Fragment, null,
+						el( 'p', { className: 'ffw-set-import-lead', role: 'status' }, 1 === changes.length ? __( '1 setting will change:', D ) : sprintf( __( '%d settings will change:', D ), changes.length ) ),
+						el( ChangeList, { changes: changes } )
+					)
+					: el( ui.Notice, { tone: 'good' }, el( 'p', null, __( 'This site already has these settings. There is nothing to import.', D ) ) ),
+				el( Notes, { notes: file.preview.notes } ),
+				props.dirty && changes.length ? el( ui.Notice, { tone: 'warn' }, el( 'p', null, __( 'You have changes on this page that are not saved. Importing discards them.', D ) ) ) : null,
+				el( 'div', { className: 'ffw-ui-row ffw-set-import-actions' },
+					changes.length ? el( ui.Button, { variant: 'brand', icon: 'upload', busy: 'import' === busy, onClick: runImport }, 1 === changes.length ? __( 'Import 1 change', D ) : sprintf( __( 'Import %d changes', D ), changes.length ) ) : null,
+					el( ui.Button, { disabled: !! busy, onClick: function () {
+						fileState[ 1 ]( null );
+					} }, changes.length ? __( 'Cancel', D ) : __( 'Choose another file', D ) )
+				)
+			);
+		} else {
+			importBody = el(
+				'div',
+				{ className: 'ffw-set-import' },
+				done ? el( ui.Notice, { tone: 'good' }, el( 'p', null, 1 === done.count ? __( 'Imported. 1 setting changed.', D ) : sprintf( __( 'Imported. %d settings changed.', D ), done.count ) ) ) : null,
+				done ? el( Notes, { notes: done.notes } ) : null,
+				errorState[ 0 ] ? el( ui.Notice, { tone: 'bad' }, el( 'p', null, errorState[ 0 ] ) ) : null,
+				el(
+					'label',
+					{
+						className: ui.cx( 'ffw-set-drop', overState[ 0 ] && 'is-over', 'read' === busy && 'is-busy' ),
+						onDragOver: function ( event ) {
+							event.preventDefault();
+							overState[ 1 ]( true );
+						},
+						onDragLeave: function () {
+							overState[ 1 ]( false );
+						},
+						onDrop: function ( event ) {
+							event.preventDefault();
+							overState[ 1 ]( false );
+							choose( event.dataTransfer.files && event.dataTransfer.files[ 0 ] );
+						}
+					},
+					el( 'input', { type: 'file', accept: '.json,application/json', onChange: function ( event ) {
+						choose( event.target.files && event.target.files[ 0 ] );
+						event.target.value = '';
+					} } ),
+					el( 'span', { className: 'ffw-set-drop-icon' }, 'read' === busy ? el( 'span', { className: 'ffw-ui-spin is-large' } ) : el( ui.Icon, { name: 'upload', size: 24 } ) ),
+					el( 'strong', null, 'read' === busy ? __( 'Reading…', D ) : __( 'Drop a settings file here, or click to choose one', D ) ),
+					el( 'span', { className: 'ffw-ui-muted' }, __( 'You see every change before anything is saved.', D ) )
+				)
+			);
+		}
+
+		return el(
+			Fragment,
+			null,
+			el(
+				ui.Card,
+				{
+					key: 'export',
+					title: __( 'Export settings', D ),
+					description: __( 'Download every Happy FAQs setting as one file, to keep as a backup or use on another site.', D )
+				},
 				el(
 					'div',
-					{ className: 'ffw-set-pv', style: { width: values.ffw_width ? Math.min( 100, Number( values.ffw_width ) ) + '%' : undefined } },
-					items.map( function ( item, index ) {
-						return el(
-							'div',
-							{ key: index, className: ui.cx( 'ffw-set-pv-item', item[ 2 ] && 'is-open' ) },
-							el( 'div', { className: 'ffw-set-pv-q', style: question }, el( 'span', null, item[ 0 ] ), iconFor( item[ 2 ] ) ),
-							item[ 2 ] ? el( 'div', { className: 'ffw-set-pv-a', style: answer }, item[ 1 ] ) : null
-						);
-					} )
+					{ className: 'ffw-set-export' },
+					transfer.hasSecret ? el( 'div', null,
+						el( ui.Toggle, { checked: secretsState[ 0 ], label: __( 'Include the API key', D ), onChange: secretsState[ 1 ] } ),
+						el( 'p', { className: 'ffw-ui-field-help' }, secretsState[ 0 ] ? __( 'The file will hold your key as plain text. Share it only with people you trust.', D ) : __( 'Your AI key stays out of the file.', D ) )
+					) : null,
+					props.dirty ? el( ui.Notice, { tone: 'warn' }, el( 'p', null, __( 'You have changes on this page that are not saved. Save them first to have them in the file.', D ) ) ) : null,
+					el( ui.Button, { variant: 'primary', icon: 'download', busy: 'export' === busy, disabled: !! busy, onClick: runExport }, __( 'Download settings file', D ) )
 				)
 			),
-			el( 'p', { className: 'ffw-set-preview-note' }, __( 'A sketch of your colors and icon. Each layout adds its own shape.', D ) )
+			el(
+				ui.Card,
+				{
+					key: 'import',
+					title: __( 'Import settings', D ),
+					description: __( 'Make this site\u2019s settings the same as a settings file.', D )
+				},
+				importBody
+			),
+			transfer.backup ? el(
+				ui.Card,
+				{
+					key: 'undo',
+					title: __( 'Undo the last import', D ),
+					description: sprintf( __( 'The settings from before the import on %s are kept.', D ), transfer.backup.date ),
+					actions: el( ui.Button, { icon: 'refresh', busy: 'undo' === busy, disabled: !! busy, onClick: undo }, __( 'Undo import', D ) ),
+					flush: true
+				}
+			) : null,
+			el(
+				'p',
+				{ className: 'ffw-set-transfer-note' },
+				__( 'These files hold settings only, not your FAQs.', D ),
+				' ',
+				transfer.faqsUrl ? el( 'a', { href: transfer.faqsUrl }, __( 'Move FAQs on the Import / Export page', D ) ) : null
+			)
 		);
 	}
 
@@ -582,7 +944,7 @@
 		if ( OLD_TABS[ hash ] ) {
 			return OLD_TABS[ hash ];
 		}
-		var found = LAYOUT.some( function ( section ) {
+		var found = SECTIONS.some( function ( section ) {
 			return section.id === hash;
 		} );
 		return found ? hash : ( LAYOUT[ 0 ] && LAYOUT[ 0 ].id );
@@ -600,6 +962,7 @@
 		var legacyDirtyState = useState( {} );
 		var legacyKeyState = useState( 0 );
 		var openGroupsState = useState( {} );
+		var transferState = useState( data.transfer );
 		var legacyRefs = useRef( {} );
 
 		var saved = savedState[ 0 ];
@@ -697,6 +1060,28 @@
 				} );
 		}
 
+		// Settings saved by an import or its undo: show them everywhere on the page.
+		function onTransferred( response ) {
+			var next = plain( response.values );
+			Object.keys( FIELDS ).forEach( function ( id ) {
+				if ( 'legacy' === FIELDS[ id ].type ) {
+					FIELDS[ id ].html = legacyHtmlWith( FIELDS[ id ].html, next );
+				}
+				// A model that is not in the list is still a choice, like on page load.
+				var model = 'ffw_ai_faqs_model' === FIELDS[ id ].key ? next.ffw_ai_faqs_model : '';
+				if ( model && FIELDS[ id ].options && ! FIELDS[ id ].options.some( function ( option ) {
+					return option.value === model;
+				} ) ) {
+					FIELDS[ id ].options.push( { value: model, label: model } );
+				}
+			} );
+			savedState[ 1 ]( next );
+			valuesState[ 1 ]( next );
+			legacyDirtyState[ 1 ]( {} );
+			legacyKeyState[ 1 ]( legacyKeyState[ 0 ] + 1 );
+			transferState[ 1 ]( response.transfer );
+		}
+
 		function discard() {
 			valuesState[ 1 ]( plain( saved ) );
 			if ( legacyDirty.length ) {
@@ -764,7 +1149,7 @@
 		}
 
 		var current = null;
-		LAYOUT.forEach( function ( item ) {
+		SECTIONS.forEach( function ( item ) {
 			if ( item.id === section ) {
 				current = item;
 			}
@@ -779,7 +1164,22 @@
 				} ).filter( Boolean );
 				return groups.length ? el( 'div', { key: sec.id, className: 'ffw-set-results' }, el( 'h2', { className: 'ffw-set-results-title' }, sec.label ), groups ) : null;
 			} ).filter( Boolean );
+			var transferWords = [ TRANSFER.label, __( 'settings backup restore move copy file json', D ) ].join( ' ' ).toLowerCase();
+			if ( SECTIONS !== LAYOUT && search.toLowerCase().split( /\s+/ ).every( function ( word ) {
+				return transferWords.indexOf( word ) !== -1;
+			} ) ) {
+				found.push( el( 'div', { key: TRANSFER.id, className: 'ffw-set-results' }, el( ui.Card, {
+					title: TRANSFER.label,
+					description: __( 'Download every setting as a file, or import one.', D ),
+					actions: el( ui.Button, { icon: 'next', onClick: function () {
+						go( TRANSFER.id );
+					} }, __( 'Open', D ) ),
+					flush: true
+				} ) ) );
+			}
 			body = found.length ? found : el( ui.Card, null, el( ui.Empty, { icon: 'search', title: __( 'No settings match', D ), text: sprintf( __( 'Nothing found for "%s". Try another word.', D ), search ) } ) );
+		} else if ( current === TRANSFER ) {
+			body = el( Transfer, { transfer: transferState[ 0 ], dirty: dirty, onSaved: onTransferred } );
 		} else {
 			body = current.groups.map( function ( group, index ) {
 				return renderGroup( group, index, current.id );
@@ -823,7 +1223,7 @@
 						label: __( 'Settings sections', D ),
 						value: search ? '' : current.id,
 						onChange: go,
-						items: LAYOUT.map( function ( sec ) {
+						items: SECTIONS.map( function ( sec ) {
 							return { id: sec.id, label: sec.label, icon: sec.icon, dot: sectionDirty( sec ) };
 						} )
 					} ),
@@ -839,7 +1239,7 @@
 					'div',
 					{ className: ui.cx( 'ffw-set-main', showPreview && 'has-preview' ) },
 					el( 'div', { className: 'ffw-set-groups' }, body ),
-					showPreview ? el( 'aside', { className: 'ffw-set-aside' }, el( StylePreview, { values: values } ) ) : null
+					showPreview ? el( 'aside', { className: 'ffw-set-aside' }, el( StylePreview, { values: values, dirty: dirty } ) ) : null
 				)
 			),
 			el( ui.SaveBar, {

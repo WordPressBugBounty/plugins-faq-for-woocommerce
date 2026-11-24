@@ -930,7 +930,7 @@ class FFW_App_Settings {
      *
      * @return FAQ_Woocommerce_Settings|null
      */
-    protected static function settings_object() {
+    public static function settings_object() {
         if ( ! class_exists( 'FAQ_Woocommerce_Settings' ) ) {
             $file = FFW_ABSPATH . '/includes/admin/class-faq-woocommerce-settings.php';
             if ( file_exists( $file ) ) {
@@ -1121,6 +1121,8 @@ class FFW_App_Settings {
             'faqCount' => (int) wp_count_posts( 'ffw' )->publish,
             'pageUrl'  => admin_url( 'post.php?action=edit&post=' ),
             'viewUrl'  => home_url( '/?page_id=' ),
+            'transfer' => FFW_Settings_Transfer::data(),
+            'stylePreview' => FFW_App_Preview::style_data(),
         );
     }
 
@@ -1130,7 +1132,7 @@ class FFW_App_Settings {
      * @param array $options Saved option.
      * @return array
      */
-    protected static function values( $options ) {
+    public static function values( $options ) {
         // RTL: older sites stored a Pro switch instead of a mode.
         if ( empty( $options['ffw_rtl_mode'] ) ) {
             $options['ffw_rtl_mode'] = function_exists( 'ffw_is_setting_enabled' ) && ffw_is_setting_enabled( $options, 'enable_rtl' ) ? 'always' : 'auto';

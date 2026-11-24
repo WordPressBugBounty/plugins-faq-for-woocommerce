@@ -23,8 +23,12 @@ class FAQ_Woocommerce_Blocks {
             return;
         }
 
-        add_filter( 'block_categories_all', array( $this, 'register_category' ), 10, 2 );
-        add_filter( 'block_categories', array( $this, 'register_category' ), 10, 2 );
+        // block_categories is deprecated since WordPress 5.8; use it only before then.
+        if ( class_exists( 'WP_Block_Editor_Context' ) ) {
+            add_filter( 'block_categories_all', array( $this, 'register_category' ), 10, 2 );
+        } else {
+            add_filter( 'block_categories', array( $this, 'register_category' ), 10, 2 );
+        }
         add_action( 'init', array( $this, 'register_blocks' ), 20 );
         add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_assets' ) );
     }

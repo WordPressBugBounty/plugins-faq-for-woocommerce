@@ -6,7 +6,7 @@
                 <img class="opt-right-side-bar-title-img" src="<?php echo esc_url(FFW_PLUGIN_URL); ?>/assets/admin/images/love.png" alt="">
                 <h4 class="opt-right-side-bar-title-heading"><?php esc_html_e('Show your love', 'faq-for-woocommerce'); ?></h4>
             </div>
-            <p class="opt-right-side-bar-para"><?php esc_html_e('We love to have you in the Happy WooCommerce FAQs family. We are making it more awesome everyday.', 'faq-for-woocommerce'); ?></p>
+            <p class="opt-right-side-bar-para"><?php esc_html_e('We love having you in the Happy FAQs family. We keep making it better.', 'faq-for-woocommerce'); ?></p>
             <a class="opt-right-side-bar-btn"  href="<?php echo esc_url(FFW_REVIEW_REQUEST_URL); ?>"><span class="opt-right-side-bar-span"><?php esc_html_e('Rate Us', 'faq-for-woocommerce'); ?></span></a>
         </div> 
     </div>    

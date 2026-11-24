@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/class-faq-woocommerce-admin-app.php';
 require_once __DIR__ . '/class-ffw-app-settings.php';
+require_once __DIR__ . '/class-ffw-settings-transfer.php';
 require_once __DIR__ . '/class-ffw-app-dashboard.php';
 require_once __DIR__ . '/class-ffw-app-preview.php';
 require_once __DIR__ . '/class-ffw-app-shortcodes.php';

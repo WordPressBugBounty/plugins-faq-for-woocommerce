@@ -2269,7 +2269,7 @@ class FAQ_Woocommerce_Settings {
                             </div>
                             <?php
                                 echo sprintf('<h3>%s</h3>', esc_html__("Be A PRO", "faq-for-woocommerce"));
-                                echo sprintf('<p>%s</p>', esc_html__("Grab the best features of Happy WooCommerce FAQs to increase your sell.", "faq-for-woocommerce"));
+                                echo sprintf('<p>%s</p>', esc_html__("Get every Happy FAQs feature: FAQ analytics, contact form suggestions, product Q&A, and more.", "faq-for-woocommerce"));
                                 echo sprintf('<a class="ffw-go-pro-modal-link ffw-primary-btn"" target="__blank" href="%2$s">%1$s</a>', esc_html__("Upgrade Now", "faq-for-woocommerce"), esc_url(FFW_PRO_URL));
                             ?>
                         </div>

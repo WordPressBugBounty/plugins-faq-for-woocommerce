@@ -3,7 +3,7 @@
  * Plugin Name: Happy FAQs
  * Plugin URI: https://wordpress.org/plugins/faq-for-woocommerce/
  * Description: Create FAQs for your site and WooCommerce products with comment, FAQ schema and AI support.
- * Version: 3.0.0
+ * Version: 3.0.1
  * Author: HappyDevs
  * Author URI: https://happydevs.net
  * Text Domain: faq-for-woocommerce
@@ -31,7 +31,7 @@ if ( ! defined( 'FFW_VERSION' ) ) {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	define( 'FFW_VERSION', '3.0.0' );
+	define( 'FFW_VERSION', '3.0.1' );
 }
 
 if ( ! defined( 'FFW_FILE' ) ) {
@@ -55,7 +55,7 @@ if ( ! defined( 'FFW_FILTERED_PLUGIN_URL' ) ) {
 }
 
 if ( ! defined( 'FFW_PRO_URL' ) ) {
-    define( 'FFW_PRO_URL', "https://happydevs.net/happy-woocommerce-faqs-pro" );
+    define( 'FFW_PRO_URL', "https://happydevs.net/happy-faqs/" );
 }
 
 if ( ! defined( 'FFW_FREE_URL' ) ) {
@@ -117,7 +117,7 @@ include_once FFW_FILE_DIR . '/includes/class-faq-woocommerce.php';
  * @return void
  */
 function appsero_init_tracker_faq_for_woocommerce() {
-    $client = new Appsero\Client( 'c989292b-3c3e-454a-a216-cc0df37fb6d9', 'Happy WooCommerce FAQs', __FILE__ );
+    $client = new Appsero\Client( 'c989292b-3c3e-454a-a216-cc0df37fb6d9', 'Happy FAQs', __FILE__ );
 
     // Active insights
     $client->insights()->init();

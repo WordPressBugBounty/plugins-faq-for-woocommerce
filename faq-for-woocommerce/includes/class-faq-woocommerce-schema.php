@@ -143,10 +143,50 @@ class FAQ_Woocommerce_Schema {
             return;
         }
 
+        $seo_plugin = self::seo_faq_block_on_page();
+        if ( $seo_plugin ) {
+            printf( "\n<!-- Happy FAQs: FAQ schema skipped, the %s FAQ block on this page already adds it -->\n", esc_html( $seo_plugin ) );
+            return;
+        }
+
         $schema = new self( array(), 'footer' );
         $schema->schema_enable = true;
         $schema->options       = get_option( 'ffw_general_settings' );
         $schema->process_faqs_schema( array_values( self::$collected_faqs ), 'footer' );
+    }
+
+    /**
+     * Name of the SEO plugin whose FAQ block is on this page, if any.
+     *
+     * Yoast SEO and Rank Math add FAQPage schema for their own FAQ blocks.
+     * A second FAQPage block on the same page is invalid for Google, so
+     * Happy FAQs leaves the schema to them on those pages.
+     *
+     * @since 3.0.1
+     * @return string Plugin name, or an empty string.
+     */
+    public static function seo_faq_block_on_page() {
+        $plugin = '';
+
+        if ( is_singular() && function_exists( 'has_block' ) ) {
+            $post_id = get_queried_object_id();
+
+            if ( defined( 'WPSEO_VERSION' ) && has_block( 'yoast/faq-block', $post_id ) ) {
+                $plugin = 'Yoast SEO';
+            } elseif ( class_exists( 'RankMath' ) && has_block( 'rank-math/faq-block', $post_id ) ) {
+                $plugin = 'Rank Math';
+            }
+        }
+
+        /**
+         * Filters whether another plugin's FAQ block already adds FAQPage schema to this page.
+         *
+         * Return a plugin name to skip Happy FAQs schema, or an empty string to keep it.
+         *
+         * @since 3.0.1
+         * @param string $plugin Detected plugin name, or an empty string.
+         */
+        return (string) apply_filters( 'ffw_seo_faq_block_on_page', $plugin );
     }
 
     /**
@@ -212,7 +252,7 @@ class FAQ_Woocommerce_Schema {
 
         if( !empty($faq_lists) ) {
             ?>
-            <!-- faq schema by Happy WooCommerce FAQs - FAQ for Woocommerce -->
+            <!-- FAQ schema by Happy FAQs -->
             <script type="application/ld+json">
                 <?php
                 $markup["@context"]     = "https://schema.org";

@@ -7,135 +7,15 @@ if( ! function_exists( "ffw_footer_content" ) ) {
             return;
         }
 
-        //get options.
         $options = FAQ_Woocommerce_Public::instance()->options;
+        $options = is_array( $options ) ? $options : array();
 
-        $question_text_color = isset($options['ffw_question_text_color']) && !empty($options['ffw_question_text_color']) ? $options['ffw_question_text_color'] : '';
-        $question_bg_color = isset($options['ffw_question_bg_color']) && !empty($options['ffw_question_bg_color']) ? $options['ffw_question_bg_color'] : '';
-        $question_bg_secondary_color = isset($options['ffw_question_bg_secondary_color']) && !empty($options['ffw_question_bg_secondary_color']) ? $options['ffw_question_bg_secondary_color'] : '';
-        $question_font_size = isset($options['ffw_question_font_size']) && !empty($options['ffw_question_font_size']) ? $options['ffw_question_font_size'] . 'px' : '';
-        $question_border_color = isset($options['ffw_question_border_color']) && !empty($options['ffw_question_border_color']) ? $options['ffw_question_border_color'] : '';
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- values are sanitized in ffw_get_style_settings_css().
+        echo '<style id="ffw-style-settings">' . ffw_get_style_settings_css( $options ) . '</style>';
 
-        //answer values
-        $answer_bg_color = isset($options['ffw_answer_bg_color']) && !empty($options['ffw_answer_bg_color']) ? $options['ffw_answer_bg_color'] : '';
-        $answer_text_color = isset($options['ffw_answer_text_color']) && !empty($options['ffw_answer_text_color']) ? $options['ffw_answer_text_color'] : '';
-        $answer_border_color = isset($options['ffw_answer_border_color']) && !empty($options['ffw_answer_border_color']) ? $options['ffw_answer_border_color'] : '';
-
-        ?>
-        <style>
-            #ffw-wrapper .ffw-accordion .ffw-accordion-item .ffw-button,
-            #ffw-wrapper.ffw-basic-wrapper .ffw-accordion-item .ffw-button {
-                background: <?php echo esc_html($question_bg_color); ?> !important;
-                color: <?php echo esc_html($question_text_color); ?> !important;
-                font-size: <?php echo esc_html($question_font_size); ?> !important;
-            }
-            #ffw-wrapper .ffw-accordion .ffw-accordion-item .ffw-button {
-                border: 1px solid <?php echo esc_html($question_border_color); ?> !important;
-            }
-            #ffw-wrapper.ffw-classic-layout .ffw-accordion .ffw-accordion-item .ffw-button {
-                border-bottom: none !important;
-            }
-            #ffw-wrapper.ffw-classic-layout .ffw-accordion .ffw-accordion-item .ffw-button span {
-                color: <?php echo esc_html($question_text_color); ?> !important;
-            }
-            #ffw-wrapper.ffw-classic-layout .ffw-accordion .ffw-accordion-item:last-child .ffw-button,
-            #ffw-wrapper.ffw-basic-wrapper .ffw-accordion-item .ffw-accordion-heading {
-                border-bottom: 1px solid <?php echo esc_html($question_border_color); ?> !important;
-            }
-            #ffw-wrapper .ffw-accordion .ffw-accordion-item .ffw-classic-answer {
-                background: <?php echo esc_html($answer_bg_color); ?> !important;
-                border: 1px solid <?php echo esc_html($answer_border_color); ?> !important;
-                color: <?php echo esc_html($answer_text_color); ?> !important;
-            }
-
-            #ffw-wrapper.ffw-basic-wrapper .ffw-accordion-item .ffw-basic-answer {
-                background: <?php echo esc_html($answer_bg_color); ?> !important;
-                color: <?php echo esc_html($answer_text_color); ?> !important;
-                border-bottom: 1px solid <?php echo esc_html($answer_border_color); ?> !important;
-            }
-
-            /* Glow Template */
-            #ffw-wrapper .ffw-accordion-container .ffw-accordion-border .ffw-accordion .ffw-accordion-heading ,
-            #ffw-wrraper .ffw-accordion-container .ffw-accordion-outline-border .ffw-accordion .ffw-accordion-heading {
-                background: <?php echo esc_html($question_bg_color); ?> !important;
-                color: <?php echo esc_html($question_text_color); ?> !important;
-                font-size: <?php echo esc_html($question_font_size); ?> !important;
-            }
-            #ffw-wrapper .ffw-accordion-container .ffw-accordion-border .ffw-accordion .ffw-accordion-heading {
-                border: 1px solid <?php echo esc_html($question_border_color); ?> !important;
-            }
-            #ffw-wrapper .ffw-accordion-container .ffw-accordion-border .ffw-accordion .ffw-accordion-heading  {
-                border-bottom: none !important;
-            }
-            #ffw-wrapper .ffw-accordion-container .ffw-accordion-border .ffw-accordion .ffw-accordion-heading span {
-                color: <?php echo esc_html($question_text_color); ?> !important;
-            }
-            #ffw-wrapper .ffw-accordion-container .ffw-accordion-border .ffw-accordion .ffw-accordion-body-content {
-                background: <?php echo esc_html($answer_bg_color); ?> !important;
-                border: 1px solid <?php echo esc_html($answer_border_color); ?> !important;
-                color: <?php echo esc_html($answer_text_color); ?> !important;
-            }
-
-            /*  */
-            #ffw-wrapper .ffw-accordion-container .ffw-accordion-outline-border .ffw-accordion .ffw-accordion-heading {
-                background: <?php echo esc_html($question_bg_color); ?> !important;
-                color: <?php echo esc_html($question_text_color); ?> !important;
-                font-size: <?php echo esc_html($question_font_size); ?> !important;
-            }
-
-
-            /* Trip template css */
-            #ffw-main-wrapper details {
-                background: <?php echo esc_html($question_bg_color); ?> !important;
-                color: <?php echo esc_html($question_text_color); ?> !important;
-                border: 1px solid <?php echo esc_html($question_border_color); ?> !important;
-            }
-            #ffw-main-wrapper details summary {
-                font-size: <?php echo esc_html($question_font_size); ?> !important;
-            }
-            #ffw-main-wrapper details .ffw-trip-answer {
-                background: <?php echo esc_html($answer_bg_color); ?> !important;
-                color: <?php echo esc_html($answer_text_color); ?> !important;
-                padding: 10px 0;
-
-                <?php
-                    if( ! empty($answer_border_color) ) {
-                        echo "border: 1px solid " . esc_html($answer_border_color) . " !important;";
-                    }else {
-                        echo "border: none;";
-                    }
-                ?>
-            }
-
-            #ffw-main-wrapper details .ffw-trip-answer iframe {
-                display: block;
-                position: relative;
-                z-index: 9999;
-            }
-
-            /* Pop template css */
-            #ffw-main-wrapper .ffw-collapse:nth-child(even) span{
-                background: <?php echo esc_html($question_bg_color); ?> !important;
-            }
-            #ffw-main-wrapper .ffw-collapse:nth-child(odd) span{
-                background: <?php echo esc_html($question_bg_secondary_color); ?> !important;
-            }
-            #ffw-main-wrapper .ffw-collapse span {
-                color: <?php echo esc_html($question_text_color); ?> !important;
-            }
-            #ffw-main-wrapper .ffw-collapse .ffw-content {
-                background: <?php echo esc_html($answer_bg_color); ?> !important;
-                color: <?php echo esc_html($answer_text_color); ?> !important;
-                border: 1px solid <?php echo esc_html($answer_border_color); ?> !important;
-            }
-
-        </style>
-        <?php
-
-        //print ffw footer custom css
-        if( isset($options['ffw_custom_css']) ) {
-            echo "<style>". esc_html($options['ffw_custom_css']) ."</style>";
-        }
+        // Custom CSS comes last. Tags are stripped, not escaped: ">" and quotes are valid CSS.
+        $custom_css = isset( $options['ffw_custom_css'] ) ? (string) $options['ffw_custom_css'] : '';
+        echo '<style id="ffw-custom-css">' . ffw_prepare_custom_css( $custom_css ) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 }
 
