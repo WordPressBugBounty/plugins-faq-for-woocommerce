@@ -2,9 +2,9 @@
 Contributors: happydevs, nayanchamp7, azha18
 Tags: faq, accordion, faq schema, product faq, woocommerce faq
 Requires at least: 4.4
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 7.4
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -450,6 +450,9 @@ Yes, in the free version. **Settings → Right to Left (RTL)** follows your site
 13. Move FAQs in and out with spreadsheet import and export, with a preview of every change (Pro)
 
 == Changelog ==
+
+= 3.0.2 =
+* Improved: Tested with WordPress 7.2.
 
 = 3.0.1 =
 * Added: Settings → Import / Export. Download every Happy FAQs setting as a JSON file and import it on this site or another one, with a list of every change first and an undo. API keys are left out unless you include them, and the FAQ page is matched by its address. Developers can use the `ffw_settings_export`, `ffw_settings_import` and `ffw_settings_is_secret` filters.
@@ -919,6 +922,9 @@ Yes, in the free version. **Settings → Right to Left (RTL)** follows your site
 * First Release.
 
 == Upgrade Notice ==
+
+= 3.0.2 =
+Tested with WordPress 7.2. No other changes.
 
 = 3.0.1 =
 Settings → Style colors now reach every layout, with a real live preview. Settings import and export, no duplicate FAQ schema next to Yoast SEO or Rank Math FAQ blocks, a quieter review request, and the Happy FAQs name everywhere.
